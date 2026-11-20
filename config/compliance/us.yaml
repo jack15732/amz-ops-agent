@@ -1,0 +1,255 @@
+meta:
+  site: US
+  version: "2026.11"
+  source: "Amazon US Seller Central / FTC substantiation guidance"
+  updated_at: "2026-11-20"
+
+rules:
+  - id: US-ABS-001
+    category: absolute
+    severity: high
+    action: block
+    terms:
+      - "best seller"
+      - "best sellers"
+      - "bestseller"
+      - "best-selling"
+      - "best-seller"
+      - "best-in-class"
+      - "top of the line"
+      - "top-of-the-line"
+      - "#1"
+      - "no.1"
+      - "number one"
+      - "number 1"
+      - "top rated"
+      - "top-rated"
+      - "world's best"
+      - "worlds best"
+      - "unbeatable"
+      - "100%"
+      - "perfect"
+      - "ultimate"
+      - "guaranteed"
+      - "guarantee"
+      - "risk-free"
+      - "risk free"
+      - "lowest price"
+      - "cheapest"
+    allow_contexts:
+      - "(?:satisfaction|money[- ]back)\\s+guarantee"
+      - "guarantee(?:d)?\\s+(?:return|refund|replacement)"
+    description: "亚马逊禁止无法证实的绝对化、排名第一、百分百保证类表述。"
+    citation: "Amazon US Product Detail Page Rules — prohibited claims"
+    suggestion: "删除排名/保证/百分百表述，改写为可验证的具体参数或第三方测试结论。"
+
+  - id: US-ABS-002
+    category: absolute
+    severity: high
+    action: block
+    terms:
+      - "best"
+      - "world-class"
+      - "world class"
+      - "second to none"
+    allow_contexts:
+      - "best\\s+(?:practices|regards)"
+    description: "“best / world-class”属于无法客观验证的绝对化比较级。"
+    citation: "FTC Advertising FAQ — substantiation of comparative claims"
+    suggestion: "改为具体卖点，例如“经 XX 项测试，连续使用 4 周可减少 32% 毛躁”。"
+
+  - id: US-MED-001
+    category: medical
+    severity: high
+    action: block
+    terms:
+      - "cure"
+      - "cures"
+      - "treat"
+      - "treats"
+      - "prevent"
+      - "prevents"
+      - "diagnose"
+      - "heal"
+      - "heals"
+      - "anti-bacterial"
+      - "antibacterial"
+      - "antiviral"
+      - "anti-viral"
+      - "kills 99.9%"
+      - "kills 99%"
+      - "medical grade"
+      - "clinical grade"
+      - "FDA approved"
+      - "FDA cleared"
+      - "doctor recommended"
+      - "clinically proven"
+      - "clinically studied"
+      - "doctor-formulated"
+      - "doctor formulated"
+      - "relieves arthritis"
+      - "reduces inflammation"
+      - "kills 99.99%"
+    description: "疾病治疗、预防、诊断及 FDA 批准类功效宣称属于医疗器械/药品监管范围。"
+    citation: "FDA — Cosmetics and medical device claims; Amazon restricted claims"
+    suggestion: "删除疾病/治疗/FDA 相关表述；仅保留化妆品或日用品允许的温和描述。"
+
+  - id: US-MED-002
+    category: medical
+    severity: medium
+    action: review
+    terms:
+      - "clinically tested"
+      - "dermatologist tested"
+      - "hypoallergenic"
+      - "non-toxic"
+      - "patented"
+      - "medical device"
+    allow_contexts:
+      - "not\\s+(?:a\\s+)?medical device"
+      - "non[- ]medical"
+    description: "测试、低敏、无毒、专利等宣称需要可核验的证据或证书。"
+    citation: "FTC Health Products Compliance Guidance (2022)"
+    suggestion: "补充测试机构、报告编号或专利号；无法提供则删除。"
+
+  - id: US-INF-001
+    category: infringement
+    severity: high
+    action: block
+    terms:
+      - "Nike"
+      - "Adidas"
+      - "Disney"
+      - "Marvel"
+      - "Apple"
+      - "iPhone"
+      - "AirPods"
+      - "Gucci"
+      - "Louis Vuitton"
+      - "Chanel"
+      - "Rolex"
+      - "Lego"
+      - "Pokemon"
+      - "Pokémon"
+      - "Harry Potter"
+      - "Barbie"
+      - "Hello Kitty"
+      - "Supreme"
+    allow_contexts:
+      - "(?:compatible|compatibility|works?|designed|fit|fits|for)\\s+(?:with\\s+)?(?:apple|iphone|airpods)"
+      - "apple\\s+(?:cider|juice|fruit|flavor|flavour|sauce|pie)"
+      - "(?:cider|juice)\\s+apple"
+    description: "品牌词直接使用容易构成商标侵权；兼容性描述必须使用兼容声明而非品牌背书。"
+    citation: "Amazon Brand Registry — Intellectual Property Policy"
+    suggestion: "删除品牌词，改为“Compatible with iPhone 15”等兼容性表述，且不得暗示官方授权。"
+
+  - id: US-INF-002
+    category: infringement
+    severity: medium
+    action: review
+    terms:
+      - "replica"
+      - "knockoff"
+      - "knock-off"
+      - "inspired by"
+      - "dupe"
+      - "1:1"
+      - "copy"
+    allow_contexts:
+      - "copy\\s+(?:of\\s+)?(?:the\\s+)?(?:manual|instructions|document)"
+    description: "仿品、复刻、平替暗示可能触发商标/外观侵权投诉。"
+    citation: "Amazon Intellectual Property Policy — counterfeit"
+    suggestion: "删除仿品/复刻/平替表述，强调自有品牌与独立设计。"
+
+  - id: US-SAF-001
+    category: safety
+    severity: high
+    action: block
+    terms:
+      - "UL certified"
+      - "CPSC approved"
+      - "CPSIA certified"
+      - "FCC certified"
+      - "ASTM certified"
+      - "FDA registered"
+    description: "把检测/注册包装成“认证”属于虚假安全宣称。"
+    citation: "Amazon US Product Safety & Compliance; FTC substantiation"
+    suggestion: "改为“Tested to UL 1234 by SGS, report No. XXX”，并确保报告真实可查。"
+
+  - id: US-ENV-001
+    category: environment
+    severity: medium
+    action: review
+    terms:
+      - "eco-friendly"
+      - "eco friendly"
+      - "biodegradable"
+      - "carbon neutral"
+      - "100% recyclable"
+      - "compostable"
+      - "green"
+    description: "环保宣称需要明确标准、范围和第三方验证，否则涉嫌绿色洗白。"
+    citation: "FTC Green Guides (16 CFR Part 260)"
+    suggestion: "写清材料比例与认证，例如“made with 30% post-consumer recycled PET, GRS certified”。"
+
+  - id: US-ORIGIN-001
+    category: origin
+    severity: medium
+    action: review
+    terms:
+      - "made in USA"
+      - "made in the USA"
+      - "usa made"
+      - "american made"
+      - "made in america"
+    description: "“Made in USA”要求全部或几乎所有工序在美国完成，需保留供应链证据。"
+    citation: "FTC Made in USA Labeling Rule (2021)"
+    suggestion: "如非全部美国制造，改为“Assembled in USA”或删除产地宣称。"
+
+  - id: US-LABEL-001
+    category: labeling
+    severity: medium
+    action: review
+    terms:
+      - "organic"
+      - "usda organic"
+      - "natural"
+      - "pure"
+      - "non-gmo"
+    allow_contexts:
+      - "organic\\s+(?:cotton|fabric|material)"
+    description: "有机、天然、纯、非转基因等标签词需要相应认证或符合定义。"
+    citation: "USDA National Organic Program; FDA labeling guidance"
+    suggestion: "只有取得 USDA Organic 认证时才可使用 organic；否则改为具体成分描述。"
+
+  - id: US-PRICE-001
+    category: pricing
+    severity: medium
+    action: review
+    terms:
+      - "free shipping"
+      - "limited time"
+      - "50% off"
+      - "save 50%"
+      - "best price"
+      - "price match"
+      - "buy one get one"
+      - "bogo"
+    description: "促销与价格比较需要真实原价、时间和条件，否则构成欺骗性定价。"
+    citation: "FTC Guides Against Deceptive Pricing (16 CFR Part 233)"
+    suggestion: "补充活动起止时间、原价依据和适用条件，或删除促销表述。"
+
+  - id: US-ADV-001
+    category: advertising
+    severity: medium
+    action: review
+    terms:
+      - "miracle"
+      - "magic"
+      - "breakthrough"
+      - "revolutionary"
+      - "instant results"
+      - "secret"
+    description: "奇迹、瞬间见效、革命性等夸张效果宣称缺乏证据支撑。"
+    citation: "FTC Deception Policy Statement"
+    suggestion: "改为具体、可测量的效果描述，并注明使用条件与个体差异。"

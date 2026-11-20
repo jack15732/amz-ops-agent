@@ -1,0 +1,23 @@
+{"id":"hold-us-001","site":"US","text":"Top of the line yoga mat for daily practice.","expected_decision":"blocked","expected_rule_ids":[],"tags":["paraphrase"],"note":"独立留出集：未加入词库的绝对化变体"}
+{"id":"hold-us-002","site":"US","text":"Doctor-formulated supplement for joint comfort.","expected_decision":"review","expected_rule_ids":[],"tags":["paraphrase"],"note":"独立留出集：医生背书变体"}
+{"id":"hold-us-003","site":"US","text":"Clinically studied formula with visible results.","expected_decision":"review","expected_rule_ids":[],"tags":["paraphrase"],"note":"独立留出集：临床研究表述"}
+{"id":"hold-us-004","site":"US","text":"Made in America from domestic and imported parts.","expected_decision":"review","expected_rule_ids":[],"tags":["paraphrase"],"note":"独立留出集：产地变体"}
+{"id":"hold-us-005","site":"US","text":"Non-GMO Project verified ingredients.","expected_decision":"review","expected_rule_ids":[],"tags":["label"],"note":"独立留出集：非转基因认证"}
+{"id":"hold-us-006","site":"US","text":"Kills 99.99% of bacteria on contact.","expected_decision":"blocked","expected_rule_ids":[],"tags":["paraphrase"],"note":"独立留出集：数字变体"}
+{"id":"hold-us-007","site":"US","text":"Satisfaction guaranteed or your money back.","expected_decision":"passed","expected_rule_ids":[],"tags":["negative"],"note":"独立留出集：售后保证白名单"}
+{"id":"hold-us-008","site":"US","text":"The #1 choice of professionals.","expected_decision":"blocked","expected_rule_ids":[],"tags":["absolute"],"note":"独立留出集：排名宣称"}
+{"id":"hold-us-009","site":"US","text":"FCC ID: 2ABCD-XXXX. Model X200.","expected_decision":"passed","expected_rule_ids":[],"tags":["factual"],"note":"独立留出集：事实性 FCC ID"}
+{"id":"hold-us-010","site":"US","text":"Relieves arthritis pain and reduces inflammation.","expected_decision":"blocked","expected_rule_ids":[],"tags":["medical"],"note":"独立留出集：疾病功效变体"}
+{"id":"hold-eu-001","site":"EU","text":"CE self-certified according to the EMC Directive.","expected_decision":"blocked","expected_rule_ids":[],"tags":["ce"],"note":"独立留出集：CE 变体"}
+{"id":"hold-eu-002","site":"EU","text":"Dermatologically tested; 98% of users agreed.","expected_decision":"review","expected_rule_ids":[],"tags":["evidence"],"note":"独立留出集：测试宣称"}
+{"id":"hold-eu-003","site":"EU","text":"Climate-positive shipping with verified offsets.","expected_decision":"review","expected_rule_ids":[],"tags":["green"],"note":"独立留出集：环保变体"}
+{"id":"hold-eu-004","site":"EU","text":"Best-in-class durability for daily use.","expected_decision":"blocked","expected_rule_ids":[],"tags":["absolute"],"note":"独立留出集：绝对化变体"}
+{"id":"hold-eu-005","site":"EU","text":"100 % natural origin ingredients.","expected_decision":"blocked","expected_rule_ids":[],"tags":["absolute"],"note":"独立留出集：空格变体"}
+{"id":"hold-eu-006","site":"EU","text":"Not a medical device, but relieves arthritis pain.","expected_decision":"blocked","expected_rule_ids":[],"tags":["medical"],"note":"独立留出集：否定+功效组合"}
+{"id":"hold-jp-001","site":"JP","text":"世界で最も売れている美容液です。","expected_decision":"blocked","expected_rule_ids":[],"tags":["paraphrase"],"note":"独立留出集：排名变体"}
+{"id":"hold-jp-002","site":"JP","text":"肌の再生を促します。","expected_decision":"blocked","expected_rule_ids":[],"tags":["medical"],"note":"独立留出集：功效变体"}
+{"id":"hold-jp-003","site":"JP","text":"医薬部外品認可取得。","expected_decision":"review","expected_rule_ids":[],"tags":["regulatory"],"note":"独立留出集：监管分类"}
+{"id":"hold-jp-004","site":"JP","text":"No.1 獲得、日本製のタオル。","expected_decision":"blocked","expected_rule_ids":[],"tags":["absolute","origin"],"note":"独立留出集：排名+产地"}
+{"id":"hold-jp-005","site":"JP","text":"PSE マーク付きの充電器。","expected_decision":"review","expected_rule_ids":[],"tags":["safety"],"note":"独立留出集：PSE 事实陈述"}
+{"id":"hold-jp-006","site":"JP","text":"天然由来成分100%配合。","expected_decision":"blocked","expected_rule_ids":[],"tags":["absolute","label"],"note":"独立留出集：绝对化+天然"}
+{"id":"hold-jp-007","site":"JP","text":"送料無料キャンペーン実施中。","expected_decision":"blocked","expected_rule_ids":[],"tags":["pricing"],"note":"独立留出集：价格促销"}

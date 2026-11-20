@@ -1,0 +1,223 @@
+meta:
+  site: JP
+  version: "2026.11"
+  source: "日本 薬機法 / 景品表示法 / 商標法"
+  updated_at: "2026-11-20"
+
+rules:
+  - id: JP-ABS-001
+    category: absolute
+    severity: high
+    action: block
+    terms:
+      - "最高"
+      - "最高級"
+      - "日本一"
+      - "世界一"
+      - "世界で最も"
+      - "最も売れている"
+      - "No.1"
+      - "No. 1"
+      - "ナンバーワン"
+      - "必ず"
+      - "絶対"
+      - "完璧"
+      - "完全"
+      - "100%"
+      - "唯一"
+      - "最強"
+      - "業界初"
+    description: "景品表示法上的優良誤認・有利誤認を招く絶対表現。"
+    citation: "景品表示法 第5条（優良誤認表示）"
+    suggestion: "順位・唯一・完全などの表現を削除し、具体的な試験値や使用条件に置き換える。"
+
+  - id: JP-MED-001
+    category: medical
+    severity: high
+    action: block
+    terms:
+      - "治療"
+      - "治る"
+      - "治す"
+      - "予防"
+      - "アレルギー"
+      - "美白"
+      - "育毛"
+      - "発毛"
+      - "医薬品"
+      - "医療用"
+      - "効能"
+      - "効果あり"
+      - "シミが消える"
+      - "ニキビが治る"
+      - "肌の再生"
+      - "再生を促"
+      - "若返り"
+    description: "疾病の治療・予防、美白、育毛などの効能効果は医薬部外品/医薬品の範囲。"
+    citation: "薬機法 第2条・第66条（未承認医薬品等の広告禁止）"
+    suggestion: "化粧品として許容される「整える」「うるおいを与える」等の表現に変更する。"
+
+  - id: JP-MED-002
+    category: medical
+    severity: medium
+    action: review
+    terms:
+      - "抗菌"
+      - "除菌"
+      - "殺菌"
+      - "ウイルス"
+      - "免疫力"
+      - "デトックス"
+      - "アンチエイジング"
+    description: "抗菌・除菌・ウイルス対策は対象や試験条件により薬機法/景表法の確認が必要。"
+    citation: "薬機法 第2条; 景品表示法 運用基準"
+    suggestion: "SIAA 等の認証範囲と試験条件を明記し、人体への効能として表現しない。"
+
+  - id: JP-INF-001
+    category: infringement
+    severity: high
+    action: block
+    terms:
+      - "ナイキ"
+      - "アディダス"
+      - "ディズニー"
+      - "アップル"
+      - "iPhone"
+      - "AirPods"
+      - "グッチ"
+      - "シャネル"
+      - "レゴ"
+      - "ポケモン"
+      - "ハリー・ポッター"
+      - "バービー"
+      - "プラダ"
+      - "ロレックス"
+    allow_contexts:
+      - "(?:対応|互換|用|向け)"
+      - "アップル(?:パイ|ジュース|酢)"
+    description: "ブランド名の使用は商標権侵害のおそれ。互換品は対応表記に限定する。"
+    citation: "商標法 第25条・第37条"
+    suggestion: "「iPhone 15 対応」等の互換表現に限定し、ロゴ・公式画像を使用しない。"
+
+  - id: JP-INF-002
+    category: infringement
+    severity: high
+    action: block
+    terms:
+      - "コピー品"
+      - "模倣品"
+      - "偽物"
+      - "レプリカ"
+      - "スーパーコピー"
+      - "1:1"
+    description: "模倣品・コピー品の販売は商標法・不正競争防止法違反。"
+    citation: "不正競争防止法 第2条; 商標法 第37条"
+    suggestion: "削除する。自社ブランドとして企画・製造した製品のみ出品する。"
+
+  - id: JP-ADV-001
+    category: advertising
+    severity: high
+    action: block
+    terms:
+      - "無料"
+      - "半額"
+      - "激安"
+      - "業界最安"
+      - "地域最安"
+      - "今だけ"
+      - "必ずもらえる"
+      - "大幅値下げ"
+    description: "有利誤認となる価格・無料・限定訴求。条件表示がない場合は違反リスクが高い。"
+    citation: "景品表示法 第5条（有利誤認表示）"
+    suggestion: "期間・対象・条件を明記し、実際の販売価格と比較できる根拠を保存する。"
+
+  - id: JP-SAFE-001
+    category: safety
+    severity: high
+    action: block
+    terms:
+      - "PSE認証"
+      - "PSE 認証"
+      - "PSマーク"
+      - "薬事承認"
+      - "FDA承認"
+      - "CE認証"
+      - "厚生労働省承認"
+      - "食品衛生法適合"
+    description: "認証・承認を装う表示は景表法違反かつ行政指導リスク。"
+    citation: "電気用品安全法; 薬機法; 景品表示法"
+    suggestion: "「PSE 適合品（届出事業者：XXX）」等、事実に基づく表記に修正する。"
+
+  - id: JP-SAFE-002
+    category: safety
+    severity: medium
+    action: review
+    terms:
+      - "PSE"
+      - "技適"
+      - "技術基準適合証明"
+      - "電気用品安全法"
+      - "医薬部外品認可"
+      - "医薬部外品"
+      - "食品衛生法"
+    description: "電気用品・無線設備・食品接触材は日本の法令適合確認が必要。"
+    citation: "電気用品安全法; 電波法; 食品衛生法"
+    suggestion: "確認 PSE/技適 编号与标签，listing 仅陈述已取得的事实。"
+
+  - id: JP-ENV-001
+    category: environment
+    severity: medium
+    action: review
+    terms:
+      - "環境に優しい"
+      - "エコ"
+      - "生分解性"
+      - "カーボンニュートラル"
+      - "100%リサイクル"
+      - "脱炭素"
+    description: "環境配慮表示は根拠と範囲の明示が必要。"
+    citation: "景品表示法 環境表示ガイドライン"
+    suggestion: "認証・材料比率・対象範囲を明記し、曖昧な「エコ」表現を避ける。"
+
+  - id: JP-ORIGIN-001
+    category: origin
+    severity: medium
+    action: review
+    terms:
+      - "日本製"
+      - "国産"
+      - "MADE IN JAPAN"
+      - "made in japan"
+    description: "原産地表示は原産地規則に基づく証明が必要。"
+    citation: "不正競争防止法 第2条; 原産地規則"
+    suggestion: "製造工程と部材調達を確認し、証明できない場合は产地表述を削除する。"
+
+  - id: JP-PRICE-001
+    category: pricing
+    severity: medium
+    action: review
+    terms:
+      - "送料無料"
+      - "期間限定"
+      - "50%OFF"
+      - "50% OFF"
+      - "セール"
+      - "タイムセール"
+    description: "送料無料・期間限定・割引表示は条件と期間の明示が必要。"
+    citation: "景品表示法 第5条; EC サイト表示ガイドライン"
+    suggestion: "明記条件・終了日時・通常価格の根拠を保存する。"
+
+  - id: JP-LABEL-001
+    category: labeling
+    severity: medium
+    action: review
+    terms:
+      - "オーガニック"
+      - "有機"
+      - "天然"
+      - "無添加"
+      - "低アレルゲン"
+      - "敏感肌用"
+    description: "オーガニック・無添加・低アレルゲン等の表示は定義と根拠が必要。"
+    citation: "JAS法; 景品表示法; 化粧品表示命名ガイドライン"
+    suggestion: "JAS 認証番号や試験結果を確認し、定義の曖昧な語は削除する。"

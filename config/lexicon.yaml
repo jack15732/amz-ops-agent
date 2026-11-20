@@ -1,0 +1,48 @@
+# Bidirectional query expansion for cross-border abbreviations.
+# The retriever appends every alias of a matched group to the query, which
+# improves BM25 recall without changing the vector representation of documents.
+terms:
+  - canonical: BSR
+    aliases: ["Best Sellers Rank", "Best Seller Rank", "畅销榜", "销售排名", "类目排名"]
+  - canonical: ACOS
+    aliases: ["Advertising Cost of Sale", "广告销售成本", "广告花费占比"]
+  - canonical: FBA
+    aliases: ["Fulfillment by Amazon", "亚马逊物流", "亚马逊配送"]
+  - canonical: FBM
+    aliases: ["Fulfillment by Merchant", "自发货", "卖家自配送"]
+  - canonical: TRO
+    aliases: ["Temporary Restraining Order", "临时限制令", "临时禁令"]
+  - canonical: ASIN
+    aliases: ["Amazon Standard Identification Number", "亚马逊标准识别号"]
+  - canonical: GPSR
+    aliases: ["General Product Safety Regulation", "通用产品安全法规", "欧盟产品安全法规"]
+  - canonical: CE
+    aliases: ["Conformité Européenne", "CE marking", "CE 标志", "欧盟符合性"]
+  - canonical: REACH
+    aliases: ["Registration Evaluation Authorisation and Restriction of Chemicals", "化学品注册评估授权限制"]
+  - canonical: WEEE
+    aliases: ["Waste Electrical and Electronic Equipment", "废弃电子电气设备"]
+  - canonical: EPR
+    aliases: ["Extended Producer Responsibility", "生产者责任延伸"]
+  - canonical: FDA
+    aliases: ["Food and Drug Administration", "美国食品药品监督管理局"]
+  - canonical: FTC
+    aliases: ["Federal Trade Commission", "美国联邦贸易委员会"]
+  - canonical: PSE
+    aliases: ["Product Safety Electrical Appliance", "電気用品安全法", "电气用品安全法"]
+  - canonical: 薬機法
+    aliases: ["Pharmaceuticals and Medical Devices Act", "药品医疗器械法", "药机法"]
+  - canonical: 景表法
+    aliases: ["景品表示法", "不当景品類及び不当表示防止法", "日本广告法"]
+  - canonical: 商標法
+    aliases: ["商标法", "Trademark Act"]
+  - canonical: 意匠法
+    aliases: ["外观设计法", "Design Act"]
+  - canonical: 绝对化用语
+    aliases: ["absolute claim", "superlative", "最高级表现", "绝对化表述"]
+  - canonical: 功效宣称
+    aliases: ["efficacy claim", "functional claim", "功效词", "效果宣称"]
+  - canonical: 侵权词
+    aliases: ["infringement term", "IP term", "商标词", "品牌词"]
+  - canonical: 敏感词
+    aliases: ["restricted term", "prohibited word", "违禁词"]

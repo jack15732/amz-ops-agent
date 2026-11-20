@@ -1,0 +1,7 @@
+*.json
+*.md
+!README.md
+!eval_report.md
+!eval_report.json
+!retrieval_comparison.md
+!retrieval_comparison.json

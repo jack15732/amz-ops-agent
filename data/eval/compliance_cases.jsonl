@@ -1,0 +1,82 @@
+{"id": "us-block-001", "site": "US", "text": "Our yoga mat is the best seller in the category and guaranteed to stay flat.", "expected_decision": "blocked", "expected_rule_ids": ["US-ABS-001", "US-ABS-002"], "tags": ["absolute"], "note": "自建标注样本"}
+{"id": "us-block-002", "site": "US", "text": "100% cure for acne and eczema. FDA approved formula.", "expected_decision": "blocked", "expected_rule_ids": ["US-ABS-001", "US-MED-001"], "tags": ["medical"], "note": "自建标注样本"}
+{"id": "us-block-003", "site": "US", "text": "Apple AirPods charging case, premium quality.", "expected_decision": "blocked", "expected_rule_ids": ["US-INF-001"], "tags": ["infringement"], "note": "自建标注样本"}
+{"id": "us-block-004", "site": "US", "text": "UL certified power adapter with FCC certified chipset.", "expected_decision": "blocked", "expected_rule_ids": ["US-SAF-001"], "tags": ["safety"], "note": "自建标注样本"}
+{"id": "us-block-005", "site": "US", "text": "Kills 99.9% germs and prevents colds.", "expected_decision": "blocked", "expected_rule_ids": ["US-MED-001"], "tags": ["medical"], "note": "自建标注样本"}
+{"id": "us-block-006", "site": "US", "text": "World's best coffee, 100% arabica beans.", "expected_decision": "blocked", "expected_rule_ids": ["US-ABS-001", "US-ABS-002"], "tags": ["absolute"], "note": "自建标注样本"}
+{"id": "us-block-007", "site": "US", "text": "FDA approved. Doctor recommended for arthritis pain.", "expected_decision": "blocked", "expected_rule_ids": ["US-MED-001"], "tags": ["medical"], "note": "自建标注样本"}
+{"id": "us-block-008", "site": "US", "text": "No.1 choice with unbeatable price.", "expected_decision": "blocked", "expected_rule_ids": ["US-ABS-001"], "tags": ["absolute"], "note": "自建标注样本"}
+{"id": "us-pas-001", "site": "US", "text": "Compatible with iPhone 15 and Samsung Galaxy S24; includes USB-C cable.", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["compatibility"], "note": "自建标注样本"}
+{"id": "us-pas-002", "site": "US", "text": "Not a medical device. For external use only.", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["negative_claim"], "note": "自建标注样本"}
+{"id": "us-pas-003", "site": "US", "text": "Satisfaction guarantee: 30-day returns and responsive support.", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["guarantee_allowed"], "note": "自建标注样本"}
+{"id": "us-pas-004", "site": "US", "text": "Classic cotton T-shirt, machine washable.", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["boundary"], "note": "自建标注样本"}
+{"id": "us-pas-005", "site": "US", "text": "Tested to FCC Part 15 Class B; report available.", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["fcc_compliant"], "note": "自建标注样本"}
+{"id": "us-pas-006", "site": "US", "text": "Replacement brush heads compatible with Oral-B handles.", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["compatibility"], "note": "自建标注样本"}
+{"id": "us-pas-007", "site": "US", "text": "BPA-free silicone phone case with shockproof corners.", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["materials"], "note": "自建标注样本"}
+{"id": "us-pas-008", "site": "US", "text": "Compatible with Apple Watch bands; watch not included.", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["compatibility"], "note": "自建标注样本"}
+{"id": "us-rev-001", "site": "US", "text": "Dermatologist tested and hypoallergenic formula.", "expected_decision": "review", "expected_rule_ids": ["US-MED-002"], "tags": ["evidence"], "note": "自建标注样本"}
+{"id": "us-rev-002", "site": "US", "text": "Eco-friendly packaging made from recycled paper.", "expected_decision": "review", "expected_rule_ids": ["US-ENV-001"], "tags": ["green"], "note": "自建标注样本"}
+{"id": "us-rev-003", "site": "US", "text": "Made in USA with imported materials.", "expected_decision": "review", "expected_rule_ids": ["US-ORIGIN-001"], "tags": ["origin"], "note": "自建标注样本"}
+{"id": "us-rev-004", "site": "US", "text": "Limited time offer: free shipping on all orders.", "expected_decision": "review", "expected_rule_ids": ["US-PRICE-001"], "tags": ["pricing"], "note": "自建标注样本"}
+{"id": "us-rev-005", "site": "US", "text": "Patented design with non-toxic materials.", "expected_decision": "review", "expected_rule_ids": ["US-MED-002"], "tags": ["evidence"], "note": "自建标注样本"}
+{"id": "us-rev-006", "site": "US", "text": "Replica designer handbag, 1:1 quality.", "expected_decision": "review", "expected_rule_ids": ["US-INF-002"], "tags": ["infringement"], "note": "自建标注样本"}
+{"id": "eu-block-001", "site": "EU", "text": "CE certified solar charger, CE approved.", "expected_decision": "blocked", "expected_rule_ids": ["EU-CE-001"], "tags": ["ce"], "note": "自建标注样本"}
+{"id": "eu-block-002", "site": "EU", "text": "The best anti-aging serum, 100% guaranteed.", "expected_decision": "blocked", "expected_rule_ids": ["EU-ABS-001", "EU-COS-001"], "tags": ["absolute_cosmetic"], "note": "自建标注样本"}
+{"id": "eu-block-003", "site": "EU", "text": "Clinically proven to repair DNA and reduce wrinkles.", "expected_decision": "blocked", "expected_rule_ids": ["EU-COS-001"], "tags": ["cosmetic"], "note": "自建标注样本"}
+{"id": "eu-block-004", "site": "EU", "text": "Nike replica running shoes, 1:1 quality.", "expected_decision": "blocked", "expected_rule_ids": ["EU-INF-001"], "tags": ["infringement"], "note": "自建标注样本"}
+{"id": "eu-block-005", "site": "EU", "text": "CE approved by a notified body.", "expected_decision": "blocked", "expected_rule_ids": ["EU-CE-001"], "tags": ["ce"], "note": "自建标注样本"}
+{"id": "eu-block-006", "site": "EU", "text": "100% recycled ocean plastic bottle.", "expected_decision": "blocked", "expected_rule_ids": ["EU-ABS-001"], "tags": ["absolute"], "note": "自建标注样本"}
+{"id": "eu-block-007", "site": "EU", "text": "Perfect fit for all sizes, guaranteed.", "expected_decision": "blocked", "expected_rule_ids": ["EU-ABS-001"], "tags": ["absolute"], "note": "自建标注样本"}
+{"id": "eu-pas-001", "site": "EU", "text": "CE marked in accordance with Directive 2014/30/EU. DoC available.", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["ce"], "note": "自建标注样本"}
+{"id": "eu-pas-002", "site": "EU", "text": "Compatible with iPhone 15, 1 m cable.", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["compatibility"], "note": "自建标注样本"}
+{"id": "eu-pas-003", "site": "EU", "text": "Silicone phone case, 2-year warranty.", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["general"], "note": "自建标注样本"}
+{"id": "eu-pas-004", "site": "EU", "text": "Not a medical device. General wellness use only.", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["negative_claim"], "note": "自建标注样本"}
+{"id": "eu-pas-005", "site": "EU", "text": "RoHS test report available on request.", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["rohs"], "note": "自建标注样本"}
+{"id": "eu-pas-006", "site": "EU", "text": "GRS certified recycled polyester, 30% recycled content.", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["green"], "note": "自建标注样本"}
+{"id": "eu-rev-001", "site": "EU", "text": "REACH compliant and RoHS compliant.", "expected_decision": "review", "expected_rule_ids": ["EU-REACH-001"], "tags": ["reach"], "note": "自建标注样本"}
+{"id": "eu-rev-002", "site": "EU", "text": "EU responsible person: ACME GmbH, Berlin.", "expected_decision": "review", "expected_rule_ids": ["EU-GPSR-001"], "tags": ["gpsr"], "note": "自建标注样本"}
+{"id": "eu-rev-003", "site": "EU", "text": "Eco-friendly packaging, climate neutral shipping.", "expected_decision": "review", "expected_rule_ids": ["EU-ENV-001"], "tags": ["green"], "note": "自建标注样本"}
+{"id": "eu-rev-004", "site": "EU", "text": "Made in Germany from imported components.", "expected_decision": "review", "expected_rule_ids": ["EU-ORIGIN-001"], "tags": ["origin"], "note": "自建标注样本"}
+{"id": "eu-rev-005", "site": "EU", "text": "Free shipping this week only.", "expected_decision": "review", "expected_rule_ids": ["EU-PRICE-001"], "tags": ["pricing"], "note": "自建标注样本"}
+{"id": "eu-rev-006", "site": "EU", "text": "Dermatologically tested and paraben-free.", "expected_decision": "review", "expected_rule_ids": ["EU-LABEL-001"], "tags": ["label"], "note": "自建标注样本"}
+{"id": "eu-rev-007", "site": "EU", "text": "Natural ingredients, suitable for sensitive skin.", "expected_decision": "review", "expected_rule_ids": ["EU-LABEL-001"], "tags": ["label"], "note": "自建标注样本"}
+{"id": "eu-rev-008", "site": "EU", "text": "Biodegradable within 12 weeks under industrial conditions.", "expected_decision": "review", "expected_rule_ids": ["EU-ENV-001"], "tags": ["green"], "note": "自建标注样本"}
+{"id": "eu-rev-009", "site": "EU", "text": "Biocide-free formula for food contact surfaces.", "expected_decision": "review", "expected_rule_ids": ["EU-SAFE-001"], "tags": ["safety"], "note": "自建标注样本"}
+{"id": "jp-block-001", "site": "JP", "text": "業界最高の美白クリーム。必ず効果があります。", "expected_decision": "blocked", "expected_rule_ids": ["JP-ABS-001", "JP-MED-001"], "tags": ["absolute_medical"], "note": "自建标注样本"}
+{"id": "jp-block-002", "site": "JP", "text": "日本一の育毛シャンプー、絶対に発毛します。", "expected_decision": "blocked", "expected_rule_ids": ["JP-ABS-001", "JP-MED-001"], "tags": ["absolute_medical"], "note": "自建标注样本"}
+{"id": "jp-block-003", "site": "JP", "text": "このサプリはアレルギーを治す。", "expected_decision": "blocked", "expected_rule_ids": ["JP-MED-001"], "tags": ["medical"], "note": "自建标注样本"}
+{"id": "jp-block-004", "site": "JP", "text": "ナイキ スニーカー コピー品", "expected_decision": "blocked", "expected_rule_ids": ["JP-INF-001", "JP-INF-002"], "tags": ["infringement"], "note": "自建标注样本"}
+{"id": "jp-block-005", "site": "JP", "text": "PSE認証取得済みの充電器。", "expected_decision": "blocked", "expected_rule_ids": ["JP-SAFE-001", "JP-SAFE-002"], "tags": ["safety"], "note": "自建标注样本"}
+{"id": "jp-block-006", "site": "JP", "text": "完全防水、100%安心の品質。", "expected_decision": "blocked", "expected_rule_ids": ["JP-ABS-001"], "tags": ["absolute"], "note": "自建标注样本"}
+{"id": "jp-block-007", "site": "JP", "text": "FDA承認の健康食品。", "expected_decision": "blocked", "expected_rule_ids": ["JP-SAFE-001"], "tags": ["safety"], "note": "自建标注样本"}
+{"id": "jp-block-008", "site": "JP", "text": "No.1 の売上を誇る商品。", "expected_decision": "blocked", "expected_rule_ids": ["JP-ABS-001"], "tags": ["absolute"], "note": "自建标注样本"}
+{"id": "jp-pas-001", "site": "JP", "text": "iPhone 15 対応のスマホケース。", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["compatibility"], "note": "自建标注样本"}
+{"id": "jp-pas-002", "site": "JP", "text": "ステンレス製 500ml 水筒、食洗機対応。", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["general"], "note": "自建标注样本"}
+{"id": "jp-pas-003", "site": "JP", "text": "コットン素材のTシャツ。", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["general"], "note": "自建标注样本"}
+{"id": "jp-pas-004", "site": "JP", "text": "BPAフリーのベビー食器。", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["materials"], "note": "自建标注样本"}
+{"id": "jp-pas-005", "site": "JP", "text": "日本語の説明書付き。", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["general"], "note": "自建标注样本"}
+{"id": "jp-pas-006", "site": "JP", "text": "洗濯機で洗えるキッチンマット。", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["general"], "note": "自建标注样本"}
+{"id": "jp-pas-007", "site": "JP", "text": "iPhone 15 用の保護フィルム。", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["compatibility"], "note": "自建标注样本"}
+{"id": "jp-rev-001", "site": "JP", "text": "抗菌加工のまな板。", "expected_decision": "review", "expected_rule_ids": ["JP-MED-002"], "tags": ["medical_review"], "note": "自建标注样本"}
+{"id": "jp-rev-002", "site": "JP", "text": "除菌スプレー、ウイルス対策に。", "expected_decision": "review", "expected_rule_ids": ["JP-MED-002"], "tags": ["medical_review"], "note": "自建标注样本"}
+{"id": "jp-rev-003", "site": "JP", "text": "日本製のタオル。", "expected_decision": "review", "expected_rule_ids": ["JP-ORIGIN-001"], "tags": ["origin"], "note": "自建标注样本"}
+{"id": "jp-rev-004", "site": "JP", "text": "オーガニックコットンの赤ちゃん服。", "expected_decision": "review", "expected_rule_ids": ["JP-LABEL-001"], "tags": ["label"], "note": "自建标注样本"}
+{"id": "jp-rev-005", "site": "JP", "text": "環境に優しい包装材。", "expected_decision": "review", "expected_rule_ids": ["JP-ENV-001"], "tags": ["green"], "note": "自建标注样本"}
+{"id": "jp-rev-006", "site": "JP", "text": "期間限定のセール価格。", "expected_decision": "review", "expected_rule_ids": ["JP-PRICE-001"], "tags": ["pricing"], "note": "自建标注样本"}
+{"id": "jp-rev-007", "site": "JP", "text": "天然成分配合のハンドクリーム。", "expected_decision": "review", "expected_rule_ids": ["JP-LABEL-001"], "tags": ["label"], "note": "自建标注样本"}
+{"id": "us-hard-001", "site": "US", "text": "Best-Seller in kitchen gadgets, loved by thousands.", "expected_decision": "blocked", "expected_rule_ids": ["US-ABS-001"], "tags": ["absolute", "hyphen"], "note": "变体/边界"}
+{"id": "us-hard-002", "site": "US", "text": "１００％ cotton, breathable and soft.", "expected_decision": "blocked", "expected_rule_ids": ["US-ABS-001"], "tags": ["absolute", "fullwidth"], "note": "全角归一化"}
+{"id": "us-hard-003", "site": "US", "text": "ｂｅｓｔ ｓｅｌｌｅｒ quality at a fair price.", "expected_decision": "blocked", "expected_rule_ids": ["US-ABS-001"], "tags": ["absolute", "fullwidth"], "note": "全角归一化"}
+{"id": "us-hard-004", "site": "US", "text": "Free from parabens and synthetic fragrance.", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["boundary"], "note": "free 不是 free shipping"}
+{"id": "us-hard-005", "site": "US", "text": "Works with Apple Watch; watch not included.", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["compatibility"], "note": "兼容性白名单"}
+{"id": "us-hard-006", "site": "US", "text": "Apple cider vinegar, 500 ml.", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["boundary"], "note": "Apple 食品义项"}
+{"id": "us-hard-007", "site": "US", "text": "Certificate of analysis available on request.", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["boundary"], "note": "certificate 不触发 CE"}
+{"id": "us-hard-008", "site": "US", "text": "Money-back guarantee within 30 days.", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["guarantee_allowed"], "note": "白名单"}
+{"id": "us-hard-009", "site": "US", "text": "Guaranteed delivery by Friday.", "expected_decision": "blocked", "expected_rule_ids": ["US-ABS-001"], "tags": ["absolute"], "note": "guarantee 非售后语境"}
+{"id": "us-hard-010", "site": "US", "text": "Best practices for storage and cleaning.", "expected_decision": "passed", "expected_rule_ids": [], "tags": ["boundary"], "note": "best practices 白名单"}
+{"id": "eu-hard-001", "site": "EU", "text": "CE certificate of conformity enclosed.", "expected_decision": "blocked", "expected_rule_ids": ["EU-CE-001"], "tags": ["ce"], "note": "CE certificate 误用"}
+{"id": "eu-hard-002", "site": "EU", "text": "Not CE certified; self-declared only.", "expected_decision": "blocked", "expected_rule_ids": ["EU-CE-001"], "tags": ["ce"], "note": "否定句仍含虚假认证"}
+{"id": "jp-hard-001", "site": "JP", "text": "No. 1 人気の商品です。", "expected_decision": "blocked", "expected_rule_ids": ["JP-ABS-001"], "tags": ["absolute", "variant"], "note": "No. 1 变体"}
+{"id": "jp-hard-002", "site": "JP", "text": "PSE 適合品（届出事業者：XX）。", "expected_decision": "review", "expected_rule_ids": ["JP-SAFE-002"], "tags": ["safety"], "note": "PSE 事实陈述仍需核验"}
+{"id": "jp-hard-003", "site": "JP", "text": "食品衛生法に適合しています。", "expected_decision": "review", "expected_rule_ids": ["JP-SAFE-002"], "tags": ["safety"], "note": "食品接触合规"}
+{"id": "jp-hard-004", "site": "JP", "text": "技適取得済みの無線マウス。", "expected_decision": "review", "expected_rule_ids": ["JP-SAFE-002"], "tags": ["safety"], "note": "技適"}

@@ -1,0 +1,35 @@
+{
+  "generated_at": "2026-11-20T15:41:28.877449+00:00",
+  "embedding": "huggingface/moka-ai/m3e-base",
+  "cases": 32,
+  "k": 6,
+  "rows": [
+    {
+      "mode": "bm25",
+      "recall@6": 1.0,
+      "precision@6": 0.3756,
+      "mrr@6": 0.8028,
+      "ndcg@6": 0.8388,
+      "no_answer_accuracy": 0.0,
+      "top1_heading_hit": 0.8667
+    },
+    {
+      "mode": "vector",
+      "recall@6": 1.0,
+      "precision@6": 0.4589,
+      "mrr@6": 0.8722,
+      "ndcg@6": 0.8386,
+      "no_answer_accuracy": 0.0,
+      "top1_heading_hit": 0.8333
+    },
+    {
+      "mode": "hybrid",
+      "recall@6": 1.0,
+      "precision@6": 0.4106,
+      "mrr@6": 0.8778,
+      "ndcg@6": 0.8784,
+      "no_answer_accuracy": 1.0,
+      "top1_heading_hit": 0.9
+    }
+  ]
+}

@@ -1,0 +1,213 @@
+meta:
+  site: EU
+  version: "2026.11"
+  source: "EU GPSR (EU) 2023/988; Regulation (EC) 1223/2009; Green Claims Directive"
+  updated_at: "2026-11-20"
+
+rules:
+  - id: EU-ABS-001
+    category: absolute
+    severity: high
+    action: block
+    terms:
+      - "best"
+      - "number one"
+      - "no.1"
+      - "#1"
+      - "100%"
+      - "guaranteed"
+      - "perfect"
+      - "world's best"
+      - "unbeatable"
+      - "beste"
+      - "garantiert"
+      - "meilleur"
+      - "garanti"
+      - "parfait"
+    allow_contexts:
+      - "(?:satisfaction|money[- ]back)\\s+guarantee"
+      - "guarantee(?:d)?\\s+(?:return|refund|replacement)"
+    description: "欧盟多国禁止无法证实的绝对化、排名第一与百分百保证表述。"
+    citation: "EU Unfair Commercial Practices Directive 2005/29/EC"
+    suggestion: "改为可验证的具体性能或第三方测试结果，删除排名与保证用语。"
+
+  - id: EU-CE-001
+    category: safety
+    severity: high
+    action: block
+    terms:
+      - "CE certified"
+      - "CE approved"
+      - "CE certificate"
+      - "CE self-certified"
+      - "self-certified CE"
+      - "CE zertifiziert"
+      - "certifié CE"
+    allow_contexts:
+      - "CE\\s+(?:marking|marked|conformity)"
+    description: "CE 是制造商符合性声明，不是第三方“认证”；写成 CE certified 属于误导。"
+    citation: "EU CE marking — Regulation (EC) No 765/2008"
+    suggestion: "改为“CE marked in accordance with Directive 2014/30/EU”，并保留符合性声明。"
+
+  - id: EU-GPSR-001
+    category: labeling
+    severity: medium
+    action: review
+    terms:
+      - "responsible person"
+      - "GPSR"
+      - "EU importer"
+      - "authorised representative"
+      - "authorized representative"
+    description: "GPSR 要求欧盟境内负责人及可追溯信息，相关表述需与实际备案一致。"
+    citation: "General Product Safety Regulation (EU) 2023/988, Art. 16"
+    suggestion: "核对欧盟负责人名称、地址、邮箱是否已印在产品/包装/listing 上。"
+
+  - id: EU-REACH-001
+    category: safety
+    severity: medium
+    action: review
+    terms:
+      - "REACH compliant"
+      - "REACH certified"
+      - "REACH konform"
+      - "conforme REACH"
+      - "RoHS compliant"
+      - "RoHS certified"
+    description: "REACH/RoHS 是合规义务而非认证标志，宣称需有检测报告或供应链声明。"
+    citation: "Regulation (EC) No 1907/2006 (REACH); Directive 2011/65/EU (RoHS)"
+    suggestion: "改为“Complies with REACH SVHC requirements — declaration available on request”。"
+
+  - id: EU-COS-001
+    category: medical
+    severity: high
+    action: block
+    terms:
+      - "anti-aging"
+      - "anti aging"
+      - "wrinkle-free"
+      - "repairs DNA"
+      - "heals"
+      - "cures"
+      - "treats"
+      - "clinically proven"
+      - "botox-like"
+      - "faltet die Haut"
+      - "relieves arthritis"
+      - "reduces inflammation"
+      - "pain relief"
+    description: "化妆品不得宣称治疗、修复 DNA、类肉毒等医疗功效。"
+    citation: "Regulation (EC) No 1223/2009, Art. 20 — cosmetic claims"
+    suggestion: "改为“helps reduce the appearance of fine lines with continued use”等化妆品允许表述。"
+
+  - id: EU-INF-001
+    category: infringement
+    severity: high
+    action: block
+    terms:
+      - "Nike"
+      - "Adidas"
+      - "Disney"
+      - "Marvel"
+      - "Apple"
+      - "iPhone"
+      - "AirPods"
+      - "Gucci"
+      - "Chanel"
+      - "Rolex"
+      - "Lego"
+      - "Pokemon"
+      - "Pokémon"
+      - "Harry Potter"
+      - "Barbie"
+      - "replica"
+      - "fake"
+    allow_contexts:
+      - "(?:compatible|compatibility|works?|designed|fit|fits|for)\\s+(?:with\\s+)?(?:apple|iphone|airpods)"
+      - "apple\\s+(?:cider|juice|fruit|flavor|flavour|sauce|pie)"
+    description: "品牌词、仿品词在欧盟同样构成商标侵权与假冒风险。"
+    citation: "EU Trade Mark Regulation (EU) 2017/1001"
+    suggestion: "仅使用兼容性声明，不使用品牌 logo/名称暗示授权，不销售仿品。"
+
+  - id: EU-ENV-001
+    category: environment
+    severity: medium
+    action: review
+    terms:
+      - "eco-friendly"
+      - "environmentally friendly"
+      - "climate neutral"
+      - "climate-positive"
+      - "climate positive"
+      - "carbon neutral"
+      - "biodegradable"
+      - "100% recycled"
+      - "umweltfreundlich"
+      - "klimaneutral"
+      - "biodégradable"
+      - "neutre en carbone"
+    description: "欧盟绿色宣称指令要求提供全生命周期证据，泛化环保词将被重点审查。"
+    citation: "EU Green Claims Directive (COM/2023/166)"
+    suggestion: "写清认证标准、覆盖范围与证据链接，例如“recycled content verified by GRS (CU-12345)”。"
+
+  - id: EU-SAFE-001
+    category: safety
+    severity: medium
+    action: review
+    terms:
+      - "medical device"
+      - "biocide"
+      - "food contact"
+      - "toy safety"
+      - "EN 71"
+      - "MDR"
+    allow_contexts:
+      - "not\\s+(?:a\\s+)?medical device"
+    description: "医疗器械、生物杀灭剂、食品接触材料等品类需要对应 CE/授权与语言标签。"
+    citation: "EU MDR 2017/745; Biocidal Products Regulation (EU) 528/2012"
+    suggestion: "确认产品分类与授权文件；非医疗器械不要使用 medical device 表述。"
+
+  - id: EU-ORIGIN-001
+    category: origin
+    severity: medium
+    action: review
+    terms:
+      - "made in EU"
+      - "made in Germany"
+      - "made in Italy"
+      - "made in France"
+      - "hergestellt in"
+      - "fabriqué en"
+    description: "产地宣称需符合欧盟非优惠原产地规则并有生产记录。"
+    citation: "Union Customs Code — non-preferential rules of origin"
+    suggestion: "保留生产工单与原材料来源证明，或删除产地表述。"
+
+  - id: EU-PRICE-001
+    category: pricing
+    severity: medium
+    action: review
+    terms:
+      - "free"
+      - "kostenlos"
+      - "gratuit"
+      - "50% off"
+      - "sale"
+      - "limited time"
+    description: "促销价格必须标明先前价格期限与条件，避免长期虚假折扣。"
+    citation: "Price Indication Directive 98/6/EC; Omnibus Directive (EU) 2019/2161"
+    suggestion: "标明活动期限与最近 30 天最低价，删除无依据的免费/折扣表述。"
+
+  - id: EU-LABEL-001
+    category: labeling
+    severity: medium
+    action: review
+    terms:
+      - "organic"
+      - "bio"
+      - "natural"
+      - "hypoallergenic"
+      - "dermatologically tested"
+      - "paraben-free"
+    description: "有机、天然、低敏等宣称需要欧盟认可认证或测试报告。"
+    citation: "EU Regulation (EC) No 834/2007; cosmetic claims common criteria"
+    suggestion: "提供 COSMOS/ECOCERT 等证书编号与测试报告，否则删除。"

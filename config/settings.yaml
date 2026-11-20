@@ -1,0 +1,52 @@
+app:
+  name: "AMZ Ops Agent"
+  version: "0.1.0"
+  data_dir: "data/runtime"
+  log_level: "INFO"
+  auto_ingest: true
+
+embedding:
+  provider: "siliconflow"        # siliconflow | huggingface | hash
+  model: "BAAI/bge-m3"
+  fallback_model: "moka-ai/m3e-base"
+  dimension: null               # null = auto detect
+  batch_size: 16
+  timeout_s: 60
+  cache_size: 2048
+
+llm:
+  provider: "siliconflow"        # siliconflow | none
+  model: "Qwen/Qwen2.5-7B-Instruct"
+  temperature: 0.0
+  max_tokens: 1500
+  timeout_s: 60
+
+retrieval:
+  top_k: 6
+  candidate_k: 30
+  rrf_k: 60
+  vector_weight: 1.2
+  bm25_weight: 1.0
+  min_score: 0.008             # 低于该分数视为“无可靠检索依据”
+  min_vector_score: 0.30
+  min_bm25_score: 0.80
+  max_chunk_chars: 760
+  chunk_overlap: 120
+  bm25_k1: 1.5
+  bm25_b: 0.75
+  query_expansion: true
+
+compliance:
+  rule_dir: "config/compliance"
+  review_on_unknown: true
+  llm_review_threshold: 0.80
+
+agent:
+  max_steps: 6
+  min_citations: 1
+  require_compliance_check: true
+  allow_human_handoff: true
+
+audit:
+  sqlite_path: "data/runtime/audit.sqlite3"
+  keep_days: 180
