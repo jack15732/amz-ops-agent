@@ -152,6 +152,7 @@ class RetrievedChunk(Base):
     bm25_score: float = 0.0
     vector_rank: int | None = None
     bm25_rank: int | None = None
+    rerank_score: float = 0.0
     matched_terms: list[str] = Field(default_factory=list)
 
     def citation(self) -> Citation:

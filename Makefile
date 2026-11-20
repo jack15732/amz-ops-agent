@@ -1,9 +1,9 @@
 PYTHON ?= python3
-EMBEDDING_PROVIDER ?= hash
+EMBEDDING_PROVIDER ?= huggingface
 EMBEDDING_MODEL ?= moka-ai/m3e-base
 export PYTHONPATH := src
 
-.PHONY: install test eval eval-hf serve ui ingest clean
+.PHONY: install test eval eval-hf eval-hash serve ui ingest clean
 
 install:
 	$(PYTHON) -m pip install -e ".[ui,hf,eval,dev]"
@@ -18,6 +18,9 @@ eval:
 
 eval-hf:
 	$(MAKE) eval EMBEDDING_PROVIDER=huggingface
+
+eval-hash:
+	$(MAKE) eval EMBEDDING_PROVIDER=hash
 
 serve:
 	$(PYTHON) -m amz_agent.cli serve --port 8000

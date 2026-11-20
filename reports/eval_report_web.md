@@ -1,6 +1,6 @@
 # AMZ Ops Agent 评测报告
 
-- 生成时间：2026-11-20T16:39:41.031909+00:00
+- 生成时间：2026-11-20T17:13:12.318489+00:00
 - Embedding：`huggingface` / `moka-ai/m3e-base`
 - Agent 模式：`rule_based`
 - 知识库 chunk 数：96；规则数：35
@@ -12,8 +12,8 @@
 | 模块 | 指标 | 数值 |
 | --- | --- | --- |
 | 联网 | 有结果率 | 100.00% |
-| 联网 | 官方域名命中率 | 90.00% |
-| 联网 | 期望域名命中率 | 90.00% |
+| 联网 | 官方域名命中率 | 70.00% |
+| 联网 | 期望域名命中率 | 70.00% |
 
 ## 联网检索（Tavily）
 
@@ -22,14 +22,16 @@
 | 指标 | 数值 |
 | --- | --- |
 | 有结果率 | 100.00% |
-| 官方域名命中率 | 90.00% |
-| 期望域名命中率 | 90.00% |
+| 官方域名命中率 | 70.00% |
+| 期望域名命中率 | 70.00% |
 | 平均结果数 | 5.0 |
-| 平均延迟 | 480.26 ms |
+| 平均延迟 | 439.59 ms |
 
 **未命中期望域名**
 
-- `Japan PSE mark electrical appliances METI official` → ['payapress.com', 'www.ul.com', 'www.jqa.jp', 'www.tuvsud.com', 'www.tuv.com']
+- `FDA cosmetic claims cure acne official guidance` → ['arrsys.com', 'formul8cosmetics.com', 'www.afdo.org', 'ww3.lawschool.cornell.edu', 'cosmetic.chemlinked.com']
+- `REACH regulation official ECHA SVHC` → ['blog.sourceintelligence.com', 'getenviropass.com', 'www.3eco.com', 'www.chemradar.com', 'getreadycompliance.eu']
+- `Japan PSE mark electrical appliances METI official` → ['payapress.com', 'www.ul.com', 'www.jqa.jp', 'www.tuv.com', 'www.emc-directory.com']
 
 ## 口径与局限
 

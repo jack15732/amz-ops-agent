@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-11-20T16:39:41.031909+00:00",
+    "generated_at": "2026-11-20T17:13:12.318489+00:00",
     "embedding_provider": "huggingface",
     "embedding_model": "moka-ai/m3e-base",
     "agent_mode": "rule_based",
@@ -13,6 +13,7 @@
       "US": "2026.11"
     },
     "retrieval_mode": "hybrid",
+    "rerank": true,
     "k": 6
   },
   "web": {
@@ -20,12 +21,46 @@
     "cases": 10,
     "metrics": {
       "sufficient_rate": 1.0,
-      "official_rate": 0.9,
-      "expected_domain_hit_rate": 0.9,
+      "official_rate": 0.7,
+      "expected_domain_hit_rate": 0.7,
       "avg_results": 5.0,
-      "avg_latency_ms": 480.26
+      "avg_latency_ms": 439.59
     },
     "failures": [
+      {
+        "id": "web-002",
+        "query": "FDA cosmetic claims cure acne official guidance",
+        "results": 5,
+        "sufficient": true,
+        "official": false,
+        "domain_hit": false,
+        "hosts": [
+          "arrsys.com",
+          "formul8cosmetics.com",
+          "www.afdo.org",
+          "ww3.lawschool.cornell.edu",
+          "cosmetic.chemlinked.com"
+        ],
+        "latency_ms": 383.74,
+        "error": ""
+      },
+      {
+        "id": "web-005",
+        "query": "REACH regulation official ECHA SVHC",
+        "results": 5,
+        "sufficient": true,
+        "official": false,
+        "domain_hit": false,
+        "hosts": [
+          "blog.sourceintelligence.com",
+          "getenviropass.com",
+          "www.3eco.com",
+          "www.chemradar.com",
+          "getreadycompliance.eu"
+        ],
+        "latency_ms": 268.13,
+        "error": ""
+      },
       {
         "id": "web-006",
         "query": "Japan PSE mark electrical appliances METI official",
@@ -37,10 +72,10 @@
           "payapress.com",
           "www.ul.com",
           "www.jqa.jp",
-          "www.tuvsud.com",
-          "www.tuv.com"
+          "www.tuv.com",
+          "www.emc-directory.com"
         ],
-        "latency_ms": 329.92,
+        "latency_ms": 319.31,
         "error": ""
       }
     ],
@@ -54,12 +89,12 @@
         "domain_hit": true,
         "hosts": [
           "www.ftc.gov",
-          "www.ftc.gov",
-          "claddr.com",
-          "www.americanconference.com",
-          "www.linkedin.com"
+          "www.millercanfield.com",
+          "ktslaw.com",
+          "www.allaboutadvertisinglaw.com",
+          "www.foodchainid.com"
         ],
-        "latency_ms": 489.61,
+        "latency_ms": 440.73,
         "error": ""
       },
       {
@@ -67,16 +102,16 @@
         "query": "FDA cosmetic claims cure acne official guidance",
         "results": 5,
         "sufficient": true,
-        "official": true,
-        "domain_hit": true,
+        "official": false,
+        "domain_hit": false,
         "hosts": [
-          "www.fda.gov",
-          "www.fda.gov",
           "arrsys.com",
-          "packoasis.com",
+          "formul8cosmetics.com",
+          "www.afdo.org",
+          "ww3.lawschool.cornell.edu",
           "cosmetic.chemlinked.com"
         ],
-        "latency_ms": 341.72,
+        "latency_ms": 383.74,
         "error": ""
       },
       {
@@ -88,12 +123,12 @@
         "domain_hit": true,
         "hosts": [
           "europa.eu",
+          "single-market-economy.ec.europa.eu",
           "www.complir.io",
           "en.wikipedia.org",
-          "www.trade.gov",
-          "www.tradecommissioner.gc.ca"
+          "www.tuvsud.com"
         ],
-        "latency_ms": 280.84,
+        "latency_ms": 330.82,
         "error": ""
       },
       {
@@ -110,7 +145,7 @@
           "conformitypoint.com",
           "www.youtube.com"
         ],
-        "latency_ms": 262.68,
+        "latency_ms": 335.08,
         "error": ""
       },
       {
@@ -118,16 +153,16 @@
         "query": "REACH regulation official ECHA SVHC",
         "results": 5,
         "sufficient": true,
-        "official": true,
-        "domain_hit": true,
+        "official": false,
+        "domain_hit": false,
         "hosts": [
-          "environment.ec.europa.eu",
           "blog.sourceintelligence.com",
           "getenviropass.com",
+          "www.3eco.com",
           "www.chemradar.com",
           "getreadycompliance.eu"
         ],
-        "latency_ms": 327.7,
+        "latency_ms": 268.13,
         "error": ""
       },
       {
@@ -141,10 +176,10 @@
           "payapress.com",
           "www.ul.com",
           "www.jqa.jp",
-          "www.tuvsud.com",
-          "www.tuv.com"
+          "www.tuv.com",
+          "www.emc-directory.com"
         ],
-        "latency_ms": 329.92,
+        "latency_ms": 319.31,
         "error": ""
       },
       {
@@ -157,11 +192,11 @@
         "hosts": [
           "www.mhlw.go.jp",
           "www.mhlw.go.jp",
-          "www.mhlw.go.jp",
           "www.tuvsud.com",
+          "www.japal.org",
           "www.youtube.com"
         ],
-        "latency_ms": 1287.36,
+        "latency_ms": 925.65,
         "error": ""
       },
       {
@@ -178,7 +213,7 @@
           "www.businesslawyers.jp",
           "esgjournaljapan.com"
         ],
-        "latency_ms": 323.06,
+        "latency_ms": 403.99,
         "error": ""
       },
       {
@@ -190,12 +225,12 @@
         "domain_hit": true,
         "hosts": [
           "sellercentral.amazon.com",
+          "sellercentral.amazon.com",
           "www.amazon.com",
-          "www.youtube.com",
           "www.youtube.com",
           "sellercandy.com"
         ],
-        "latency_ms": 425.84,
+        "latency_ms": 650.16,
         "error": ""
       },
       {
@@ -208,11 +243,11 @@
         "hosts": [
           "sellercentral.amazon.com",
           "sellercentral.amazon.com",
-          "www.amazon.com",
           "sellercentral.amazon.com",
+          "www.youtube.com",
           "www.youtube.com"
         ],
-        "latency_ms": 733.83,
+        "latency_ms": 338.34,
         "error": ""
       }
     ]

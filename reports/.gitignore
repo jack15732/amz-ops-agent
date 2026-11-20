@@ -9,3 +9,5 @@
 !eval_report_web.json
 !retrieval_comparison.md
 !retrieval_comparison.json
+!eval_report_llm_ruleonly.md
+!eval_report_llm_ruleonly.json

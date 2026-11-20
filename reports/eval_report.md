@@ -1,6 +1,6 @@
 # AMZ Ops Agent 评测报告
 
-- 生成时间：2026-11-20T16:41:04.871347+00:00
+- 生成时间：2026-11-20T17:20:27.820447+00:00
 - Embedding：`huggingface` / `moka-ai/m3e-base`
 - Agent 模式：`rule_based`
 - 知识库 chunk 数：96；规则数：35
@@ -20,11 +20,11 @@
 | 留出集 | 高危漏检率 | 0.00% |
 | 留出集 | 通过样本误报率 | 0.00% |
 | 联网 | 有结果率 | 100.00% |
-| 联网 | 官方域名命中率 | 90.00% |
-| 联网 | 期望域名命中率 | 90.00% |
+| 联网 | 官方域名命中率 | 70.00% |
+| 联网 | 期望域名命中率 | 70.00% |
 | 检索 | Recall@6 | 100.00% |
-| 检索 | MRR@6 | 0.8778 |
-| 检索 | nDCG@6 | 0.8784 |
+| 检索 | MRR@6 | 0.8833 |
+| 检索 | nDCG@6 | 0.8984 |
 | 检索 | 无答案识别率 | 100.00% |
 | Agent | 任务成功率 | 100.00% |
 | Agent | 决策准确率 | 100.00% |
@@ -59,14 +59,16 @@
 | 指标 | 数值 |
 | --- | --- |
 | 有结果率 | 100.00% |
-| 官方域名命中率 | 90.00% |
-| 期望域名命中率 | 90.00% |
+| 官方域名命中率 | 70.00% |
+| 期望域名命中率 | 70.00% |
 | 平均结果数 | 5.0 |
-| 平均延迟 | 987.4 ms |
+| 平均延迟 | 464.53 ms |
 
 **未命中期望域名**
 
-- `Japan PSE mark electrical appliances METI official` → ['payapress.com', 'www.ul.com', 'www.jqa.jp', 'www.tuvsud.com', 'www.tuv.com']
+- `FDA cosmetic claims cure acne official guidance` → ['arrsys.com', 'formul8cosmetics.com', 'www.afdo.org', 'ww3.lawschool.cornell.edu', 'cosmetic.chemlinked.com']
+- `REACH regulation official ECHA SVHC` → ['blog.sourceintelligence.com', 'getenviropass.com', 'www.3eco.com', 'www.chemradar.com', 'getreadycompliance.eu']
+- `Japan PSE mark electrical appliances METI official` → ['payapress.com', 'www.ul.com', 'www.jqa.jp', 'www.tuv.com', 'www.emc-directory.com']
 
 ## 混合检索
 
@@ -75,11 +77,11 @@
 | 指标 | 数值 |
 | --- | --- |
 | Recall@K | 100.00% |
-| Precision@K | 41.06% |
-| MRR@K | 0.8778 |
-| nDCG@K | 0.8784 |
+| Precision@K | 42.39% |
+| MRR@K | 0.8833 |
+| nDCG@K | 0.8984 |
 | 无答案识别率 | 100.00% |
-| Top-1 标题命中 | 90.00% |
+| Top-1 标题命中 | 96.67% |
 
 ## Agent 评测
 
@@ -94,7 +96,7 @@
 | 引用覆盖率 | 100.00% |
 | 护栏通过率 | 100.00% |
 | 平均工具步数 | 2.39 |
-| 平均延迟 | 123.75 ms |
+| 平均延迟 | 61.88 ms |
 
 ## 口径与局限
 

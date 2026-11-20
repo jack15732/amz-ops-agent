@@ -85,7 +85,7 @@ def _compliance(service: AppService, cases: list[dict], llm_review: bool) -> dic
 
 
 def _retrieval_rankings(
-    service: AppService, cases: list[dict], k: int, mode: str
+    service: AppService, cases: list[dict], k: int, mode: str, rerank: bool | None = None
 ) -> tuple[dict[str, list[str]], dict[str, bool], dict[str, str]]:
     rankings: dict[str, list[str]] = {}
     sufficient: dict[str, bool] = {}
@@ -95,7 +95,9 @@ def _retrieval_rankings(
         query = case["query"]
         site = Site(case["site"]) if case.get("site") else None
         if mode == "hybrid":
-            results, _ = retriever.search(query, site=site, top_k=k)
+            results, _ = retriever.search(
+                query, site=site, top_k=k, use_rerank=rerank
+            )
             sufficient[case["id"]] = retriever.is_sufficient(results, query)
         elif mode == "vector":
             rewritten, _ = (
@@ -142,8 +144,14 @@ def _retrieval_rankings(
     return rankings, sufficient, top_texts
 
 
-def _retrieval(service: AppService, cases: list[dict], k: int, mode: str) -> dict:
-    rankings, sufficient, top_texts = _retrieval_rankings(service, cases, k, mode)
+def _retrieval(
+    service: AppService,
+    cases: list[dict],
+    k: int,
+    mode: str,
+    rerank: bool | None = None,
+) -> dict:
+    rankings, sufficient, top_texts = _retrieval_rankings(service, cases, k, mode, rerank)
     # Heading hit needs the top chunk text; encode it as a doc id ranking for the
     # metric, then evaluate doc-level recall separately.
     enriched = []
@@ -299,6 +307,7 @@ def evaluate(
     retrieval_mode: str = "hybrid",
     rule_based: bool = True,
     llm_review: bool = False,
+    rerank: bool | None = None,
 ) -> dict:
     started_at = datetime.now(timezone.utc).isoformat()
     report: dict = {
@@ -312,6 +321,7 @@ def evaluate(
             "rules": service.engine.rule_count,
             "rule_versions": service.ruleset.versions,
             "retrieval_mode": retrieval_mode,
+            "rerank": service.settings.retrieval.rerank_enabled if rerank is None else rerank,
             "k": k,
         }
     }
@@ -325,7 +335,7 @@ def evaluate(
         report["web"] = _web(service, load_cases("web_cases"))
     if suite in {"all", "retrieval"}:
         report["retrieval"] = _retrieval(
-            service, load_cases("retrieval_cases"), k, retrieval_mode
+            service, load_cases("retrieval_cases"), k, retrieval_mode, rerank
         )
     if suite in {"all", "agent"}:
         report["agent"] = _agent(
@@ -532,7 +542,7 @@ def render_markdown(report: dict) -> str:
         "- Agent 集为离线可复现的任务集；生产环境应继续抽样人工复核并监控漏检。",
         "",
     ]
-    return "\n".join(lines)
+    return "\n".join(line.rstrip() for line in lines)
 
 
 def write_report(report: dict, report_dir: str | Path = "reports", stem: str = "eval_report") -> tuple[Path, Path]:

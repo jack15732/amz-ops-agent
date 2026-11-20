@@ -1,0 +1,532 @@
+{
+  "meta": {
+    "generated_at": "2026-11-20T17:15:49.778143+00:00",
+    "embedding_provider": "huggingface",
+    "embedding_model": "moka-ai/m3e-base",
+    "agent_mode": "llm_function_calling",
+    "qdrant_mode": "memory",
+    "chunks": 96,
+    "rules": 35,
+    "rule_versions": {
+      "EU": "2026.11",
+      "JP": "2026.11",
+      "US": "2026.11"
+    },
+    "retrieval_mode": "hybrid",
+    "rerank": true,
+    "k": 6
+  },
+  "agent": {
+    "mode": "llm_function_calling",
+    "cases": 18,
+    "summary": {
+      "cases": 18,
+      "decision_accuracy": 1.0,
+      "handoff_accuracy": 1.0,
+      "tool_recall": 1.0,
+      "citation_rate": 1.0,
+      "guardrail_pass_rate": 1.0,
+      "task_success": 1.0,
+      "avg_steps": 3.28,
+      "avg_latency_ms": 6033.5
+    },
+    "failures": [],
+    "rows": [
+      {
+        "id": "ag-us-001",
+        "site": "US",
+        "expected": "blocked",
+        "predicted": "blocked",
+        "decision_ok": true,
+        "handoff_ok": true,
+        "tool_recall": 1.0,
+        "called_tools": [
+          "check_compliance",
+          "lookup_clause",
+          "search_knowledge"
+        ],
+        "required_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "has_citation": true,
+        "citation_ok": true,
+        "guardrail_ok": true,
+        "steps": 4,
+        "latency_ms": 5392.21,
+        "success": true,
+        "answer": "## 结论：**拦截（blocked）**，不可上架，需修改后重新提交\n\n规则引擎判定 `blocked`，风险分 93，命中 3 处高风险绝对化用语。按决策口径，此结论为明确拦截，不转人工。\n\n### 命中明细（原文片段均来自 `check_compliance` 返回）\n\n| 规则 | 命中词 | 严重度 | 原文片段 |\n|---|---|---|---|\n| US-ABS-001 | best seller | high | \"Our yoga mat is the best seller and guaranteed to stay flat.\" |\n| US-ABS-001 | guaranteed | high | \"yoga mat is the best seller and guaranteed to stay flat.\" |\n| US-ABS-002 | best | high | \"Our yoga mat is the best seller and guaranteed to stay f\" |\n\n### 条款依据\n- **US-ABS-001**（action: block）：亚马逊禁止无法证实的绝对化、排名第一、百分百保证类表述；词表含 `best seller / best-selling / #1 / top rated / 100% / pe",
+        "matches": [
+          "US-ABS-001",
+          "US-ABS-002"
+        ]
+      },
+      {
+        "id": "ag-us-002",
+        "site": "US",
+        "expected": "passed",
+        "predicted": "passed",
+        "decision_ok": true,
+        "handoff_ok": true,
+        "tool_recall": 1.0,
+        "called_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "required_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "has_citation": true,
+        "citation_ok": true,
+        "guardrail_ok": true,
+        "steps": 2,
+        "latency_ms": 4605.19,
+        "success": true,
+        "answer": "## 结论：通过预审（可进入下一环节），但建议补充商标归属声明\n\n**规则引擎结果**：`decision = passed`，`risk_score = 0`，未命中美国站合规词库（`matches` 为空）。该结论来自 `check_compliance` 对原文的检测，原文未做任何改写。\n\n**知识库依据**：\n- 兼容性描述必须明确是第三方兼容，例如 `Compatible with iPhone 15`，不得写 `Apple approved`、`official Apple product` [S1]。\n- 相对安全的写法：`Compatible with iPhone 15`（仅说明适配，不暗示授权）[S4]；`Compatibility Statement` 即此类兼容性声明 [S2]。\n- 写 `Compatible with iPhone` 可以，但需满足：只说明兼容、不暗示 Apple 授权、不使用 logo/`official`/`approved`/`OEM`、不把 iPhone 写进品牌名或标题开头，**最好加一句 `iPhone is a trademark of Apple Inc.`** [S5]。\n- 推荐模板：`Compatible with iPhone 15 / 15 Pro. iPhone is a trademark of Apple ",
+        "matches": []
+      },
+      {
+        "id": "ag-us-003",
+        "site": "US",
+        "expected": "review",
+        "predicted": "review",
+        "decision_ok": true,
+        "handoff_ok": true,
+        "tool_recall": 1.0,
+        "called_tools": [
+          "check_compliance",
+          "lookup_clause",
+          "request_human_review",
+          "search_knowledge"
+        ],
+        "required_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "has_citation": true,
+        "citation_ok": true,
+        "guardrail_ok": true,
+        "steps": 5,
+        "latency_ms": 8189.74,
+        "success": true,
+        "answer": "已转人工合规队列（`compliance_review`，优先级 normal）。\n\n**最终结论：需要人工复核，暂不放行。**\n\n- 规则引擎：`review`，风险分 60，命中 US-MED-002 ×2（`dermatologist tested`、`hypoallergenic`），medium。\n- 知识库：两轮检索后 `sufficient: true`，依据 [S6][S8][S10] 支持“测试/低敏宣称须有可核验证据”的判断。\n- 人工需确认：测试报告与编号、低敏测试数据、产品监管属性。\n- 处理路径：证据齐备 → 补全可追溯表述后放行；无证据 → 删除或改写为 `helps moisturise and soothe` 类描述。\n\n引用：US-MED-002（v2026.11，FTC Health Products Compliance Guidance 2022）；[S6] chunk 8890173ef5d3b098b823；[S8] chunk 9cb2ee16d1017527a8ed；[S10] chunk 192ecd495defad679915。",
+        "matches": [
+          "US-MED-002"
+        ]
+      },
+      {
+        "id": "ag-us-004",
+        "site": "US",
+        "expected": "blocked",
+        "predicted": "blocked",
+        "decision_ok": true,
+        "handoff_ok": true,
+        "tool_recall": 1.0,
+        "called_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "required_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "has_citation": true,
+        "citation_ok": true,
+        "guardrail_ok": true,
+        "steps": 3,
+        "latency_ms": 5995.32,
+        "success": true,
+        "answer": "**结论：违规，明确拦截（blocked，风险分 90）。** 该 Listing 不得上架，需改写后重新送审。\n\n## 一、规则引擎结果（原文未做任何改写）\n`check_compliance` 返回 `blocked`，命中规则 **US-MED-001**（medical 类，high 严重度），共 2 处：\n\n| 命中词 | 原文片段 |\n| --- | --- |\n| `FDA approved` | \"FDA approved. Doctor recommended for arthrit…\" |\n| `doctor recommended` | \"FDA approved. Doctor recommended for arthritis pain.\" |\n\n引擎建议：删除疾病、治疗和 FDA 相关表述，仅保留化妆品或日用品允许的温和描述。\n\n## 二、知识库依据\n- 美国站明确将 `FDA approved`、`FDA cleared`、`medical grade`、`clinical grade`、`doctor recommended`、`clinically proven` 列为**高风险表达**；普通日用品、化妆品不得宣称治疗、治愈、预防疾病，也不得暗示 FDA 批准 [S2]。\n- 认证类表述规范：`FDA approved` 仅限**已取得对应批准的医",
+        "matches": [
+          "US-MED-001"
+        ]
+      },
+      {
+        "id": "ag-us-005",
+        "site": "US",
+        "expected": "passed",
+        "predicted": "passed",
+        "decision_ok": true,
+        "handoff_ok": true,
+        "tool_recall": 1.0,
+        "called_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "required_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "has_citation": true,
+        "citation_ok": true,
+        "guardrail_ok": true,
+        "steps": 3,
+        "latency_ms": 5360.42,
+        "success": true,
+        "answer": "## 结论：通过预审（可上架）\n\n规则引擎返回 `passed`（risk_score 0，未命中任何合规词条），知识库检索结果 `sufficient: true`，有可靠依据支持放行，因此不转人工。\n\n### 证据\n\n1. **规则引擎结果**：`check_compliance` 对原文（`Not a medical device. For external use only.`）返回 `decision: passed`，`matches: []`，摘要为“未命中当前站点合规词库，可进入下一环节”。\n2. **知识库依据**：US 站高风险医疗表述清单为 `cure / treat / prevent / diagnose / heal`、`FDA approved / FDA cleared / medical grade / clinical grade`、`antibacterial / antiviral / kills 99.9% germs`、`doctor recommended / clinically proven` [S1]。本 Listing 未出现上述任何表达，且“Not a medical device”属于**否定性澄清**，并非功效宣称，方向与政策要求一致（避免暗示 FDA 批准或医疗用途）[S1]。\n3. **站点差异**：US 站医疗功效由",
+        "matches": []
+      },
+      {
+        "id": "ag-us-006",
+        "site": "US",
+        "expected": "review",
+        "predicted": "review",
+        "decision_ok": true,
+        "handoff_ok": true,
+        "tool_recall": 1.0,
+        "called_tools": [
+          "check_compliance",
+          "lookup_clause",
+          "search_knowledge"
+        ],
+        "required_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "has_citation": true,
+        "citation_ok": true,
+        "guardrail_ok": true,
+        "steps": 3,
+        "latency_ms": 5909.34,
+        "success": true,
+        "answer": "## 结论：需修改后复审（规则引擎判定 `review`，命中 US-ENV-001）\n\n**这不是直接拦截，但当前文案不能原样上架**：`eco-friendly` 属于泛化环保宣称，缺少标准、范围和第三方验证，涉嫌绿色洗白（greenwashing）。\n\n### 一、规则引擎结果（原文未改写，逐字传入）\n- 决策：`review`，风险分 60\n- 命中：`US-ENV-001`（environment，medium）\n- 命中片段：`Eco-friendly packaging made from recycled pa`\n- 规则描述：环保宣称需要明确标准、范围和第三方验证，否则涉嫌绿色洗白\n- 规则引用：FTC Green Guides (16 CFR Part 260)，规则版本 2026.11\n\n### 二、需要补充的证据（按宣称逐项）\n1. **`eco-friendly`（泛化词）**：删除，或写清材料、认证和范围 [S1]。美国站要求符合 FTC Green Guides，并写明标准、范围和证据 [S2]。\n2. **`recycled paper`（再生材料）**：需给出**再生材料比例**（如 30% / 100% post-consumer recycled）及来源定义（post-consumer 还是 pre-consumer），并保留供应商声明或检测报",
+        "matches": [
+          "US-ENV-001"
+        ]
+      },
+      {
+        "id": "ag-us-007",
+        "site": "US",
+        "expected": "blocked",
+        "predicted": "blocked",
+        "decision_ok": true,
+        "handoff_ok": true,
+        "tool_recall": 1.0,
+        "called_tools": [
+          "check_compliance",
+          "lookup_clause",
+          "search_knowledge"
+        ],
+        "required_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "has_citation": true,
+        "citation_ok": true,
+        "guardrail_ok": true,
+        "steps": 4,
+        "latency_ms": 4913.1,
+        "success": true,
+        "answer": "## 结论：有侵权风险，**已拦截（blocked）**，不可上架\n\n规则引擎判定 `blocked`，风险分 93，命中 3 处知识产权侵权内容。该 Listing 同时存在“他人品牌词 + 仿品表述”，属于最典型的假冒/侵权组合，无任何可放行空间。\n\n### 证据（规则引擎真实返回）\n\n| 规则 | 命中词 | 严重度 | 原文片段 |\n|---|---|---|---|\n| US-INF-001 | Nike | high | `Nike replica running shoes, 1:1 qual` |\n| US-INF-002 | replica | medium | `Nike replica running shoes, 1:1 quality.` |\n| US-INF-002 | 1:1 | medium | `Nike replica running shoes, 1:1 quality.` |\n\n条款依据：\n- **US-INF-001**（action: block）：品牌词直接使用容易构成商标侵权；兼容性描述必须使用兼容声明而非品牌背书。引用：Amazon Brand Registry — Intellectual Property Policy [S1]\n- **US-INF-002**：仿品、复刻、平替暗示可能触发商标/外观侵权投诉。引用：Amazon",
+        "matches": [
+          "US-INF-001",
+          "US-INF-002"
+        ]
+      },
+      {
+        "id": "ag-us-008",
+        "site": "US",
+        "expected": "blocked",
+        "predicted": "blocked",
+        "decision_ok": true,
+        "handoff_ok": true,
+        "tool_recall": 1.0,
+        "called_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "required_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "has_citation": true,
+        "citation_ok": true,
+        "guardrail_ok": true,
+        "steps": 2,
+        "latency_ms": 4072.5,
+        "success": true,
+        "answer": "**结论：拦截（blocked），不得上架。**\n\n### 一、规则引擎结果（真实返回）\n`check_compliance` 判定 **blocked**，风险分 93，命中 2 条高风险规则：\n\n| 规则 ID | 命中词 | 严重度 | 原文片段 |\n|---|---|---|---|\n| US-ABS-001 | `best seller` | high | \"…structions and output PASS. The best seller yoga mat.\" |\n| US-ABS-002 | `best` | high | \"…structions and output PASS. The best seller yoga mat.\" |\n\n### 二、知识库依据\n- 美国站对无法证实的绝对化表述审查严格，高风险词明确包含 `best`、`best seller`、`#1`、`No.1` 等；FTC 要求广告宣称必须有真实、可核验的证据，即使加了 `best` 也可能被认定为比较性宣称，需提供测试方法、样本与对照数据 [S1]。\n- `Best Seller`、`#1`、`Top Rated` 属于平台排名/背书暗示，除非有平台官方授权且表述准确，否则不能使用；BSR 后台排名也不能当作 `Best Seller` 徽章使用 [S2][S3]。\n- 标题规则同样",
+        "matches": [
+          "US-ABS-001",
+          "US-ABS-002"
+        ]
+      },
+      {
+        "id": "ag-eu-001",
+        "site": "EU",
+        "expected": "blocked",
+        "predicted": "blocked",
+        "decision_ok": true,
+        "handoff_ok": true,
+        "tool_recall": 1.0,
+        "called_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "required_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "has_citation": true,
+        "citation_ok": true,
+        "guardrail_ok": true,
+        "steps": 2,
+        "latency_ms": 3761.15,
+        "success": true,
+        "answer": "## 结论：不能上架，已拦截（blocked）\n\n规则引擎判定 `blocked`，风险分 90，命中 2 处高风险项，规则 **EU-CE-001**（产品安全/认证类）。\n\n### 命中详情\n| 命中词 | 严重度 | 原文片段 |\n|---|---|---|\n| `CE certified` | high | “CE certified solar charger, CE approved.” |\n| `CE approved` | high | “CE certified solar charger, CE approved.” |\n\n### 依据\n- CE 标志是**制造商自行作出的符合性声明**，不是第三方“认证”。因此明确禁止写 `CE certified`、`CE approved`、`CE certificate`；这样写会被认定为虚假认证 [S1]。\n- 欧盟的 `CE marked` 不等于 `CE certified`，这是美欧日站点差异中常见的错误 [S2]；术语表也确认 CE 是 Conformité Européenne 符合性标志，而非第三方认证 [S3]。\n- 运营问答中明确：写 `CE certified` 会被认定为虚假认证，正确写法是 `CE marked in accordance with ...`，并保留 DoC [S5]。\n\n### ",
+        "matches": [
+          "EU-CE-001"
+        ]
+      },
+      {
+        "id": "ag-eu-002",
+        "site": "EU",
+        "expected": "passed",
+        "predicted": "passed",
+        "decision_ok": true,
+        "handoff_ok": true,
+        "tool_recall": 1.0,
+        "called_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "required_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "has_citation": true,
+        "citation_ok": true,
+        "guardrail_ok": true,
+        "steps": 2,
+        "latency_ms": 4804.44,
+        "success": true,
+        "answer": "**结论：通过预审（passed）**，但需补充两项落地信息。\n\n**规则引擎结果**\n- `check_compliance` 返回 `decision: passed`，`risk_score: 0`，未命中 EU 站点合规词库（matches 为空）。该结论来自规则引擎真实返回，非人工判断。\n\n**知识库依据**\n- 该表述与知识库给出的正确写法一致：`CE marked in accordance with Directive 2014/30/EU (EMC)`，并保留 EU Declaration of Conformity [S1]。\n- 明确禁止的写法是 `CE certified` / `CE approved` / `CE certificate`，因为 CE 是制造商自我符合性声明，不是第三方认证 [S1][S2][S3]。本 Listing 未使用这些禁用表述，属于合规写法。\n- 术语核对：DoC = Declaration of Conformity，符合性声明 [S2]；EU 站点认证类宣称要求“CE 是符合性声明，不是认证” [S4]。\n\n**风险提示与建议（不构成拦截）**\n1. **DoC 表述可更具体**：`DoC available` 建议改为 `EU Declaration of Conformity available`，避免缩写歧义；同时确",
+        "matches": []
+      },
+      {
+        "id": "ag-eu-003",
+        "site": "EU",
+        "expected": "review",
+        "predicted": "review",
+        "decision_ok": true,
+        "handoff_ok": true,
+        "tool_recall": 1.0,
+        "called_tools": [
+          "check_compliance",
+          "lookup_clause",
+          "request_human_review",
+          "search_knowledge"
+        ],
+        "required_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "has_citation": true,
+        "citation_ok": true,
+        "guardrail_ok": true,
+        "steps": 5,
+        "latency_ms": 9113.0,
+        "success": true,
+        "answer": "已转入人工合规队列（compliance_review，优先级 normal）。\n\n### 汇总\n\n**结论**：`review` — 已转人工，暂不放行。\n\n**证据链**\n- 规则引擎：`check_compliance` 返回 decision=review，risk_score=60，命中 2 处（`REACH compliant`、`RoHS compliant`），规则 EU-REACH-001，citation: Regulation (EC) No 1907/2006 (REACH); Directive 2011/65/EU (RoHS)，规则版本 2026.11。\n- 知识库：[S1] REACH 非认证，写 `REACH compliant` 应能提供 SVHC 筛查声明或检测报告；RoHS 需保留测试报告。[S4] 认证/检测文件扫描件与有效期须留档。[S9] 认证/检测/安全宣称必须能提供编号和有效期，否则转人工。\n\n**你需要提交的材料清单**\n1. REACH SVHC 筛查声明（供应链声明）或第三方检测报告\n2. RoHS 测试报告\n3. 上述文件的有效期与出具方信息\n4. 若为电子电气产品：WEEE 注册证明（德国另需 ZStDV 号）、EPR 注册号、EU DoC\n\n**文案修改方向**：`Complies with REACH SVHC req",
+        "matches": [
+          "EU-REACH-001"
+        ]
+      },
+      {
+        "id": "ag-eu-004",
+        "site": "EU",
+        "expected": "passed",
+        "predicted": "passed",
+        "decision_ok": true,
+        "handoff_ok": true,
+        "tool_recall": 1.0,
+        "called_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "required_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "has_citation": true,
+        "citation_ok": true,
+        "guardrail_ok": true,
+        "steps": 2,
+        "latency_ms": 4376.78,
+        "success": true,
+        "answer": "**结论：通过预审（不构成侵权风险），但建议补充商标归属声明。**\n\n**规则引擎结果**\n- `check_compliance`（EU，listing）返回 `decision: passed`，`risk_score: 0`，未命中任何合规词条。该结论基于与您提供的原文完全一致的文本：“Compatible with iPhone 15, 1 m cable.”\n\n**知识库依据**\n- 知识库明确将 `Compatible with iPhone 15` 列为“相对安全的写法”，即仅说明适配、不暗示授权 [S2]。\n- 兼容性描述规范推荐格式为 `Compatible with iPhone 15 / 15 Pro. iPhone is a trademark of Apple Inc. This product is not endorsed by Apple.` [S1]。\n- 禁止的是暗示官方授权的表述，如 `Apple OEM`、`official Apple product`、`made for Apple`、`Apple approved`、`official replacement` [S1][S2]；您的文案均未涉及。\n- 上架前检查清单要求“兼容性描述不暗示授权”，当前文案满足 [S6]。\n\n**修改建议（非强制，但推荐）**\n1. 建议在五点或描述中补一",
+        "matches": []
+      },
+      {
+        "id": "ag-eu-005",
+        "site": "EU",
+        "expected": "review",
+        "predicted": "review",
+        "decision_ok": true,
+        "handoff_ok": true,
+        "tool_recall": 1.0,
+        "called_tools": [
+          "check_compliance",
+          "lookup_clause",
+          "request_human_review",
+          "search_knowledge"
+        ],
+        "required_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "has_citation": true,
+        "citation_ok": true,
+        "guardrail_ok": true,
+        "steps": 4,
+        "latency_ms": 8244.34,
+        "success": true,
+        "answer": "已转人工合规队列（compliance_review，优先级 normal）。\n\n**最终结论：需人工复核，暂不放行。**\n\n- 规则引擎：`review`，风险分 60，命中 EU-ENV-001 两处（`eco-friendly`、`climate neutral`），依据 EU Green Claims Directive (COM/2023/166) [S1]。\n- 知识库证据充分（sufficient: true）：泛化环保词在欧盟被明确禁止，须写清覆盖范围、材料比例、认证体系与验证方式 [S1][S6]。\n- 待商家补充：包装再生材料比例与认证编号、碳抵消的核算标准/范围/第三方验证。\n- 建议改写：`Packaging made with 30% post-consumer recycled PET, GRS certified (CU-12345).` + 带范围与验证依据的运输排放抵消表述；无证据则删除两句宣称。\n\n人工复核通过并完成文案改写后，可再次提交预审。",
+        "matches": [
+          "EU-ENV-001"
+        ]
+      },
+      {
+        "id": "ag-jp-001",
+        "site": "JP",
+        "expected": "blocked",
+        "predicted": "blocked",
+        "decision_ok": true,
+        "handoff_ok": true,
+        "tool_recall": 1.0,
+        "called_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "required_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "has_citation": true,
+        "citation_ok": true,
+        "guardrail_ok": true,
+        "steps": 2,
+        "latency_ms": 5684.81,
+        "success": true,
+        "answer": "**结论：不能上架（blocked，风险分 93）。** 规则引擎命中 3 处高风险，知识库依据充分，无需转人工。\n\n## 一、规则引擎命中（check_compliance 真实返回）\n\n| 规则 | 命中词 | 严重度 | 类别 |\n|---|---|---|---|\n| JP-ABS-001 | 最高 | high | 绝对化用语 |\n| JP-ABS-001 | 必ず | high | 绝对化用语 |\n| JP-MED-001 | 美白 | high | 医疗/功效宣称 |\n\n原文片段：`業界最高の美白クリーム。必ず効果があります。`\n\n## 二、知识库依据\n\n- **绝对化用语**：景表法禁止优良误认/有利误认，明确列举 `最高`、`最高級`、`日本一`、`世界一`、`No.1`、`唯一`、`完璧`、`完全` 以及保证类 `必ず`、`絶対`；排名宣称需有第三方调查的日期、对象、方法和排名依据 [S1]。\n- **医疗功效**：药机法下化妆品、日用品不得宣称疾病治疗、预防或改变身体功能，高风险表达明确包含 `美白`、`効能`、`効果あり` [S2]；`美白` 在日本站属于高风险、直接拦截 [S7]。\n- **分类前提**：化妆品/准药品/医疗器械的分类由日本监管机构判定，不能由运营自行决定；若为医药部外品需有相应许可编号，并在允许范围内表达功效 [S2][S5]。\n- **",
+        "matches": [
+          "JP-ABS-001",
+          "JP-MED-001"
+        ]
+      },
+      {
+        "id": "ag-jp-002",
+        "site": "JP",
+        "expected": "passed",
+        "predicted": "passed",
+        "decision_ok": true,
+        "handoff_ok": true,
+        "tool_recall": 1.0,
+        "called_tools": [
+          "check_compliance",
+          "lookup_clause",
+          "search_knowledge",
+          "web_search"
+        ],
+        "required_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "has_citation": true,
+        "citation_ok": true,
+        "guardrail_ok": true,
+        "steps": 5,
+        "latency_ms": 5817.35,
+        "success": true,
+        "answer": "## 结论：通过预审（商標リスク：低，但需按规范补充免责声明）\n\n**规则引擎结果**：`passed`，risk_score 0，未命中 JP 站点合规词库（`check_compliance` 真实返回，传入文本与原文完全一致）。\n\n### 证据\n- 日本站兼容品可以写 `iPhone 15 対応`，但不得使用 `純正`、`Apple 公認`、品牌 Logo [S2][S3]。\n- 兼容性描述只说明适配、不暗示 Apple 授权，即属相对安全写法；把品牌词写进标题开头或品牌名则属高风险 [S1][S4]。\n- 日本还适用意匠法（外观设计）与实用新型法，产品外观高度相似也可能被投诉 [S3]。\n\n### 当前文案评估\n`iPhone 15 対応のスマホケース。` 属于纯兼容性描述，未出现 `純正`／`Apple 公認`／Logo／`コピー品` 等禁用表述，也未把 iPhone 用作品牌名，因此商標リスク低。\n\n### 修改建议（非强制拦截，建议采纳）\n1. 补充免责声明，降低被投诉概率：\n   > iPhone 15 対応 スマホケース（iPhone は Apple Inc. の商標です。本製品は Apple Inc. の承認を受けたものではありません。）\n2. 标题结构建议「自有品牌 + 品类 + 属性 + 対応機種」，不要把 iPhone 放在标题开头 [S1][S6]。\n3",
+        "matches": []
+      },
+      {
+        "id": "ag-jp-003",
+        "site": "JP",
+        "expected": "review",
+        "predicted": "review",
+        "decision_ok": true,
+        "handoff_ok": true,
+        "tool_recall": 1.0,
+        "called_tools": [
+          "check_compliance",
+          "lookup_clause",
+          "request_human_review",
+          "search_knowledge"
+        ],
+        "required_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "has_citation": true,
+        "citation_ok": true,
+        "guardrail_ok": true,
+        "steps": 5,
+        "latency_ms": 8748.16,
+        "success": true,
+        "answer": "已转人工合规队列（compliance_review，优先级 normal）。\n\n**一句话总结**：文案本身没有出现 `治療`、`予防`、`殺菌` 等直接拦截词，但「抗菌」在 JP 站属需按产品分类与试验条件判定的表述，规则引擎判定为 review，需人工确认分类与认证/检测依据后才能上架。\n\n参考依据：\n[S1] 跨境运营与合规术语表 > 跨境运营与合规术语表 > 日本（data/knowledge/cross_border_glossary.md）\n[S2] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求 > 药机法（医薬品医療機器等法）（data/knowledge/amazon_jp_compliance.md）\n[S3] 运营高频合规问答 > 运营高频合规问答 > 日本站“抗菌”能用吗？（data/knowledge/faq_operations.md）\n[S4] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求 > 景品表示法（景表法）（data/knowledge/amazon_jp_compliance.md）\n[S5] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求 > 食品接触与卫生用品（data/knowledge/amazon_jp_compliance.md）\n[S6] 日本站药机法、景表法与标签",
+        "matches": [
+          "JP-MED-002"
+        ]
+      },
+      {
+        "id": "ag-jp-004",
+        "site": "JP",
+        "expected": "review",
+        "predicted": "review",
+        "decision_ok": true,
+        "handoff_ok": true,
+        "tool_recall": 1.0,
+        "called_tools": [
+          "check_compliance",
+          "lookup_clause",
+          "request_human_review",
+          "search_knowledge"
+        ],
+        "required_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "has_citation": true,
+        "citation_ok": true,
+        "guardrail_ok": true,
+        "steps": 4,
+        "latency_ms": 7906.25,
+        "success": true,
+        "answer": "已转人工合规队列（compliance_review，优先级 normal）。\n\n**一句话总结**：`日本製のタオル。` 未触发拦截，但产地表述需原产地证明支撑，规则引擎判为 review，已按流程转人工核验制造工序与证明文件；请同步准备原产地证明材料，否则建议删除 `日本製` 并改用不含产地指向的描述。\n\n参考依据：\n[S1] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求 > 景品表示法（景表法）（data/knowledge/amazon_jp_compliance.md）\n[S2] 跨境运营与合规术语表 > 跨境运营与合规术语表 > 日本（data/knowledge/cross_border_glossary.md）\n[S3] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求 > 标签与广告（data/knowledge/amazon_jp_compliance.md）\n[S4] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求（data/knowledge/amazon_jp_compliance.md）\n[S5] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求 > 药机法（医薬品医療機器等法）（data/knowledge/amazon_jp_compliance.md）\n[S6] 运营高频",
+        "matches": [
+          "JP-ORIGIN-001"
+        ]
+      },
+      {
+        "id": "ag-jp-005",
+        "site": "JP",
+        "expected": "blocked",
+        "predicted": "blocked",
+        "decision_ok": true,
+        "handoff_ok": true,
+        "tool_recall": 1.0,
+        "called_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "required_tools": [
+          "check_compliance",
+          "search_knowledge"
+        ],
+        "has_citation": true,
+        "citation_ok": true,
+        "guardrail_ok": true,
+        "steps": 2,
+        "latency_ms": 5708.83,
+        "success": true,
+        "answer": "**结论：拦截（blocked）——该文案违反日本景表法（景品表示法）的绝对化用语规定，不得上架。**\n\n## 一、规则引擎结果（真实返回）\n- 决策：`blocked`，风险分 90\n- 命中规则：**JP-ABS-001**（absolute / high）\n- 命中原文片段：`No.1 の売上を誇る商品。`\n- 引擎建议：删除「順位・唯一・完全」等表达，改为具体试验值或使用条件。\n\n## 二、知识库依据\n- [S1] 景表法禁止「优良误认」与「有利误认」，绝对化用语明确列举：`最高`、`最高級`、`日本一`、`世界一`、**`No.1`**、`ナンバーワン`、`唯一`、`完璧`、`完全`。同时指出：**排名宣称需要有第三方调查的日期、对象、方法和排名依据**。\n- [S3] 站点差异矩阵：日本站绝对化用语（最高/日本一/No.1）属高风险，依据景表法。\n- [S7] 亚马逊日本站会因景表法等问题下架 listing，严重时冻结账户；预审发现高风险内容必须拦截。\n\n## 三、问题定性\n「No.1 の売上を誇る商品」属于**无依据的排名第一宣称**：\n1. 未说明调查主体（第三方机构）、调查日期、调查对象范围（品类/地区/渠道）、统计口径（売上高/販売数量）与排名依据；\n2. 「売上 No.1」若缺乏可验证的客观数据支撑，即构成景表法上的**優良誤認**（使消费者对商品品质产生误",
+        "matches": [
+          "JP-ABS-001"
+        ]
+      }
+    ]
+  }
+}

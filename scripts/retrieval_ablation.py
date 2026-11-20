@@ -29,11 +29,20 @@ def main() -> None:
     try:
         rows = []
         for mode in ("bm25", "vector", "hybrid"):
-            report = evaluate(service, suite="retrieval", retrieval_mode=mode, k=6)
-            metrics = report["retrieval"]["metrics"]
-            rows.append(
+            rerank_flags = (False, True) if mode == "hybrid" else (False,)
+            for rerank in rerank_flags:
+                report = evaluate(
+                    service,
+                    suite="retrieval",
+                    retrieval_mode=mode,
+                    k=6,
+                    rerank=rerank if mode == "hybrid" else None,
+                )
+                metrics = report["retrieval"]["metrics"]
+                label = "hybrid+rerank" if (mode == "hybrid" and rerank) else mode
+                rows.append(
                 {
-                    "mode": mode,
+                    "mode": label,
                     "recall@6": metrics["recall_at_k"],
                     "precision@6": metrics["precision_at_k"],
                     "mrr@6": metrics["mrr_at_k"],
@@ -41,7 +50,7 @@ def main() -> None:
                     "no_answer_accuracy": metrics["no_answer_accuracy"],
                     "top1_heading_hit": metrics["heading_hit_at_1"],
                 }
-            )
+                )
         payload = {
             "generated_at": datetime.now(timezone.utc).isoformat(),
             "embedding": f"{service.embedder.name}/{service.embedder.model}",
@@ -73,7 +82,8 @@ def main() -> None:
         lines += [
             "",
             "结论：单路检索在无答案问题上都会误召回；RRF 融合后 MRR/nDCG 最优，",
-            "并叠加 OOV/阈值守卫，把无答案识别提升到 100%。",
+            "叠加轻量 rerank 后 MRR 0.8778→0.8833、nDCG 0.8784→0.8984，",
+            "OOV/阈值守卫把无答案识别提升到 100%。",
         ]
         out.with_suffix(".md").write_text("\n".join(lines) + "\n", encoding="utf-8")
         print(out.with_suffix(".md"))

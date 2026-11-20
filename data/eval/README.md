@@ -64,7 +64,7 @@
 ```
 
 - `required_tools` 是必须出现的工具调用（不要求顺序）。
-- `should_handoff` 表示是否应转人工。
+- `should_handoff` 单独衡量是否转人工；`review` 用例不强制调用 `request_human_review`，因为系统在 `_finalize` 会自动转人工。
 - 任务成功 = 决策正确 + 转人工正确 + 工具召回 100% + 引用满足 + 护栏通过。
 
 ### 联网

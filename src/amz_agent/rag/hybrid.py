@@ -11,6 +11,7 @@ from ..config import RetrievalSettings
 from ..models import Chunk, RetrievedChunk, Site
 from .bm25 import BM25Index, tokenize
 from .embeddings import Embedder
+from .rerank import rerank_results
 from .vector_store import VectorStore
 
 logger = logging.getLogger(__name__)
@@ -82,6 +83,7 @@ class HybridRetriever:
         site: Site | None = None,
         top_k: int | None = None,
         use_expansion: bool | None = None,
+        use_rerank: bool | None = None,
     ) -> tuple[list[RetrievedChunk], str]:
         top_k = top_k or self.settings.top_k
         use_expansion = self.settings.query_expansion if use_expansion is None else use_expansion
@@ -128,8 +130,12 @@ class HybridRetriever:
                 item.matched_terms = matched
                 item.score += contribution
 
-        results = sorted(fused.values(), key=lambda item: item.score, reverse=True)[:top_k]
-        return results, rewritten
+        ranked = sorted(fused.values(), key=lambda item: item.score, reverse=True)
+        should_rerank = self.settings.rerank_enabled if use_rerank is None else use_rerank
+        if should_rerank and len(ranked) > 1:
+            candidates = ranked[: self.settings.rerank_candidate_k]
+            ranked = rerank_results(query, candidates)
+        return ranked[:top_k], rewritten
 
     def is_sufficient(self, results: list[RetrievedChunk], query: str = "") -> bool:
         if not results:
@@ -155,11 +161,20 @@ class HybridRetriever:
                     return False
         return True
 
-    def search_response(self, query: str, *, site: Site | None = None, top_k: int | None = None):
+    def search_response(
+        self,
+        query: str,
+        *,
+        site: Site | None = None,
+        top_k: int | None = None,
+        use_rerank: bool | None = None,
+    ):
         from ..models import SearchResponse
 
         started = time.perf_counter()
-        results, rewritten = self.search(query, site=site, top_k=top_k)
+        results, rewritten = self.search(
+            query, site=site, top_k=top_k, use_rerank=use_rerank
+        )
         return SearchResponse(
             query=query,
             results=results,

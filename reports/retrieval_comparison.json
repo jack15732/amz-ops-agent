@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-20T15:41:28.877449+00:00",
+  "generated_at": "2026-11-20T17:10:18.531117+00:00",
   "embedding": "huggingface/moka-ai/m3e-base",
   "cases": 32,
   "k": 6,
@@ -16,7 +16,7 @@
     {
       "mode": "vector",
       "recall@6": 1.0,
-      "precision@6": 0.4589,
+      "precision@6": 0.4533,
       "mrr@6": 0.8722,
       "ndcg@6": 0.8386,
       "no_answer_accuracy": 0.0,
@@ -30,6 +30,15 @@
       "ndcg@6": 0.8784,
       "no_answer_accuracy": 1.0,
       "top1_heading_hit": 0.9
+    },
+    {
+      "mode": "hybrid+rerank",
+      "recall@6": 1.0,
+      "precision@6": 0.4239,
+      "mrr@6": 0.8833,
+      "ndcg@6": 0.8984,
+      "no_answer_accuracy": 1.0,
+      "top1_heading_hit": 0.9667
     }
   ]
 }

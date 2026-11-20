@@ -123,6 +123,7 @@ def cmd_eval(args: argparse.Namespace) -> None:
             retrieval_mode=args.retrieval_mode,
             rule_based=not args.use_llm_agent,
             llm_review=args.llm_review,
+            rerank=args.rerank,
         )
         json_path, md_path = write_report(report, args.report_dir, args.stem)
         print(f"report: {md_path}")
@@ -217,6 +218,7 @@ def build_parser() -> argparse.ArgumentParser:
     ev.add_argument("--suite", choices=["all", "compliance", "holdout", "retrieval", "web", "agent"], default="all")
     ev.add_argument("--k", type=int, default=6)
     ev.add_argument("--retrieval-mode", choices=["hybrid", "vector", "bm25"], default="hybrid")
+    ev.add_argument("--rerank", action=argparse.BooleanOptionalAction, default=None)
     ev.add_argument("--report-dir", default="reports")
     ev.add_argument("--stem", default="eval_report")
     ev.add_argument("--use-llm-agent", action="store_true")

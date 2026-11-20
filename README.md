@@ -26,7 +26,7 @@
 | Agent 工具编排 | `search_knowledge` / `check_compliance` / `lookup_clause` / `web_search` / `request_human_review` |
 | 强约束 | 结论以规则引擎为准；必须用原文检测；引用必须来自本轮工具；无依据转人工；模型不能把 blocked 改成 passed |
 | 工程落地 | FastAPI、Streamlit 运营界面、SQLite 全链路审计、Docker Compose、GitHub Actions |
-| 评测 | 自建 82 条合规回归 + 23 条留出集 + 32 条检索 + 18 条 Agent 轨迹；规则基线与 DeepSeek LLM Agent 对比 |
+| 评测 | 自建 82 条合规回归 + 23 条留出集 + 32 条检索 + 18 条 Agent 轨迹 + 10 条联网评测；规则基线与 DeepSeek LLM Agent 对比 |
 
 ---
 
@@ -87,7 +87,7 @@ flowchart LR
 │   ├── eval/                      # 指标与评测 runner
 │   ├── service.py                 # 依赖装配
 │   └── cli.py                     # amz-agent 命令
-├── tests/                         # 30 个单测/集成测试
+├── tests/                         # 32 个单测/集成测试
 ├── reports/                       # 评测报告（已提交）
 ├── Dockerfile / docker-compose.yml
 └── .github/workflows/ci.yml
@@ -236,6 +236,7 @@ curl -s http://127.0.0.1:8000/v1/agent/query \
 
 - 规则基线：[`reports/eval_report.md`](reports/eval_report.md)
 - DeepSeek LLM Agent：[`reports/eval_report_llm.md`](reports/eval_report_llm.md)
+- LLM Agent + 规则复核：[`reports/eval_report_llm_ruleonly.md`](reports/eval_report_llm_ruleonly.md)
 - 检索消融：[`reports/retrieval_comparison.md`](reports/retrieval_comparison.md)
 - Tavily 联网评测：[`reports/eval_report_web.md`](reports/eval_report_web.md)
 
@@ -249,9 +250,9 @@ curl -s http://127.0.0.1:8000/v1/agent/query \
 | 合规回归 | 高危漏检率 / 通过样本误报率 | **0.00% / 0.00%** |
 | 独立留出集（23 条） | 准确率 | **91.30%** |
 | 独立留出集 | 高危漏检率 | **0.00%** |
-| 检索（32 条） | Recall@6 / MRR@6 / nDCG@6 | **100.00% / 0.8778 / 0.8784** |
+| 检索（32 条） | Recall@6 / MRR@6 / nDCG@6 | **100.00% / 0.8833 / 0.8984** |
 | 检索 | 无答案识别率 | **100.00%** |
-| 联网（10 条） | 有结果率 / 官方域名命中率 | **100.00% / 90.00%** |
+| 联网（10 条） | 有结果率 / 官方域名命中率 | **100.00% / 70.00%** |
 | Agent（18 条） | 任务成功率 / 决策准确率 | **100.00% / 100.00%** |
 | Agent | 工具召回 / 引用覆盖 / 护栏通过 | **100.00% / 100.00% / 100.00%** |
 
@@ -262,14 +263,14 @@ curl -s http://127.0.0.1:8000/v1/agent/query \
 | 模式 | 合规准确率 | Agent 成功率 | 决策准确率 | 转人工准确率 | 工具召回 | 平均延迟 |
 | --- | --- | --- | --- | --- | --- | --- |
 | 规则型 Agent（无 LLM） | 100.00% | 100.00% | 100.00% | 100.00% | 100.00% | ~28 ms |
-| LLM Agent + 规则复核 | — | **100.00%** | 100.00% | 100.00% | 100.00% | 6.7 s |
-| LLM Agent + LLM 复核 | 89.02% | 88.89% | 88.89% | 88.89% | 96.30% | 6.4 s |
+| LLM Agent + 规则复核 | — | **100.00%** | 100.00% | 100.00% | 100.00% | 6.0 s |
+| LLM Agent + LLM 复核 | 90.24% | 83.33% | 83.33% | 83.33% | 100.00% | 6.0 s |
 
-- 开启 LLM 复核后，部分 `review` 被 DeepSeek 升级为 `blocked`，与“期望 review”的 2 条 Agent 用例不一致；这是风险优先策略的代价，不是工具调用失败。
+- 开启 LLM 复核后，部分 `review` 被 DeepSeek 升级为 `blocked`，与“期望 review”的 3 条 Agent 用例不一致；这是风险优先策略的代价，不是工具调用失败。
 - 关闭 LLM 复核时，LLM Agent 的 18 条轨迹任务成功率 100%，说明规划、工具选择、引用和转人工策略在已知用例上闭环。
 - 这些仍是自建小样本，不代表线上泛化能力；真实效果需要盲测集和人工复核。
 
-Tavily 联网检索已完成 10 条实测：全部有结果，官方域名命中 9/10，平均延迟约 0.5–0.9s（随网络波动）；唯一未命中是 PSE 问题没有返回 `meti.go.jp`（返回了 TÜV/UL/JQA 等机构页）。网页内容按不可信数据处理，只作为补充证据，不能覆盖规则引擎的 blocked 结论。
+Tavily 联网检索已完成 10 条实测：全部有结果，官方域名命中 **7/10**（本轮结果；Tavily 排序会随时间和查询波动，之前一轮为 9/10），平均延迟约 0.4–0.6s。PSE 问题未稳定返回 `meti.go.jp`，而是 TÜV/UL/JQA 等机构页。网页内容按不可信数据处理，只作为补充证据，不能覆盖规则引擎的 blocked 结论。
 
 ### 6.3 检索消融
 
@@ -278,10 +279,11 @@ Tavily 联网检索已完成 10 条实测：全部有结果，官方域名命中
 | 模式 | Recall@6 | Precision@6 | MRR@6 | nDCG@6 | 无答案识别 |
 | --- | --- | --- | --- | --- | --- |
 | BM25 | 100.00% | 37.56% | 0.8028 | 0.8388 | 0.00% |
-| 向量 | 100.00% | 45.89% | 0.8722 | 0.8386 | 0.00% |
-| **混合（RRF）** | **100.00%** | **41.06%** | **0.8778** | **0.8784** | **100.00%** |
+| 向量 | 100.00% | 45.33% | 0.8722 | 0.8386 | 0.00% |
+| 混合（RRF） | 100.00% | 41.06% | 0.8778 | 0.8784 | 100.00% |
+| **混合 + 轻量 rerank** | **100.00%** | **42.39%** | **0.8833** | **0.8984** | **100.00%** |
 
-结论：单路检索在“无答案”问题上都会误召回；RRF 融合后 MRR/nDCG 最优，叠加 OOV/阈值守卫后无答案识别提升到 100%。
+结论：单路检索在“无答案”问题上都会误召回；RRF 融合后 MRR/nDCG 最优，轻量 rerank 进一步把 MRR 从 0.8778 提升到 0.8833、nDCG 从 0.8784 提升到 0.8984，同时保持无答案识别 100%。
 
 ### 6.4 留出集迭代记录
 
@@ -301,9 +303,12 @@ amz-agent eval --suite all \
 amz-agent eval --suite all \
   --embedding-provider siliconflow --embedding-model BAAI/bge-m3
 
-# 消融
+# 消融（含 rerank 开/关）
 python scripts/retrieval_ablation.py \
   --embedding-provider huggingface --embedding-model moka-ai/m3e-base
+
+# 只跑基线：关闭 rerank
+amz-agent eval --suite retrieval --no-rerank
 
 # LLM Agent（DeepSeek，规则复核）
 amz-agent eval --suite agent --use-llm-agent
@@ -342,6 +347,7 @@ python scripts/push_eval_to_hf.py --repo-id <your-account>/amz-ops-eval
 - 关键词：jieba + CJK bigram + 拉丁词；BM25 参数 `k1=1.5, b=0.75`。
 - RRF：`w_v/(k+rank_v) + w_b/(k+rank_b)`，默认 `k=60, w_v=1.2, w_b=1.0`（由消融实验调参）。
 - `config/lexicon.yaml` 做双向扩展：BSR / ACOS / GPSR / 薬機法 / 景表法 等。
+- 轻量 rerank：RRF 候选 Top 20 再按向量分、BM25、query 词覆盖、标题覆盖重排，不引入 cross-encoder 大模型；MRR 0.8778→0.8833，nDCG 0.8784→0.8984。
 - 无依据守卫：向量/BM25 阈值 + query OOV 比例，避免把“火星站”“2099 量子条款”硬答成政策。
 
 ### 7.4 Agentic RAG 闭环
@@ -367,7 +373,7 @@ python scripts/push_eval_to_hf.py --repo-id <your-account>/amz-ops-eval
 
 ```bash
 pytest -q
-# 30 passed
+# 32 passed
 ```
 
 覆盖：归一化/offset、边界与白名单、三站点规则、全角/连字符变体、切块稳定性、BM25/混合检索、无答案守卫、Agent 注入与决策纠正、无依据转人工、Tavily 解析/Web Citation/联网兜底、API 校验、SQLite 审计、Qdrant local 模式、docx/xlsx 解析。
