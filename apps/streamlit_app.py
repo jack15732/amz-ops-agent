@@ -1,4 +1,4 @@
-"""Internal ops UI for the listing pre-review agent.
+"""Operations UI for the listing pre-review agent.
 
 Run:
   streamlit run apps/streamlit_app.py

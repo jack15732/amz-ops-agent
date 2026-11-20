@@ -3,7 +3,7 @@ title: Listing 上架前合规预审 SOP
 site: ALL
 tags: [SOP, precheck, workflow]
 updated_at: 2026-11-20
-source: "内部运营 SOP v1.2"
+source: "示例运营 SOP v1.2（演示用）"
 ---
 
 # Listing 上架前合规预审 SOP

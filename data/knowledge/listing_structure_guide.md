@@ -3,7 +3,7 @@ title: Listing 结构与文案规范
 site: ALL
 tags: [listing, title, bullets, A+]
 updated_at: 2026-11-20
-source: "运营团队 Listing 规范"
+source: "示例 Listing 规范（演示用）"
 ---
 
 # Listing 结构与文案规范

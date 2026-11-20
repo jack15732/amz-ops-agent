@@ -3,7 +3,7 @@ title: 知识产权侵权筛查 SOP
 site: ALL
 tags: [IP, trademark, copyright, patent, TRO]
 updated_at: 2026-11-20
-source: "Amazon IP Policy / 内部案例"
+source: "Amazon IP Policy / 公开案例整理"
 ---
 
 # 知识产权侵权筛查 SOP

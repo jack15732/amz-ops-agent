@@ -3,7 +3,7 @@ title: 跨境运营与合规术语表
 site: ALL
 tags: [glossary, abbreviations, operations]
 updated_at: 2026-11-20
-source: "团队内部术语表"
+source: "示例术语表（演示用）"
 ---
 
 # 跨境运营与合规术语表
@@ -19,7 +19,7 @@ source: "团队内部术语表"
 - **FBA（Fulfillment by Amazon）**：亚马逊物流，由平台仓储配送。
 - **FBM（Fulfillment by Merchant）**：卖家自发货。
 - **ASIN**：亚马逊标准识别号，一个 ASIN 对应一个 listing 变体。
-- **SKU**：卖家内部库存单位。
+- **SKU**：卖家自定义库存单位。
 
 ## 合规与知识产权
 

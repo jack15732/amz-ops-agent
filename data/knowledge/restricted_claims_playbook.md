@@ -3,7 +3,7 @@ title: 受限功效词与改写手册
 site: ALL
 tags: [claims, rewrite, efficacy]
 updated_at: 2026-11-20
-source: "合规团队内部改写案例库"
+source: "公开资料与示例案例整理"
 ---
 
 # 受限功效词与改写手册

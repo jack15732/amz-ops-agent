@@ -8,7 +8,7 @@ source: "Amazon Seller Central 政策整理，非官方原文"
 
 # 美国站 Listing 合规政策摘要
 
-本文是运营团队内部整理的美国站预审口径，用于规则引擎与人工复核的共同参照。平台政策会更新，最终以 Seller Central 后台通知为准。
+本文是项目示例知识库整理的美国站预审口径，用于规则引擎与人工复核的共同参照。平台政策会更新，最终以 Seller Central 后台通知为准。
 
 ## 标题与关键词规则
 
@@ -29,7 +29,7 @@ FTC 要求广告宣称必须有真实、可核验的证据。即使加了 `best`
 
 > 原文：The best yoga mat for hot yoga, 100% non-slip guaranteed.
 >
-> 改写：Textured natural rubber surface; grip retention tested after 60 minutes of hot yoga (internal test, 2026).
+> 改写：Textured natural rubber surface; grip retention tested after 60 minutes of hot yoga (in-house test, 2026).
 
 ## 功效与医疗宣称
 

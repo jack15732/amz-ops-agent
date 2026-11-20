@@ -3,7 +3,7 @@ title: 人工转接与复核指引
 site: ALL
 tags: [handoff, review, escalation]
 updated_at: 2026-11-20
-source: "合规运营内部指引"
+source: "示例复核指引（演示用）"
 ---
 
 # 人工转接与复核指引

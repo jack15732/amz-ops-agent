@@ -7,7 +7,7 @@
 
 面向运营经验零散、新人上手慢、人工合规漏检率高的问题，把「词库检测 → 风险分级 → 知识溯源 → 人工转接 → 审计留档」做成可运行、可评测、可接入上架流程的闭环。
 
-> 个人项目，代码量刻意保持克制：约 6k 行 Python（核心约 5k，含评测与测试），无微服务、无消息队列，一条命令即可本地跑通。
+> 单体架构：约 6k 行 Python（核心约 5k，含评测与测试），无微服务、无消息队列，一条命令即可本地跑通。
 
 ---
 
@@ -25,7 +25,7 @@
 | 联网兜底 | Tavily `web_search`：知识库不足时查官方政策，结果带 URL 引用；网页内容按不可信数据处理 |
 | Agent 工具编排 | `search_knowledge` / `check_compliance` / `lookup_clause` / `web_search` / `request_human_review` |
 | 强约束 | 结论以规则引擎为准；必须用原文检测；引用必须来自本轮工具；无依据转人工；模型不能把 blocked 改成 passed |
-| 工程落地 | FastAPI、Streamlit 内部界面、SQLite 全链路审计、Docker Compose、GitHub Actions |
+| 工程落地 | FastAPI、Streamlit 运营界面、SQLite 全链路审计、Docker Compose、GitHub Actions |
 | 评测 | 自建 82 条合规回归 + 23 条留出集 + 32 条检索 + 18 条 Agent 轨迹；规则基线与 DeepSeek LLM Agent 对比 |
 
 ---
@@ -35,7 +35,7 @@
 ```mermaid
 flowchart LR
     U[运营 / Listing 上架流程] --> API[FastAPI]
-    UI[Streamlit 内部界面] --> API
+    UI[Streamlit 运营界面] --> API
     API --> RE[规则引擎]
     API --> AG[Agent Orchestrator]
     AG --> T[工具层]
@@ -67,7 +67,7 @@ flowchart LR
 
 ```text
 .
-├── apps/streamlit_app.py          # 内部可视化界面
+├── apps/streamlit_app.py          # 运营可视化界面
 ├── config/
 │   ├── settings.yaml              # 主配置
 │   ├── lexicon.yaml               # 缩写/术语双向扩展
@@ -158,7 +158,7 @@ amz-agent ingest data/knowledge --reset
 amz-agent serve --port 8000
 # 打开 http://127.0.0.1:8000/docs
 
-# 3) 内部界面（另开终端）
+# 3) 运营界面（另开终端）
 streamlit run apps/streamlit_app.py
 # 打开 http://127.0.0.1:8501
 ```
@@ -239,7 +239,7 @@ curl -s http://127.0.0.1:8000/v1/agent/query \
 - 检索消融：[`reports/retrieval_comparison.md`](reports/retrieval_comparison.md)
 - Tavily 联网评测：[`reports/eval_report_web.md`](reports/eval_report_web.md)
 
-> 本机没有 SiliconFlow Key，Embedding 使用本地 `moka-ai/m3e-base`；LLM 使用 `deepseek-chat`。配置 SiliconFlow Key 后可用同一条命令换成 `BAAI/bge-m3`。
+> 当前评测使用本地 `moka-ai/m3e-base`；LLM 使用 `deepseek-chat`。配置 SiliconFlow Key 后可用同一条命令换成 `BAAI/bge-m3`。
 
 ### 6.1 总览
 
@@ -269,7 +269,7 @@ curl -s http://127.0.0.1:8000/v1/agent/query \
 - 关闭 LLM 复核时，LLM Agent 的 18 条轨迹任务成功率 100%，说明规划、工具选择、引用和转人工策略在已知用例上闭环。
 - 这些仍是自建小样本，不代表线上泛化能力；真实效果需要盲测集和人工复核。
 
-Tavily 联网检索已用真实 Key 跑通：10 条问题全部有结果，官方域名命中 9/10，平均延迟约 0.5–0.9s（随网络波动）；唯一未命中是 PSE 问题没有返回 `meti.go.jp`（返回了 TÜV/UL/JQA 等机构页）。网页内容按不可信数据处理，只作为补充证据，不能覆盖规则引擎的 blocked 结论。
+Tavily 联网检索已完成 10 条实测：全部有结果，官方域名命中 9/10，平均延迟约 0.5–0.9s（随网络波动）；唯一未命中是 PSE 问题没有返回 `meti.go.jp`（返回了 TÜV/UL/JQA 等机构页）。网页内容按不可信数据处理，只作为补充证据，不能覆盖规则引擎的 blocked 结论。
 
 ### 6.3 检索消融
 
@@ -380,9 +380,9 @@ CI：`.github/workflows/ci.yml` 在 Python 3.11/3.12 上安装核心依赖并跑
 
 - **规则覆盖是有限集**：留出集仍有 2 个保守误拦截；语义改写、图片内文字、视频口播尚未覆盖。
 - **联网结果是补充证据**：Tavily 可能返回博客/机构页而非官方原文；Prompt 已要求优先官方域名，但最终仍需人工核对 URL 与发布日期。
-- **评测集为自建**：82 条回归与 23 条留出集来自团队口径，不等于平台官方基准；上线后应持续抽样人工复核。
+- **评测集为自建**：82 条回归与 23 条留出集为项目自建标注，不等于平台官方基准；上线后应持续抽样人工复核。
 - **PDF 只做文本层**：扫描件需要 OCR；表格结构未做单元格级还原。
-- **LLM 复核未纳入最终报告**：报告默认关闭 LLM 复核，以衡量规则引擎本身；开启后需记录模型版本、成本与漂移。
+- **LLM 复核单独出报告**：默认规则报告关闭 LLM 复核，避免模型波动混入规则指标；`eval_report_llm.md` 记录 DeepSeek 复核结果与模型版本。
 - **Qdrant embedded 单进程**：本地模式下 API 与 Streamlit 不要同时直连同一个 Qdrant 路径；生产用 server 模式。
 - **下一步**：图片 OCR 预审、规则灰度与回滚、人工复核工作台、按 ASIN 的历史趋势看板、LLM 评审的 gold set。
 
@@ -406,7 +406,7 @@ CI：`.github/workflows/ci.yml` 在 Python 3.11/3.12 上安装核心依赖并跑
 
 已上传：**https://github.com/jack15732/amz-ops-agent**
 
-CI 在 Python 3.11 / 3.12 上运行；`reports/eval_report.*` 与 `reports/retrieval_comparison.*` 随仓库提交，便于面试/复盘时直接展示。`.env` 未提交（已在 `.gitignore` 中）。
+CI 在 Python 3.11 / 3.12 上运行；`reports/eval_report.*` 与 `reports/retrieval_comparison.*` 随仓库提交，便于复现与对比。`.env` 未提交（已在 `.gitignore` 中）。
 
 ---
 

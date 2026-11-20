@@ -3,7 +3,7 @@ title: 合规证据与审计留档规范
 site: ALL
 tags: [evidence, audit, retention]
 updated_at: 2026-11-20
-source: "内部合规审计规范"
+source: "示例审计规范（演示用）"
 ---
 
 # 合规证据与审计留档规范
@@ -48,7 +48,7 @@ source: "内部合规审计规范"
 ## 抽检
 
 - 每周抽检 5% 的 passed 结论，重点看漏检和引用失效。
-- 每月复盘 blocked/review 的误报率。
+- 每月复核 blocked/review 的误报率。
 - 规则更新后跑回归集，指标下降不得上线。
 - 发现漏检立即回滚规则版本并通知已上架 listing 复查。
 

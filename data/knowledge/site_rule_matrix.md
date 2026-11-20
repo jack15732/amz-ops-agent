@@ -3,7 +3,7 @@ title: 美欧日站点合规差异矩阵
 site: ALL
 tags: [US, EU, JP, comparison]
 updated_at: 2026-11-20
-source: "内部站点对比表"
+source: "示例站点对比表（演示用）"
 ---
 
 # 美欧日站点合规差异矩阵
@@ -36,7 +36,7 @@ source: "内部站点对比表"
 - 欧盟 `CE marked` 不等于 `CE certified`；日本 `PSE 適合` 不等于 `PSE 認証`。
 - 美国 `Best Sellers Rank` 是排名数据；日本 `No.1` 需要第三方调查依据。
 - 欧盟化妆品 `anti-aging` 高风险；美国也可能被要求证据；日本 `アンチエイジング` 属功效宣称。
-- 中国团队常把“抗菌”直译成 antibacterial，在欧美日都需要分类和测试支持。
+- 中文运营常把“抗菌”直译成 antibacterial，在欧美日都需要分类和测试支持。
 
 ## 预审输出要求
 
