@@ -95,7 +95,7 @@ class RetrievalSettings(_Base):
     bm25_b: float = 0.75
     query_expansion: bool = True
     rerank_enabled: bool = True
-    rerank_candidate_k: int = 20
+    rerank_candidate_k: int = 6
 
 
 class WebSearchSettings(_Base):

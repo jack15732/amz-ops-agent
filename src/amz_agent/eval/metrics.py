@@ -39,9 +39,11 @@ def retrieval_metrics(
     k: int,
     sufficient: dict[str, bool],
     top_texts: dict[str, str] | None = None,
+    chunk_rankings: dict[str, list[str]] | None = None,
 ) -> dict:
     recalls: list[float] = []
     precisions: list[float] = []
+    doc_precisions: list[float] = []
     reciprocal_ranks: list[float] = []
     ndcgs: list[float] = []
     no_answer_correct: list[float] = []
@@ -55,7 +57,13 @@ def retrieval_metrics(
             continue
         hits = [1.0 if doc in expected else 0.0 for doc in ranked]
         recalls.append(1.0 if any(hits) else 0.0)
-        precisions.append(sum(hits) / len(ranked) if ranked else 0.0)
+        doc_precisions.append(sum(hits) / len(ranked) if ranked else 0.0)
+        chunk_ranked = (chunk_rankings or {}).get(case["id"], [])[:k]
+        chunk_hits = [1.0 if doc in expected else 0.0 for doc in chunk_ranked]
+        # Standard precision@k uses k as the denominator.  The old doc-level
+        # value used the number of unique retrieved docs, which made the score
+        # look lower and was not comparable across queries.
+        precisions.append(sum(chunk_hits) / k if k else 0.0)
         first = next((i + 1 for i, hit in enumerate(hits) if hit), None)
         reciprocal_ranks.append(1.0 / first if first else 0.0)
         dcg = sum(hit / math.log2(i + 2) for i, hit in enumerate(hits))
@@ -77,6 +85,7 @@ def retrieval_metrics(
     return {
         "recall_at_k": mean(recalls),
         "precision_at_k": mean(precisions),
+        "doc_precision_at_k": mean(doc_precisions),
         "mrr_at_k": mean(reciprocal_ranks),
         "ndcg_at_k": mean(ndcgs),
         "no_answer_accuracy": mean(no_answer_correct),

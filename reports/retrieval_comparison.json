@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-20T17:10:18.531117+00:00",
+  "generated_at": "2026-11-20T17:30:01.574348+00:00",
   "embedding": "huggingface/moka-ai/m3e-base",
   "cases": 32,
   "k": 6,
@@ -7,7 +7,8 @@
     {
       "mode": "bm25",
       "recall@6": 1.0,
-      "precision@6": 0.3756,
+      "chunk_precision@6": 0.45,
+      "doc_precision@6": 0.3756,
       "mrr@6": 0.8028,
       "ndcg@6": 0.8388,
       "no_answer_accuracy": 0.0,
@@ -16,7 +17,8 @@
     {
       "mode": "vector",
       "recall@6": 1.0,
-      "precision@6": 0.4533,
+      "chunk_precision@6": 0.6,
+      "doc_precision@6": 0.4533,
       "mrr@6": 0.8722,
       "ndcg@6": 0.8386,
       "no_answer_accuracy": 0.0,
@@ -25,7 +27,8 @@
     {
       "mode": "hybrid",
       "recall@6": 1.0,
-      "precision@6": 0.4106,
+      "chunk_precision@6": 0.55,
+      "doc_precision@6": 0.4106,
       "mrr@6": 0.8778,
       "ndcg@6": 0.8784,
       "no_answer_accuracy": 1.0,
@@ -34,9 +37,10 @@
     {
       "mode": "hybrid+rerank",
       "recall@6": 1.0,
-      "precision@6": 0.4239,
+      "chunk_precision@6": 0.55,
+      "doc_precision@6": 0.4106,
       "mrr@6": 0.8833,
-      "ndcg@6": 0.8984,
+      "ndcg@6": 0.8957,
       "no_answer_accuracy": 1.0,
       "top1_heading_hit": 0.9667
     }

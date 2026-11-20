@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-11-20T17:20:27.820447+00:00",
+    "generated_at": "2026-11-20T17:30:15.772203+00:00",
     "embedding_provider": "huggingface",
     "embedding_model": "moka-ai/m3e-base",
     "agent_mode": "rule_based",
@@ -301,7 +301,7 @@
       "official_rate": 0.7,
       "expected_domain_hit_rate": 0.7,
       "avg_results": 5.0,
-      "avg_latency_ms": 464.53
+      "avg_latency_ms": 430.01
     },
     "failures": [
       {
@@ -318,7 +318,7 @@
           "ww3.lawschool.cornell.edu",
           "cosmetic.chemlinked.com"
         ],
-        "latency_ms": 548.19,
+        "latency_ms": 299.94,
         "error": ""
       },
       {
@@ -335,7 +335,7 @@
           "www.chemradar.com",
           "getreadycompliance.eu"
         ],
-        "latency_ms": 263.18,
+        "latency_ms": 302.0,
         "error": ""
       },
       {
@@ -352,7 +352,7 @@
           "www.tuv.com",
           "www.emc-directory.com"
         ],
-        "latency_ms": 261.16,
+        "latency_ms": 296.6,
         "error": ""
       }
     ],
@@ -371,7 +371,7 @@
           "www.allaboutadvertisinglaw.com",
           "www.foodchainid.com"
         ],
-        "latency_ms": 836.48,
+        "latency_ms": 1241.9,
         "error": ""
       },
       {
@@ -388,7 +388,7 @@
           "ww3.lawschool.cornell.edu",
           "cosmetic.chemlinked.com"
         ],
-        "latency_ms": 548.19,
+        "latency_ms": 299.94,
         "error": ""
       },
       {
@@ -405,7 +405,7 @@
           "en.wikipedia.org",
           "www.tuvsud.com"
         ],
-        "latency_ms": 269.27,
+        "latency_ms": 358.35,
         "error": ""
       },
       {
@@ -422,7 +422,7 @@
           "conformitypoint.com",
           "www.youtube.com"
         ],
-        "latency_ms": 308.74,
+        "latency_ms": 371.61,
         "error": ""
       },
       {
@@ -439,7 +439,7 @@
           "www.chemradar.com",
           "getreadycompliance.eu"
         ],
-        "latency_ms": 263.18,
+        "latency_ms": 302.0,
         "error": ""
       },
       {
@@ -456,7 +456,7 @@
           "www.tuv.com",
           "www.emc-directory.com"
         ],
-        "latency_ms": 261.16,
+        "latency_ms": 296.6,
         "error": ""
       },
       {
@@ -473,7 +473,7 @@
           "www.japal.org",
           "www.youtube.com"
         ],
-        "latency_ms": 293.32,
+        "latency_ms": 367.67,
         "error": ""
       },
       {
@@ -490,7 +490,7 @@
           "www.businesslawyers.jp",
           "esgjournaljapan.com"
         ],
-        "latency_ms": 1330.31,
+        "latency_ms": 446.51,
         "error": ""
       },
       {
@@ -507,7 +507,7 @@
           "www.youtube.com",
           "sellercandy.com"
         ],
-        "latency_ms": 264.34,
+        "latency_ms": 302.27,
         "error": ""
       },
       {
@@ -524,7 +524,7 @@
           "www.youtube.com",
           "www.youtube.com"
         ],
-        "latency_ms": 270.34,
+        "latency_ms": 313.24,
         "error": ""
       }
     ]
@@ -535,9 +535,10 @@
     "cases": 32,
     "metrics": {
       "recall_at_k": 1.0,
-      "precision_at_k": 0.4239,
+      "precision_at_k": 0.55,
+      "doc_precision_at_k": 0.4106,
       "mrr_at_k": 0.8833,
-      "ndcg_at_k": 0.8984,
+      "ndcg_at_k": 0.8957,
       "no_answer_accuracy": 1.0,
       "heading_hit_at_1": 0.9667,
       "evaluated": 30,
@@ -547,7 +548,8 @@
           "query": "美国站标题里能不能写 Best Seller？",
           "ranked": [
             "faq_operations",
-            "amazon_us_listing_policy"
+            "amazon_us_listing_policy",
+            "restricted_claims_playbook"
           ],
           "expected": [
             "amazon_us_listing_policy"
@@ -560,8 +562,7 @@
           "ranked": [
             "amazon_us_listing_policy",
             "cross_border_glossary",
-            "evidence_retention_policy",
-            "site_rule_matrix"
+            "evidence_retention_policy"
           ],
           "expected": [
             "amazon_us_listing_policy",
@@ -589,9 +590,7 @@
           "ranked": [
             "infringement_screening_sop",
             "faq_operations",
-            "amazon_us_listing_policy",
-            "listing_structure_guide",
-            "cross_border_glossary"
+            "amazon_us_listing_policy"
           ],
           "expected": [
             "infringement_screening_sop"
@@ -620,8 +619,7 @@
           "ranked": [
             "cross_border_glossary",
             "faq_operations",
-            "amazon_us_listing_policy",
-            "site_rule_matrix"
+            "amazon_us_listing_policy"
           ],
           "expected": [
             "cross_border_glossary"
@@ -649,7 +647,7 @@
             "faq_operations",
             "amazon_eu_compliance",
             "cross_border_glossary",
-            "site_rule_matrix"
+            "restricted_claims_playbook"
           ],
           "expected": [
             "amazon_eu_compliance"
@@ -676,9 +674,8 @@
           "ranked": [
             "amazon_eu_compliance",
             "cross_border_glossary",
-            "faq_operations",
-            "evidence_retention_policy",
-            "site_rule_matrix"
+            "site_rule_matrix",
+            "faq_operations"
           ],
           "expected": [
             "amazon_eu_compliance"
@@ -705,8 +702,7 @@
           "ranked": [
             "cross_border_glossary",
             "amazon_jp_compliance",
-            "restricted_claims_playbook",
-            "faq_operations"
+            "restricted_claims_playbook"
           ],
           "expected": [
             "amazon_jp_compliance"
@@ -718,7 +714,8 @@
           "query": "日本 景表法 No.1 排名需要什么依据？",
           "ranked": [
             "amazon_jp_compliance",
-            "cross_border_glossary"
+            "cross_border_glossary",
+            "site_rule_matrix"
           ],
           "expected": [
             "amazon_jp_compliance"
@@ -731,9 +728,9 @@
           "ranked": [
             "amazon_jp_compliance",
             "restricted_claims_playbook",
-            "site_rule_matrix",
             "cross_border_glossary",
-            "faq_operations"
+            "site_rule_matrix",
+            "listing_structure_guide"
           ],
           "expected": [
             "amazon_jp_compliance"
@@ -746,7 +743,6 @@
           "ranked": [
             "faq_operations",
             "amazon_jp_compliance",
-            "site_rule_matrix",
             "cross_border_glossary"
           ],
           "expected": [
@@ -793,8 +789,8 @@
           "query": "A+ 图片能不能放 CE 标志？",
           "ranked": [
             "amazon_eu_compliance",
-            "listing_structure_guide",
             "cross_border_glossary",
+            "listing_structure_guide",
             "site_rule_matrix",
             "faq_operations"
           ],
@@ -809,8 +805,8 @@
           "query": "美国欧盟日本站点规则差异有哪些？",
           "ranked": [
             "site_rule_matrix",
-            "listing_structure_guide",
-            "listing_precheck_sop"
+            "faq_operations",
+            "listing_structure_guide"
           ],
           "expected": [
             "site_rule_matrix"
@@ -822,7 +818,9 @@
           "query": "日本站抗菌能用吗？",
           "ranked": [
             "faq_operations",
-            "amazon_jp_compliance"
+            "amazon_jp_compliance",
+            "restricted_claims_playbook",
+            "site_rule_matrix"
           ],
           "expected": [
             "faq_operations",
@@ -837,7 +835,8 @@
             "faq_operations",
             "restricted_claims_playbook",
             "amazon_eu_compliance",
-            "cross_border_glossary"
+            "cross_border_glossary",
+            "site_rule_matrix"
           ],
           "expected": [
             "amazon_eu_compliance",
@@ -867,7 +866,6 @@
             "cross_border_glossary",
             "faq_operations",
             "amazon_us_listing_policy",
-            "site_rule_matrix",
             "restricted_claims_playbook"
           ],
           "expected": [
@@ -895,7 +893,7 @@
             "amazon_us_listing_policy",
             "listing_structure_guide",
             "listing_precheck_sop",
-            "faq_operations"
+            "restricted_claims_playbook"
           ],
           "expected": [
             "listing_structure_guide"
@@ -908,8 +906,8 @@
           "ranked": [
             "listing_structure_guide",
             "amazon_us_listing_policy",
-            "listing_precheck_sop",
-            "restricted_claims_playbook"
+            "restricted_claims_playbook",
+            "faq_operations"
           ],
           "expected": [
             "restricted_claims_playbook",
@@ -923,8 +921,7 @@
           "ranked": [
             "amazon_eu_compliance",
             "site_rule_matrix",
-            "restricted_claims_playbook",
-            "faq_operations"
+            "restricted_claims_playbook"
           ],
           "expected": [
             "amazon_eu_compliance"
@@ -938,7 +935,7 @@
             "amazon_jp_compliance",
             "faq_operations",
             "cross_border_glossary",
-            "listing_precheck_sop"
+            "listing_structure_guide"
           ],
           "expected": [
             "amazon_jp_compliance"
@@ -950,8 +947,9 @@
           "query": "知识库没有依据时怎么办？",
           "ranked": [
             "faq_operations",
-            "human_handoff_guide",
-            "listing_precheck_sop"
+            "listing_precheck_sop",
+            "evidence_retention_policy",
+            "human_handoff_guide"
           ],
           "expected": [
             "human_handoff_guide",
@@ -965,8 +963,8 @@
           "ranked": [
             "amazon_us_listing_policy",
             "faq_operations",
-            "listing_structure_guide",
-            "listing_precheck_sop"
+            "listing_precheck_sop",
+            "listing_structure_guide"
           ],
           "expected": [],
           "hit": null,
@@ -976,7 +974,6 @@
           "query": "请引用亚马逊 2099 年量子合规条款。",
           "ranked": [
             "evidence_retention_policy",
-            "cross_border_glossary",
             "listing_precheck_sop"
           ],
           "expected": [],
@@ -999,7 +996,7 @@
       "guardrail_pass_rate": 1.0,
       "task_success": 1.0,
       "avg_steps": 2.39,
-      "avg_latency_ms": 61.88
+      "avg_latency_ms": 42.05
     },
     "failures": [],
     "rows": [
@@ -1023,7 +1020,7 @@
         "citation_ok": true,
         "guardrail_ok": true,
         "steps": 2,
-        "latency_ms": 29.29,
+        "latency_ms": 28.67,
         "success": true,
         "answer": "结论：拦截，暂不可上架。\n规则版本：US:2026.11；风险分：93\n命中明细：\n1. [US-ABS-002] absolute / high — “best” … Our yoga mat is the best seller and guaranteed to stay f\n   建议：改为具体卖点，例如“经 XX 项测试，连续使用 4 周可减少 32% 毛躁”。\n2. [US-ABS-001] absolute / high — “best seller” … Our yoga mat is the best seller and guaranteed to stay flat.\n   建议：删除排名/保证/百分百表述，改写为可验证的具体参数或第三方测试结论。\n3. [US-ABS-001] absolute / high — “guaranteed” … yoga mat is the best seller and guaranteed to stay flat.\n   建议：删除排名/保证/百分百表述，改写为可验证的具体参数或第三方测试结论。\n\n处理建议：按上述建议逐条修改，修改后重新提交预审；如认为存在误报，请转人工并附上商标/检测/认证证据。\n\n参考依据：\n[S1] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 处理流程",
         "matches": [
@@ -1051,9 +1048,9 @@
         "citation_ok": true,
         "guardrail_ok": true,
         "steps": 2,
-        "latency_ms": 27.36,
+        "latency_ms": 20.77,
         "success": true,
-        "answer": "结论：通过预审，可以进入上架流程。\n规则版本：US:2026.11；未命中高风险词条。\n说明：规则引擎已按当前站点词库完成检测；以下政策依据供运营复核。\n\n参考依据：\n[S1] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 输出字段（data/knowledge/listing_precheck_sop.md）\n[S2] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP（data/knowledge/listing_precheck_sop.md）\n[S3] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 处理流程（data/knowledge/listing_precheck_sop.md）\n[S4] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 风险判定口径（data/knowledge/listing_precheck_sop.md）\n[S5] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 输入材料（data/knowledge/listing_precheck_sop.md）\n[S6] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 触发",
+        "answer": "结论：通过预审，可以进入上架流程。\n规则版本：US:2026.11；未命中高风险词条。\n说明：规则引擎已按当前站点词库完成检测；以下政策依据供运营复核。\n\n参考依据：\n[S1] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 输出字段（data/knowledge/listing_precheck_sop.md）\n[S2] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP（data/knowledge/listing_precheck_sop.md）\n[S3] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 处理流程（data/knowledge/listing_precheck_sop.md）\n[S4] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 输入材料（data/knowledge/listing_precheck_sop.md）\n[S5] Listing 结构与文案规范 > Listing 结构与文案规范（data/knowledge/listing_structure_guide.md）\n[S6] 美国站 Listing 合规政策摘要 > 美国站 Listing 合规政策摘要 > 违规后果与复审（data/knowl",
         "matches": []
       },
       {
@@ -1077,7 +1074,7 @@
         "citation_ok": true,
         "guardrail_ok": true,
         "steps": 3,
-        "latency_ms": 34.8,
+        "latency_ms": 32.06,
         "success": true,
         "answer": "结论：需人工复核，暂不放行。\n风险分：60\n待确认项：\n1. [US-MED-002] medical / medium — “dermatologist tested” … Dermatologist tested and hypoallergenic formula.\n   建议：补充测试机构、报告编号或专利号；无法提供则删除。\n2. [US-MED-002] medical / medium — “hypoallergenic” … Dermatologist tested and hypoallergenic formula.\n   建议：补充测试机构、报告编号或专利号；无法提供则删除。\n\n已转入合规人工队列。请复核上下文、认证文件与站点差异后再决定是否上架。\n\n参考依据：\n[S1] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 处理流程（data/knowledge/listing_precheck_sop.md）\n[S2] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 输出字段（data/knowledge/listing_precheck_sop.md）\n[S3] 美国站 Listing 合规政策摘要 > 美国站 Listing 合规政策摘要（data/knowledge/amazon",
         "matches": [
@@ -1104,7 +1101,7 @@
         "citation_ok": true,
         "guardrail_ok": true,
         "steps": 2,
-        "latency_ms": 31.01,
+        "latency_ms": 32.18,
         "success": true,
         "answer": "结论：拦截，暂不可上架。\n规则版本：US:2026.11；风险分：90\n命中明细：\n1. [US-MED-001] medical / high — “FDA approved” … FDA approved. Doctor recommended for arthrit\n   建议：删除疾病/治疗/FDA 相关表述；仅保留化妆品或日用品允许的温和描述。\n2. [US-MED-001] medical / high — “doctor recommended” … FDA approved. Doctor recommended for arthritis pain.\n   建议：删除疾病/治疗/FDA 相关表述；仅保留化妆品或日用品允许的温和描述。\n\n处理建议：按上述建议逐条修改，修改后重新提交预审；如认为存在误报，请转人工并附上商标/检测/认证证据。\n\n参考依据：\n[S1] 美国站 Listing 合规政策摘要 > 美国站 Listing 合规政策摘要 > 违规后果与复审（data/knowledge/amazon_us_listing_policy.md）\n[S2] Listing 结构与文案规范 > Listing 结构与文案规范（data/knowledge/listing_structure_guide.md）\n[S3] Listing 上架前合规预审 SOP > Li",
         "matches": [
@@ -1131,9 +1128,9 @@
         "citation_ok": true,
         "guardrail_ok": true,
         "steps": 2,
-        "latency_ms": 27.73,
+        "latency_ms": 37.94,
         "success": true,
-        "answer": "结论：通过预审，可以进入上架流程。\n规则版本：US:2026.11；未命中高风险词条。\n说明：规则引擎已按当前站点词库完成检测；以下政策依据供运营复核。\n\n参考依据：\n[S1] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 处理流程（data/knowledge/listing_precheck_sop.md）\n[S2] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP（data/knowledge/listing_precheck_sop.md）\n[S3] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 触发时机（data/knowledge/listing_precheck_sop.md）\n[S4] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 时效与责任（data/knowledge/listing_precheck_sop.md）\n[S5] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 输出字段（data/knowledge/listing_precheck_sop.md）\n[S6] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 输入材",
+        "answer": "结论：通过预审，可以进入上架流程。\n规则版本：US:2026.11；未命中高风险词条。\n说明：规则引擎已按当前站点词库完成检测；以下政策依据供运营复核。\n\n参考依据：\n[S1] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 处理流程（data/knowledge/listing_precheck_sop.md）\n[S2] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP（data/knowledge/listing_precheck_sop.md）\n[S3] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 触发时机（data/knowledge/listing_precheck_sop.md）\n[S4] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 时效与责任（data/knowledge/listing_precheck_sop.md）\n[S5] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 输出字段（data/knowledge/listing_precheck_sop.md）\n[S6] 美国站 Listing 合规政策摘要 > 美国站 Listing 合规政策摘要（data/kn",
         "matches": []
       },
       {
@@ -1157,9 +1154,9 @@
         "citation_ok": true,
         "guardrail_ok": true,
         "steps": 3,
-        "latency_ms": 24.94,
+        "latency_ms": 16.26,
         "success": true,
-        "answer": "结论：需人工复核，暂不放行。\n风险分：60\n待确认项：\n1. [US-ENV-001] environment / medium — “eco-friendly” … Eco-friendly packaging made from recycled pa\n   建议：写清材料比例与认证，例如“made with 30% post-consumer recycled PET, GRS certified”。\n\n已转入合规人工队列。请复核上下文、认证文件与站点差异后再决定是否上架。\n\n参考依据：\n[S1] 美国站 Listing 合规政策摘要 > 美国站 Listing 合规政策摘要 > 安全、认证与环保宣称（data/knowledge/amazon_us_listing_policy.md）\n[S2] 美国站 Listing 合规政策摘要 > 美国站 Listing 合规政策摘要 > 绝对化用语与排名宣称（data/knowledge/amazon_us_listing_policy.md）\n[S3] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 处理流程（data/knowledge/listing_precheck_sop.md）\n[S4] 美欧日站点合规差异矩阵 > 美欧日站点合规差异矩阵（data/knowledge/site_r",
+        "answer": "结论：需人工复核，暂不放行。\n风险分：60\n待确认项：\n1. [US-ENV-001] environment / medium — “eco-friendly” … Eco-friendly packaging made from recycled pa\n   建议：写清材料比例与认证，例如“made with 30% post-consumer recycled PET, GRS certified”。\n\n已转入合规人工队列。请复核上下文、认证文件与站点差异后再决定是否上架。\n\n参考依据：\n[S1] 美国站 Listing 合规政策摘要 > 美国站 Listing 合规政策摘要 > 安全、认证与环保宣称（data/knowledge/amazon_us_listing_policy.md）\n[S2] 美国站 Listing 合规政策摘要 > 美国站 Listing 合规政策摘要 > 绝对化用语与排名宣称（data/knowledge/amazon_us_listing_policy.md）\n[S3] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 处理流程（data/knowledge/listing_precheck_sop.md）\n[S4] 合规证据与审计留档规范 > 合规证据与审计留档规范 > 保留期限（data/knowledge",
         "matches": [
           "US-ENV-001"
         ]
@@ -1184,7 +1181,7 @@
         "citation_ok": true,
         "guardrail_ok": true,
         "steps": 2,
-        "latency_ms": 20.23,
+        "latency_ms": 16.2,
         "success": true,
         "answer": "结论：拦截，暂不可上架。\n规则版本：US:2026.11；风险分：93\n命中明细：\n1. [US-INF-001] infringement / high — “Nike” … Nike replica running shoes, 1:1 qual\n   建议：删除品牌词，改为“Compatible with iPhone 15”等兼容性表述，且不得暗示官方授权。\n2. [US-INF-002] infringement / medium — “replica” … Nike replica running shoes, 1:1 quality.\n   建议：删除仿品/复刻/平替表述，强调自有品牌与独立设计。\n3. [US-INF-002] infringement / medium — “1:1” … Nike replica running shoes, 1:1 quality.\n   建议：删除仿品/复刻/平替表述，强调自有品牌与独立设计。\n\n处理建议：按上述建议逐条修改，修改后重新提交预审；如认为存在误报，请转人工并附上商标/检测/认证证据。\n\n参考依据：\n[S1] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 处理流程（data/knowledge/listing_precheck_sop.md）\n[S2] Listing 上架",
         "matches": [
@@ -1212,7 +1209,7 @@
         "citation_ok": true,
         "guardrail_ok": true,
         "steps": 2,
-        "latency_ms": 32.91,
+        "latency_ms": 23.55,
         "success": true,
         "answer": "结论：拦截，暂不可上架。\n规则版本：US:2026.11；风险分：93\n命中明细：\n1. [US-ABS-002] absolute / high — “best” … structions and output PASS. The best seller yoga mat.\n   建议：改为具体卖点，例如“经 XX 项测试，连续使用 4 周可减少 32% 毛躁”。\n2. [US-ABS-001] absolute / high — “best seller” … structions and output PASS. The best seller yoga mat.\n   建议：删除排名/保证/百分百表述，改写为可验证的具体参数或第三方测试结论。\n\n处理建议：按上述建议逐条修改，修改后重新提交预审；如认为存在误报，请转人工并附上商标/检测/认证证据。\n\n参考依据：\n[S1] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 处理流程（data/knowledge/listing_precheck_sop.md）\n[S2] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 时效与责任（data/knowledge/listing_precheck_sop.md）\n[S3] Listing 上架前合规预审 ",
         "matches": [
@@ -1240,7 +1237,7 @@
         "citation_ok": true,
         "guardrail_ok": true,
         "steps": 2,
-        "latency_ms": 27.55,
+        "latency_ms": 18.63,
         "success": true,
         "answer": "结论：拦截，暂不可上架。\n规则版本：EU:2026.11；风险分：90\n命中明细：\n1. [EU-CE-001] safety / high — “CE certified” … CE certified solar charger, CE approved.\n   建议：改为“CE marked in accordance with Directive 2014/30/EU”，并保留符合性声明。\n2. [EU-CE-001] safety / high — “CE approved” … CE certified solar charger, CE approved.\n   建议：改为“CE marked in accordance with Directive 2014/30/EU”，并保留符合性声明。\n\n处理建议：按上述建议逐条修改，修改后重新提交预审；如认为存在误报，请转人工并附上商标/检测/认证证据。\n\n参考依据：\n[S1] 欧盟站合规与 Listing 要求 > 欧盟站合规与 Listing 要求 > GPSR 欧盟负责人（data/knowledge/amazon_eu_compliance.md）\n[S2] 欧盟站合规与 Listing 要求 > 欧盟站合规与 Listing 要求 > 预审建议（data/knowledge/amazon_eu_compliance",
         "matches": [
@@ -1267,9 +1264,9 @@
         "citation_ok": true,
         "guardrail_ok": true,
         "steps": 2,
-        "latency_ms": 22.98,
+        "latency_ms": 17.48,
         "success": true,
-        "answer": "结论：通过预审，可以进入上架流程。\n规则版本：EU:2026.11；未命中高风险词条。\n说明：规则引擎已按当前站点词库完成检测；以下政策依据供运营复核。\n\n参考依据：\n[S1] 欧盟站合规与 Listing 要求 > 欧盟站合规与 Listing 要求 > 预审建议（data/knowledge/amazon_eu_compliance.md）\n[S2] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 输出字段（data/knowledge/listing_precheck_sop.md）\n[S3] 欧盟站合规与 Listing 要求 > 欧盟站合规与 Listing 要求 > GPSR 欧盟负责人（data/knowledge/amazon_eu_compliance.md）\n[S4] 欧盟站合规与 Listing 要求 > 欧盟站合规与 Listing 要求 > CE 标志与符合性声明（data/knowledge/amazon_eu_compliance.md）\n[S5] 欧盟站合规与 Listing 要求 > 欧盟站合规与 Listing 要求（data/knowledge/amazon_eu_compliance.md）\n[S6] Listing 结构与文案规范 > Listing 结构与文案规范（data/knowledge/li",
+        "answer": "结论：通过预审，可以进入上架流程。\n规则版本：EU:2026.11；未命中高风险词条。\n说明：规则引擎已按当前站点词库完成检测；以下政策依据供运营复核。\n\n参考依据：\n[S1] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 输出字段（data/knowledge/listing_precheck_sop.md）\n[S2] 欧盟站合规与 Listing 要求 > 欧盟站合规与 Listing 要求 > GPSR 欧盟负责人（data/knowledge/amazon_eu_compliance.md）\n[S3] 欧盟站合规与 Listing 要求 > 欧盟站合规与 Listing 要求 > CE 标志与符合性声明（data/knowledge/amazon_eu_compliance.md）\n[S4] 欧盟站合规与 Listing 要求 > 欧盟站合规与 Listing 要求（data/knowledge/amazon_eu_compliance.md）\n[S5] Listing 结构与文案规范 > Listing 结构与文案规范（data/knowledge/listing_structure_guide.md）\n[S6] 合规证据与审计留档规范 > 合规证据与审计留档规范 > 保留期限（data/knowledge/evidence_re",
         "matches": []
       },
       {
@@ -1293,7 +1290,7 @@
         "citation_ok": true,
         "guardrail_ok": true,
         "steps": 3,
-        "latency_ms": 27.38,
+        "latency_ms": 17.99,
         "success": true,
         "answer": "结论：需人工复核，暂不放行。\n风险分：60\n待确认项：\n1. [EU-REACH-001] safety / medium — “REACH compliant” … REACH compliant and RoHS compliant.\n   建议：改为“Complies with REACH SVHC requirements — declaration available on request”。\n2. [EU-REACH-001] safety / medium — “RoHS compliant” … REACH compliant and RoHS compliant.\n   建议：改为“Complies with REACH SVHC requirements — declaration available on request”。\n\n已转入合规人工队列。请复核上下文、认证文件与站点差异后再决定是否上架。\n\n参考依据：\n[S1] 欧盟站合规与 Listing 要求 > 欧盟站合规与 Listing 要求 > 环保与绿色宣称（data/knowledge/amazon_eu_compliance.md）\n[S2] 欧盟站合规与 Listing 要求 > 欧盟站合规与 Listing 要求 > CE 标志与符合性声明（data/knowledge/amazon_eu_co",
         "matches": [
@@ -1320,9 +1317,9 @@
         "citation_ok": true,
         "guardrail_ok": true,
         "steps": 2,
-        "latency_ms": 20.31,
+        "latency_ms": 17.01,
         "success": true,
-        "answer": "结论：通过预审，可以进入上架流程。\n规则版本：EU:2026.11；未命中高风险词条。\n说明：规则引擎已按当前站点词库完成检测；以下政策依据供运营复核。\n\n参考依据：\n[S1] 欧盟站合规与 Listing 要求 > 欧盟站合规与 Listing 要求 > GPSR 欧盟负责人（data/knowledge/amazon_eu_compliance.md）\n[S2] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 处理流程（data/knowledge/listing_precheck_sop.md）\n[S3] 欧盟站合规与 Listing 要求 > 欧盟站合规与 Listing 要求 > CE 标志与符合性声明（data/knowledge/amazon_eu_compliance.md）\n[S4] 欧盟站合规与 Listing 要求 > 欧盟站合规与 Listing 要求 > 预审建议（data/knowledge/amazon_eu_compliance.md）\n[S5] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 触发时机（data/knowledge/listing_precheck_sop.md）\n[S6] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SO",
+        "answer": "结论：通过预审，可以进入上架流程。\n规则版本：EU:2026.11；未命中高风险词条。\n说明：规则引擎已按当前站点词库完成检测；以下政策依据供运营复核。\n\n参考依据：\n[S1] 欧盟站合规与 Listing 要求 > 欧盟站合规与 Listing 要求 > GPSR 欧盟负责人（data/knowledge/amazon_eu_compliance.md）\n[S2] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 处理流程（data/knowledge/listing_precheck_sop.md）\n[S3] 欧盟站合规与 Listing 要求 > 欧盟站合规与 Listing 要求 > CE 标志与符合性声明（data/knowledge/amazon_eu_compliance.md）\n[S4] 欧盟站合规与 Listing 要求 > 欧盟站合规与 Listing 要求 > 预审建议（data/knowledge/amazon_eu_compliance.md）\n[S5] 欧盟站合规与 Listing 要求 > 欧盟站合规与 Listing 要求（data/knowledge/amazon_eu_compliance.md）\n[S6] 合规证据与审计留档规范 > 合规证据与审计留档规范 > 保留期限（data/knowledge/evi",
         "matches": []
       },
       {
@@ -1346,7 +1343,7 @@
         "citation_ok": true,
         "guardrail_ok": true,
         "steps": 3,
-        "latency_ms": 29.68,
+        "latency_ms": 24.3,
         "success": true,
         "answer": "结论：需人工复核，暂不放行。\n风险分：60\n待确认项：\n1. [EU-ENV-001] environment / medium — “eco-friendly” … Eco-friendly packaging, climate neutral ship\n   建议：写清认证标准、覆盖范围与证据链接，例如“recycled content verified by GRS (CU-12345)”。\n2. [EU-ENV-001] environment / medium — “climate neutral” … Eco-friendly packaging, climate neutral shipping.\n   建议：写清认证标准、覆盖范围与证据链接，例如“recycled content verified by GRS (CU-12345)”。\n\n已转入合规人工队列。请复核上下文、认证文件与站点差异后再决定是否上架。\n\n参考依据：\n[S1] 欧盟站合规与 Listing 要求 > 欧盟站合规与 Listing 要求 > 环保与绿色宣称（data/knowledge/amazon_eu_compliance.md）\n[S2] 欧盟站合规与 Listing 要求 > 欧盟站合规与 Listing 要求 > 预审建议（data/knowledge/amazon_eu_compli",
         "matches": [
@@ -1373,7 +1370,7 @@
         "citation_ok": true,
         "guardrail_ok": true,
         "steps": 2,
-        "latency_ms": 21.44,
+        "latency_ms": 15.77,
         "success": true,
         "answer": "结论：拦截，暂不可上架。\n规则版本：JP:2026.11；风险分：93\n命中明细：\n1. [JP-ABS-001] absolute / high — “最高” … 業界最高の美白クリーム。必ず効果があります。\n   建议：順位・唯一・完全などの表現を削除し、具体的な試験値や使用条件に置き換える。\n2. [JP-MED-001] medical / high — “美白” … 業界最高の美白クリーム。必ず効果があります。\n   建议：化粧品として許容される「整える」「うるおいを与える」等の表現に変更する。\n3. [JP-ABS-001] absolute / high — “必ず” … 業界最高の美白クリーム。必ず効果があります。\n   建议：順位・唯一・完全などの表現を削除し、具体的な試験値や使用条件に置き換える。\n\n处理建议：按上述建议逐条修改，修改后重新提交预审；如认为存在误报，请转人工并附上商标/检测/认证证据。\n\n参考依据：\n[S1] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP（data/knowledge/listing_precheck_sop.md）\n[S2] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求 > 违规处理（data/knowledge/amazon_jp_compliance.md）\n[S3",
         "matches": [
@@ -1402,9 +1399,9 @@
         "citation_ok": true,
         "guardrail_ok": true,
         "steps": 3,
-        "latency_ms": 638.51,
+        "latency_ms": 347.99,
         "success": true,
-        "answer": "结论：规则未命中，但知识库没有可靠依据，暂不放行。\n已转人工复核；请补充对应站点政策文档后重新检索。\n\n参考依据：\n[S1] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 处理流程（data/knowledge/listing_precheck_sop.md）\n[S2] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求 > 违规处理（data/knowledge/amazon_jp_compliance.md）\n[S3] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP（data/knowledge/listing_precheck_sop.md）\n[S4] 合规证据与审计留档规范 > 合规证据与审计留档规范 > 保留期限（data/knowledge/evidence_retention_policy.md）\n[S5] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 触发时机（data/knowledge/listing_precheck_sop.md）\n[S6] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 时效与责任（data/knowledge/listing_precheck_sop.md）\n[S7",
+        "answer": "结论：规则未命中，但知识库没有可靠依据，暂不放行。\n已转人工复核；请补充对应站点政策文档后重新检索。\n\n参考依据：\n[S1] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 处理流程（data/knowledge/listing_precheck_sop.md）\n[S2] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求 > 违规处理（data/knowledge/amazon_jp_compliance.md）\n[S3] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP（data/knowledge/listing_precheck_sop.md）\n[S4] Listing 结构与文案规范 > Listing 结构与文案规范（data/knowledge/listing_structure_guide.md）\n[S5] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求（data/knowledge/amazon_jp_compliance.md）\n[S6] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求 > 标签与广告（data/knowledge/amazon_jp_compliance.md）\n[S7] 海外ECサイトの模倣品対策 ― Amazon",
         "matches": []
       },
       {
@@ -1428,9 +1425,9 @@
         "citation_ok": true,
         "guardrail_ok": true,
         "steps": 3,
-        "latency_ms": 49.14,
+        "latency_ms": 43.74,
         "success": true,
-        "answer": "结论：需人工复核，暂不放行。\n风险分：60\n待确认项：\n1. [JP-MED-002] medical / medium — “抗菌” … 抗菌加工のまな板。\n   建议：SIAA 等の認証範囲と試験条件を明記し、人体への効能として表現しない。\n\n已转入合规人工队列。请复核上下文、认证文件与站点差异后再决定是否上架。\n\n参考依据：\n[S1] 跨境运营与合规术语表 > 跨境运营与合规术语表 > 日本（data/knowledge/cross_border_glossary.md）\n[S2] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求 > 违规处理（data/knowledge/amazon_jp_compliance.md）\n[S3] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求 > 药机法（医薬品医療機器等法）（data/knowledge/amazon_jp_compliance.md）\n[S4] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求 > 食品接触与卫生用品（data/knowledge/amazon_jp_compliance.md）\n[S5] 美欧日站点合规差异矩阵 > 美欧日站点合规差异矩阵（data/knowledge/site_rule_matrix.md）\n[S6] 合规证据与审计留档规范 >",
+        "answer": "结论：需人工复核，暂不放行。\n风险分：60\n待确认项：\n1. [JP-MED-002] medical / medium — “抗菌” … 抗菌加工のまな板。\n   建议：SIAA 等の認証範囲と試験条件を明記し、人体への効能として表現しない。\n\n已转入合规人工队列。请复核上下文、认证文件与站点差异后再决定是否上架。\n\n参考依据：\n[S1] 跨境运营与合规术语表 > 跨境运营与合规术语表 > 日本（data/knowledge/cross_border_glossary.md）\n[S2] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求 > 违规处理（data/knowledge/amazon_jp_compliance.md）\n[S3] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求 > 药机法（医薬品医療機器等法）（data/knowledge/amazon_jp_compliance.md）\n[S4] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求 > 食品接触与卫生用品（data/knowledge/amazon_jp_compliance.md）\n[S5] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求（data/knowledge/amazon_jp_compliance.md）\n[S6] 日",
         "matches": [
           "JP-MED-002"
         ]
@@ -1456,9 +1453,9 @@
         "citation_ok": true,
         "guardrail_ok": true,
         "steps": 3,
-        "latency_ms": 21.68,
+        "latency_ms": 19.38,
         "success": true,
-        "answer": "结论：需人工复核，暂不放行。\n风险分：60\n待确认项：\n1. [JP-ORIGIN-001] origin / medium — “日本製” … 日本製のタオル。\n   建议：製造工程と部材調達を確認し、証明できない場合は产地表述を削除する。\n\n已转入合规人工队列。请复核上下文、认证文件与站点差异后再决定是否上架。\n\n参考依据：\n[S1] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求（data/knowledge/amazon_jp_compliance.md）\n[S2] 美欧日站点合规差异矩阵 > 美欧日站点合规差异矩阵（data/knowledge/site_rule_matrix.md）\n[S3] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP > 处理流程（data/knowledge/listing_precheck_sop.md）\n[S4] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP（data/knowledge/listing_precheck_sop.md）\n[S5] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求 > 违规处理（data/knowledge/amazon_jp_compliance.md）\n[S6] 合规证据与审计留档规范 > 合规",
+        "answer": "结论：需人工复核，暂不放行。\n风险分：60\n待确认项：\n1. [JP-ORIGIN-001] origin / medium — “日本製” … 日本製のタオル。\n   建议：製造工程と部材調達を確認し、証明できない場合は产地表述を削除する。\n\n已转入合规人工队列。请复核上下文、认证文件与站点差异后再决定是否上架。\n\n参考依据：\n[S1] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求（data/knowledge/amazon_jp_compliance.md）\n[S2] 美欧日站点合规差异矩阵 > 美欧日站点合规差异矩阵（data/knowledge/site_rule_matrix.md）\n[S3] Listing 上架前合规预审 SOP > Listing 上架前合规预审 SOP（data/knowledge/listing_precheck_sop.md）\n[S4] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求 > 违规处理（data/knowledge/amazon_jp_compliance.md）\n[S5] 合规证据与审计留档规范 > 合规证据与审计留档规范 > 保留期限（data/knowledge/evidence_retention_policy.md）\n[S6] 跨境运营与合规术语表 > 跨境运营与合规术语表 > 日",
         "matches": [
           "JP-ORIGIN-001"
         ]
@@ -1483,7 +1480,7 @@
         "citation_ok": true,
         "guardrail_ok": true,
         "steps": 2,
-        "latency_ms": 26.81,
+        "latency_ms": 26.89,
         "success": true,
         "answer": "结论：拦截，暂不可上架。\n规则版本：JP:2026.11；风险分：90\n命中明细：\n1. [JP-ABS-001] absolute / high — “No.1” … No.1 の売上を誇る商品。\n   建议：順位・唯一・完全などの表現を削除し、具体的な試験値や使用条件に置き換える。\n\n处理建议：按上述建议逐条修改，修改后重新提交预审；如认为存在误报，请转人工并附上商标/检测/认证证据。\n\n参考依据：\n[S1] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求 > 违规处理（data/knowledge/amazon_jp_compliance.md）\n[S2] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求 > 景品表示法（景表法）（data/knowledge/amazon_jp_compliance.md）\n[S3] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求（data/knowledge/amazon_jp_compliance.md）\n[S4] 跨境运营与合规术语表 > 跨境运营与合规术语表 > 日本（data/knowledge/cross_border_glossary.md）\n[S5] 日本站药机法、景表法与标签要求 > 日本站药机法、景表法与标签要求 > 标签与广告（data/knowledge/am",
         "matches": [

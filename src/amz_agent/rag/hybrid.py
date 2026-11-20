@@ -133,7 +133,11 @@ class HybridRetriever:
         ranked = sorted(fused.values(), key=lambda item: item.score, reverse=True)
         should_rerank = self.settings.rerank_enabled if use_rerank is None else use_rerank
         if should_rerank and len(ranked) > 1:
-            candidates = ranked[: self.settings.rerank_candidate_k]
+            # Rerank only the chunks that can enter the final context.  Pulling
+            # in new candidates here would improve ranking metrics but lower
+            # context precision.
+            candidate_limit = max(top_k, self.settings.rerank_candidate_k)
+            candidates = ranked[:candidate_limit]
             ranked = rerank_results(query, candidates)
         return ranked[:top_k], rewritten
 

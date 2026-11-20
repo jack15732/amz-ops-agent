@@ -44,7 +44,8 @@ def main() -> None:
                 {
                     "mode": label,
                     "recall@6": metrics["recall_at_k"],
-                    "precision@6": metrics["precision_at_k"],
+                    "chunk_precision@6": metrics["precision_at_k"],
+                    "doc_precision@6": metrics["doc_precision_at_k"],
                     "mrr@6": metrics["mrr_at_k"],
                     "ndcg@6": metrics["ndcg_at_k"],
                     "no_answer_accuracy": metrics["no_answer_accuracy"],
@@ -70,19 +71,19 @@ def main() -> None:
             f"- Embedding：`{payload['embedding']}`",
             f"- 样本：{payload['cases']} 条；K={payload['k']}",
             "",
-            "| 模式 | Recall@6 | Precision@6 | MRR@6 | nDCG@6 | 无答案识别 | Top-1 标题命中 |",
-            "| --- | --- | --- | --- | --- | --- | --- |",
+            "| 模式 | Recall@6 | Chunk P@6 | Doc P@6 | MRR@6 | nDCG@6 | 无答案识别 | Top-1 标题命中 |",
+            "| --- | --- | --- | --- | --- | --- | --- | --- |",
         ]
         for row in rows:
             lines.append(
-                f"| {row['mode']} | {row['recall@6']:.2%} | {row['precision@6']:.2%} | "
-                f"{row['mrr@6']:.4f} | {row['ndcg@6']:.4f} | "
+                f"| {row['mode']} | {row['recall@6']:.2%} | {row['chunk_precision@6']:.2%} | "
+                f"{row['doc_precision@6']:.2%} | {row['mrr@6']:.4f} | {row['ndcg@6']:.4f} | "
                 f"{row['no_answer_accuracy']:.2%} | {row['top1_heading_hit']:.2%} |"
             )
         lines += [
             "",
             "结论：单路检索在无答案问题上都会误召回；RRF 融合后 MRR/nDCG 最优，",
-            "叠加轻量 rerank 后 MRR 0.8778→0.8833、nDCG 0.8784→0.8984，",
+            "叠加轻量 rerank 后 MRR 0.8778→0.8833、nDCG 0.8784→0.8957，",
             "OOV/阈值守卫把无答案识别提升到 100%。",
         ]
         out.with_suffix(".md").write_text("\n".join(lines) + "\n", encoding="utf-8")

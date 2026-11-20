@@ -36,7 +36,7 @@ retrieval:
   bm25_b: 0.75
   query_expansion: true
   rerank_enabled: true
-  rerank_candidate_k: 20
+  rerank_candidate_k: 6
 
 compliance:
   rule_dir: "config/compliance"

@@ -86,8 +86,9 @@ def _compliance(service: AppService, cases: list[dict], llm_review: bool) -> dic
 
 def _retrieval_rankings(
     service: AppService, cases: list[dict], k: int, mode: str, rerank: bool | None = None
-) -> tuple[dict[str, list[str]], dict[str, bool], dict[str, str]]:
+) -> tuple[dict[str, list[str]], dict[str, bool], dict[str, str], dict[str, list[str]]]:
     rankings: dict[str, list[str]] = {}
+    chunk_rankings: dict[str, list[str]] = {}
     sufficient: dict[str, bool] = {}
     top_texts: dict[str, str] = {}
     retriever = service.retriever
@@ -138,10 +139,11 @@ def _retrieval_rankings(
             if item.chunk.doc_id not in seen:
                 seen.append(item.chunk.doc_id)
         rankings[case["id"]] = seen
+        chunk_rankings[case["id"]] = [item.chunk.doc_id for item in results[:k]]
         if results:
             top = results[0].chunk
             top_texts[case["id"]] = f"{' > '.join(top.heading_path)} {top.text[:400]}"
-    return rankings, sufficient, top_texts
+    return rankings, sufficient, top_texts, chunk_rankings
 
 
 def _retrieval(
@@ -151,7 +153,9 @@ def _retrieval(
     mode: str,
     rerank: bool | None = None,
 ) -> dict:
-    rankings, sufficient, top_texts = _retrieval_rankings(service, cases, k, mode, rerank)
+    rankings, sufficient, top_texts, chunk_rankings = _retrieval_rankings(
+        service, cases, k, mode, rerank
+    )
     # Heading hit needs the top chunk text; encode it as a doc id ranking for the
     # metric, then evaluate doc-level recall separately.
     enriched = []
@@ -160,7 +164,9 @@ def _retrieval(
         if top_texts.get(case["id"]):
             copy["expected_heading_keywords"] = case.get("expected_heading_keywords", [])
         enriched.append(copy)
-    metrics = retrieval_metrics(enriched, rankings, k, sufficient, top_texts)
+    metrics = retrieval_metrics(
+        enriched, rankings, k, sufficient, top_texts, chunk_rankings
+    )
     for case in cases:
         ranking = rankings.get(case["id"], [])
         expected = case.get("expected_doc_ids", [])
@@ -492,7 +498,8 @@ def render_markdown(report: dict) -> str:
             "| 指标 | 数值 |",
             "| --- | --- |",
             f"| Recall@K | {rm['recall_at_k']:.2%} |",
-            f"| Precision@K | {rm['precision_at_k']:.2%} |",
+            f"| Chunk Precision@K | {rm['precision_at_k']:.2%} |",
+            f"| Doc Precision@K | {rm['doc_precision_at_k']:.2%} |",
             f"| MRR@K | {rm['mrr_at_k']:.4f} |",
             f"| nDCG@K | {rm['ndcg_at_k']:.4f} |",
             f"| 无答案识别率 | {rm['no_answer_accuracy']:.2%} |",
