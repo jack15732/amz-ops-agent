@@ -1,5 +1,8 @@
 # AMZ Ops Agent
 
+[![CI](https://github.com/jack15732/amz-ops-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/jack15732/amz-ops-agent/actions/workflows/ci.yml)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/)
+
 亚马逊跨境 Listing 上架前合规预审系统：**规则引擎判违规 + 混合 RAG 溯源 + Function Calling Agent 分流**。
 
 面向运营经验零散、新人上手慢、人工合规漏检率高的问题，把「词库检测 → 风险分级 → 知识溯源 → 人工转接 → 审计留档」做成可运行、可评测、可接入上架流程的闭环。
@@ -94,6 +97,9 @@ flowchart LR
 - 可选：SiliconFlow API Key（BGE-M3 + Qwen）；没有 Key 会自动降级到本地 HuggingFace 或 hash embedder
 
 ```bash
+git clone https://github.com/jack15732/amz-ops-agent.git
+cd amz-ops-agent
+
 python -m venv .venv
 source .venv/bin/activate
 pip install -e ".[ui,hf,eval,dev]"
@@ -334,21 +340,11 @@ CI：`.github/workflows/ci.yml` 在 Python 3.11/3.12 上安装核心依赖并跑
 
 ---
 
-## 11. 上传到 GitHub
+## 11. 仓库地址
 
-当前仓库已在本地初始化并提交。推送到你的 GitHub 仓库：
+已上传：**https://github.com/jack15732/amz-ops-agent**
 
-```bash
-# 方式一：先建空仓库，再 push
-git remote add origin git@github.com:<your-account>/amz-ops-agent.git
-git branch -M main
-git push -u origin main
-
-# 方式二：使用 gh（需先 gh auth login）
-gh repo create amz-ops-agent --public --source=. --remote=origin --push
-```
-
-推送前确认 `.env` 未被提交（已在 `.gitignore` 中）；`reports/eval_report.*` 与 `reports/retrieval_comparison.*` 会随仓库提交，便于面试/复盘时直接展示。
+CI 在 Python 3.11 / 3.12 上运行；`reports/eval_report.*` 与 `reports/retrieval_comparison.*` 随仓库提交，便于面试/复盘时直接展示。`.env` 未提交（已在 `.gitignore` 中）。
 
 ---
 
