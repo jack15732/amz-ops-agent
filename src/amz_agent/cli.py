@@ -140,6 +140,13 @@ def cmd_eval(args: argparse.Namespace) -> None:
                 f"mrr={metrics['mrr_at_k']:.3f} ndcg={metrics['ndcg_at_k']:.3f} "
                 f"no_answer={metrics['no_answer_accuracy']:.3f}"
             )
+        if "web" in report and report["web"].get("available"):
+            wm = report["web"]["metrics"]
+            print(
+                f"web sufficient={wm['sufficient_rate']:.3f} "
+                f"official={wm['official_rate']:.3f} "
+                f"expected_domain={wm['expected_domain_hit_rate']:.3f}"
+            )
         if "agent" in report:
             summary = report["agent"]["summary"]
             print(
@@ -207,7 +214,7 @@ def build_parser() -> argparse.ArgumentParser:
     agent.set_defaults(func=cmd_agent)
 
     ev = sub.add_parser("eval", help="run compliance / retrieval / agent evaluation")
-    ev.add_argument("--suite", choices=["all", "compliance", "holdout", "retrieval", "agent"], default="all")
+    ev.add_argument("--suite", choices=["all", "compliance", "holdout", "retrieval", "web", "agent"], default="all")
     ev.add_argument("--k", type=int, default=6)
     ev.add_argument("--retrieval-mode", choices=["hybrid", "vector", "bm25"], default="hybrid")
     ev.add_argument("--report-dir", default="reports")

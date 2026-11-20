@@ -44,9 +44,12 @@ def _citation_block(session: ToolSession) -> str:
     if not session.citations:
         return ""
     lines = ["参考依据："]
-    for index, citation in enumerate(session.citations[:6], start=1):
-        heading = " > ".join(citation.heading_path)
-        lines.append(f"[S{index}] {citation.title} > {heading}（{citation.source}）")
+    for index, citation in enumerate(session.citations[:8], start=1):
+        if citation.source_type == "web":
+            lines.append(f"[S{index}] {citation.title} — {citation.url}")
+        else:
+            heading = " > ".join(citation.heading_path)
+            lines.append(f"[S{index}] {citation.title} > {heading}（{citation.source}）")
     return "\n".join(lines)
 
 
@@ -67,7 +70,7 @@ def _ensure_compliance(session: ToolSession, request: AgentRequest) -> Complianc
 
 
 def _ensure_retrieval(session: ToolSession, request: AgentRequest, compliance: ComplianceResult) -> None:
-    if session.retrieval_sufficient:
+    if session.retrieval_sufficient or session.web_sufficient:
         return
     categories = " ".join(sorted({m.category for m in compliance.matches}))
     query = f"{request.site.value} {categories} {request.question} listing 合规 预审 要求"
@@ -75,17 +78,32 @@ def _ensure_retrieval(session: ToolSession, request: AgentRequest, compliance: C
         "search_knowledge",
         {"query": query, "site": request.site.value, "top_k": 6},
     )
-    if not session.retrieval_sufficient and compliance.decision is Decision.PASSED:
-        # A passed listing still needs a policy anchor.  Fall back to the site's
-        # generic precheck query before escalating to a human.
-        session.execute(
-            "search_knowledge",
-            {
-                "query": f"{request.site.value} listing 合规 预审 要求",
-                "site": request.site.value,
-                "top_k": 4,
-            },
-        )
+    if session.retrieval_sufficient or session.web_sufficient:
+        return
+    if compliance.decision is Decision.PASSED:
+        # Agentic fallback: if the local KB is insufficient, try the web once
+        # before falling back to a human.  The model may already have done this.
+        if (
+            session.web is not None
+            and getattr(session.web, "available", False)
+            and not session.web_used
+        ):
+            session.execute(
+                "web_search",
+                {
+                    "query": f"{request.site.value} Amazon listing compliance {request.question}",
+                    "max_results": 4,
+                },
+            )
+        if not session.retrieval_sufficient and not session.web_sufficient:
+            session.execute(
+                "search_knowledge",
+                {
+                    "query": f"{request.site.value} listing 合规 预审 要求",
+                    "site": request.site.value,
+                    "top_k": 4,
+                },
+            )
 
 
 def _finalize(
@@ -116,21 +134,35 @@ def _finalize(
     if not session.citations and refs:
         citations_valid = False
 
-    evidence_sufficient = session.retrieval_sufficient or bool(compliance.matches)
-    if decision is Decision.PASSED and not session.retrieval_sufficient:
+    evidence_sufficient = (
+        session.retrieval_sufficient
+        or session.web_sufficient
+        or bool(compliance.matches)
+    )
+    if decision is Decision.PASSED and not (
+        session.retrieval_sufficient or session.web_sufficient
+    ):
         decision = Decision.REVIEW
-        overrides.append("规则未命中，但知识库无可靠检索依据，降级为人工复核")
+        overrides.append("规则未命中，但知识库/联网均无可靠检索依据，降级为人工复核")
         if not handoff.required:
             handoff = Handoff(
                 required=True,
-                reason="知识库无可靠检索依据，按风险优先原则转人工",
+                reason="知识库/联网无可靠检索依据，按风险优先原则转人工",
             )
-        answer += "\n\n系统校验：知识库没有可靠依据，已转人工复核，未直接放行。"
+        answer += "\n\n系统校验：没有可靠依据，已转人工复核，未直接放行。"
     if decision is Decision.PASSED and not citations_valid:
         decision = Decision.REVIEW
         overrides.append("引用编号无法解析，降级为人工复核")
         if not handoff.required:
             handoff = Handoff(required=True, reason="生成内容包含无法解析的引用")
+
+    if decision is Decision.PASSED and evidence_sufficient and handoff.required:
+        handoff = Handoff(
+            required=False,
+            reason="已有知识库/联网依据，撤销不必要的转人工",
+        )
+        overrides.append("passed 且有可靠依据，撤销不必要的转人工")
+        answer += "\n\n系统校验：已具备可靠依据，撤销不必要的转人工。"
 
     if decision is Decision.REVIEW and not handoff.required:
         reason = (
@@ -148,7 +180,11 @@ def _finalize(
         and exact_text_checked
         and citations_valid
         and evidence_sufficient
-        and (decision is not Decision.PASSED or session.retrieval_sufficient)
+        and (
+            decision is not Decision.PASSED
+            or session.retrieval_sufficient
+            or session.web_sufficient
+        )
     )
     if not request.text.strip():
         violations.append("待审文本为空")
@@ -183,6 +219,8 @@ def _finalize(
             violations=violations,
         ),
         agent_mode=mode,
+        web_used=session.web_used,
+        retrieval_rounds=session.retrieval_rounds,
         rule_version=compliance.rule_version,
         trace_id=request.trace_id or "",
         latency_ms=latency,
@@ -195,13 +233,27 @@ class RuleBasedAgent:
 
     mode = "rule_based"
 
-    def __init__(self, retriever: HybridRetriever, engine: ComplianceEngine):
+    def __init__(
+        self,
+        retriever: HybridRetriever,
+        engine: ComplianceEngine,
+        web=None,
+        use_llm_review: bool = True,
+    ):
         self.retriever = retriever
         self.engine = engine
+        self.web = web
+        self.use_llm_review = use_llm_review
 
     def run(self, request: AgentRequest) -> AgentResponse:
         started = time.perf_counter()
-        session = ToolSession(request, self.retriever, self.engine)
+        session = ToolSession(
+            request,
+            self.retriever,
+            self.engine,
+            web=self.web,
+            use_llm_review=self.use_llm_review,
+        )
         compliance = _ensure_compliance(session, request)
         _ensure_retrieval(session, request, compliance)
 
@@ -247,15 +299,25 @@ class FunctionCallingAgent:
         engine: ComplianceEngine,
         llm: LLMClient,
         settings: AgentSettings,
+        web=None,
+        use_llm_review: bool = True,
     ):
         self.retriever = retriever
         self.engine = engine
         self.llm = llm
         self.settings = settings
+        self.web = web
+        self.use_llm_review = use_llm_review
 
     def run(self, request: AgentRequest) -> AgentResponse:
         started = time.perf_counter()
-        session = ToolSession(request, self.retriever, self.engine)
+        session = ToolSession(
+            request,
+            self.retriever,
+            self.engine,
+            web=self.web,
+            use_llm_review=self.use_llm_review,
+        )
         messages: list[dict[str, Any]] = [
             {"role": "system", "content": AGENT_SYSTEM_PROMPT},
             {
@@ -342,13 +404,24 @@ class AgentService:
         llm: LLMClient | None = None,
         settings: AgentSettings | None = None,
         force_rule_based: bool = False,
+        web=None,
+        use_llm_review: bool = True,
     ):
         self.retriever = retriever
         self.engine = engine
         self.settings = settings or AgentSettings()
-        self.rule_based = RuleBasedAgent(retriever, engine)
+        self.rule_based = RuleBasedAgent(
+            retriever, engine, web=web, use_llm_review=use_llm_review
+        )
         self.llm_agent = (
-            FunctionCallingAgent(retriever, engine, llm, self.settings)
+            FunctionCallingAgent(
+                retriever,
+                engine,
+                llm,
+                self.settings,
+                web=web,
+                use_llm_review=use_llm_review,
+            )
             if (llm is not None and llm.available and not force_rule_based)
             else None
         )

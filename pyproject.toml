@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "amz-ops-agent"
-version = "0.1.0"
+version = "0.2.0"
 description = "Amazon cross-border listing pre-review agent: rule engine + hybrid RAG + tool-calling agent"
 readme = "README.md"
 requires-python = ">=3.11"

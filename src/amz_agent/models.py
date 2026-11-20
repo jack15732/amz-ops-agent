@@ -139,6 +139,10 @@ class Citation(Base):
     source: str = ""
     snippet: str = ""
     score: float = 0.0
+    source_type: Literal["knowledge", "web"] = "knowledge"
+    url: str = ""
+    published_date: str = ""
+    official: bool = False
 
 
 class RetrievedChunk(Base):
@@ -179,6 +183,31 @@ class SearchResponse(Base):
     sufficient: bool = False
     latency_ms: float = 0.0
     trace_id: str = ""
+
+
+class WebResult(Base):
+    title: str
+    url: str
+    content: str = ""
+    score: float = 0.0
+    published_date: str = ""
+    official: bool = False
+
+
+class WebSearchRequest(Base):
+    query: str
+    max_results: int = 5
+    topic: Literal["general", "news"] = "general"
+    days: int | None = None
+
+
+class WebSearchResponse(Base):
+    query: str
+    results: list[WebResult] = Field(default_factory=list)
+    sufficient: bool = False
+    provider: str = "tavily"
+    latency_ms: float = 0.0
+    error: str = ""
 
 
 class ComplianceRequest(Base):
@@ -253,6 +282,8 @@ class AgentResponse(Base):
     handoff: Handoff = Field(default_factory=Handoff)
     guardrails: GuardrailReport = Field(default_factory=GuardrailReport)
     agent_mode: str = "rule_based"
+    web_used: bool = False
+    retrieval_rounds: int = 0
     rule_version: str = ""
     trace_id: str = ""
     latency_ms: float = 0.0
@@ -290,6 +321,8 @@ class HealthResponse(Base):
     embedding_provider: str
     embedding_model: str
     llm_available: bool
+    llm_model: str = ""
+    web_search_available: bool = False
     qdrant_mode: str
     chunks: int
     rules: int

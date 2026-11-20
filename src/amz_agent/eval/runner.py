@@ -4,7 +4,9 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from ..agent import AgentService, RuleBasedAgent
 from ..config import PROJECT_ROOT
+from urllib.parse import urlparse
 from ..models import AgentRequest, Decision, RetrievedChunk, Site
 from ..rag.bm25 import tokenize
 from ..service import AppService
@@ -175,8 +177,72 @@ def _retrieval(service: AppService, cases: list[dict], k: int, mode: str) -> dic
     }
 
 
-def _agent(service: AppService, cases: list[dict], rule_based: bool) -> dict:
-    runner = service.agent.rule_based if rule_based else service.agent
+def _web(service: AppService, cases: list[dict], max_results: int = 5) -> dict:
+    if not service.web.available:
+        return {"available": False, "cases": len(cases), "message": "Tavily is not configured"}
+    rows = []
+    for case in cases:
+        response = service.web.search(case["query"], max_results=max_results)
+        hosts = []
+        for result in response.results:
+            host = (urlparse(result.url).hostname or "").lower()
+            if host:
+                hosts.append(host)
+        expected = [domain.lower() for domain in case.get("expected_domains", [])]
+        domain_hit = any(
+            host == domain or host.endswith("." + domain)
+            for host in hosts
+            for domain in expected
+        )
+        rows.append(
+            {
+                "id": case["id"],
+                "query": case["query"],
+                "results": len(response.results),
+                "sufficient": response.sufficient,
+                "official": any(result.official for result in response.results),
+                "domain_hit": domain_hit,
+                "hosts": hosts,
+                "latency_ms": response.latency_ms,
+                "error": response.error,
+            }
+        )
+    total = len(rows) or 1
+    return {
+        "available": True,
+        "cases": len(rows),
+        "metrics": {
+            "sufficient_rate": round(sum(row["sufficient"] for row in rows) / total, 4),
+            "official_rate": round(sum(row["official"] for row in rows) / total, 4),
+            "expected_domain_hit_rate": round(sum(row["domain_hit"] for row in rows) / total, 4),
+            "avg_results": round(sum(row["results"] for row in rows) / total, 2),
+            "avg_latency_ms": round(sum(row["latency_ms"] for row in rows) / total, 2),
+        },
+        "failures": [row for row in rows if not row["domain_hit"]][:10],
+        "rows": rows,
+    }
+
+
+def _agent(
+    service: AppService, cases: list[dict], rule_based: bool, llm_review: bool = False
+) -> dict:
+    runner = (
+        RuleBasedAgent(
+            service.retriever,
+            service.engine,
+            web=service.web,
+            use_llm_review=llm_review,
+        )
+        if rule_based
+        else AgentService(
+            service.retriever,
+            service.engine,
+            llm=service.llm,
+            settings=service.settings.agent,
+            web=service.web,
+            use_llm_review=llm_review,
+        )
+    )
     mode = "rule_based" if rule_based else service.agent.mode
     rows = []
     for case in cases:
@@ -255,12 +321,16 @@ def evaluate(
         report["compliance_holdout"] = _compliance(
             service, load_cases("compliance_holdout"), llm_review
         )
+    if suite in {"all", "web"}:
+        report["web"] = _web(service, load_cases("web_cases"))
     if suite in {"all", "retrieval"}:
         report["retrieval"] = _retrieval(
             service, load_cases("retrieval_cases"), k, retrieval_mode
         )
     if suite in {"all", "agent"}:
-        report["agent"] = _agent(service, load_cases("agent_cases"), rule_based)
+        report["agent"] = _agent(
+            service, load_cases("agent_cases"), rule_based, llm_review=llm_review
+        )
     return report
 
 
@@ -297,6 +367,13 @@ def render_markdown(report: dict) -> str:
             f"| 留出集 | 三分类准确率 | {hold['metrics']['accuracy']:.2%} |",
             f"| 留出集 | 高危漏检率 | {hold['high_risk_miss_rate']:.2%} |",
             f"| 留出集 | 通过样本误报率 | {hold['false_positive_rate']:.2%} |",
+        ]
+    if "web" in report and report["web"].get("available"):
+        wm = report["web"]["metrics"]
+        lines += [
+            f"| 联网 | 有结果率 | {wm['sufficient_rate']:.2%} |",
+            f"| 联网 | 官方域名命中率 | {wm['official_rate']:.2%} |",
+            f"| 联网 | 期望域名命中率 | {wm['expected_domain_hit_rate']:.2%} |",
         ]
     if "retrieval" in report:
         rm = report["retrieval"]["metrics"]
@@ -370,6 +447,28 @@ def render_markdown(report: dict) -> str:
                 "留出集只用于暴露规则盲区，不并入主回归集；迭代后仍保留 2 个保守误拦截，"
                 "说明纯词表规则对语义改写仍有边界。",
             ]
+
+    if "web" in report and report["web"].get("available"):
+        web = report["web"]
+        wm = web["metrics"]
+        lines += [
+            "",
+            "## 联网检索（Tavily）",
+            "",
+            f"样本 {web['cases']} 条，max_results=5。",
+            "",
+            "| 指标 | 数值 |",
+            "| --- | --- |",
+            f"| 有结果率 | {wm['sufficient_rate']:.2%} |",
+            f"| 官方域名命中率 | {wm['official_rate']:.2%} |",
+            f"| 期望域名命中率 | {wm['expected_domain_hit_rate']:.2%} |",
+            f"| 平均结果数 | {wm['avg_results']} |",
+            f"| 平均延迟 | {wm['avg_latency_ms']} ms |",
+        ]
+        if web["failures"]:
+            lines += ["", "**未命中期望域名**", ""]
+            for row in web["failures"][:8]:
+                lines.append(f"- `{row['query']}` → {row['hosts']}")
 
     if "retrieval" in report:
         ret = report["retrieval"]

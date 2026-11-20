@@ -17,6 +17,8 @@ def settings(tmp_path: Path) -> Settings:
     settings.embedding.provider = "hash"
     settings.llm.provider = "none"
     settings.llm.api_key = ""
+    settings.web_search.enabled = False
+    settings.web_search.api_key = ""
     settings.retrieval.query_expansion = True
     return settings
 

@@ -1,6 +1,6 @@
 app:
   name: "AMZ Ops Agent"
-  version: "0.1.0"
+  version: "0.2.0"
   data_dir: "data/runtime"
   log_level: "INFO"
   auto_ingest: true
@@ -15,7 +15,7 @@ embedding:
   cache_size: 2048
 
 llm:
-  provider: "siliconflow"        # siliconflow | none
+  provider: "siliconflow"        # siliconflow | deepseek | none
   model: "Qwen/Qwen2.5-7B-Instruct"
   temperature: 0.0
   max_tokens: 1500
@@ -40,6 +40,29 @@ compliance:
   rule_dir: "config/compliance"
   review_on_unknown: true
   llm_review_threshold: 0.80
+
+web_search:
+  enabled: true
+  provider: "tavily"
+  base_url: "https://api.tavily.com"
+  max_results: 5
+  timeout_s: 20
+  search_depth: "basic"
+  include_domains: []
+  priority_domains:
+    - "amazon.com"
+    - "sellercentral.amazon.com"
+    - "sell.amazon.com"
+    - "ec.europa.eu"
+    - "europa.eu"
+    - "eur-lex.europa.eu"
+    - "echa.europa.eu"
+    - "ftc.gov"
+    - "fda.gov"
+    - "cpsc.gov"
+    - "meti.go.jp"
+    - "mhlw.go.jp"
+    - "caa.go.jp"
 
 agent:
   max_steps: 6

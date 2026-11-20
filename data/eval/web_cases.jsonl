@@ -1,0 +1,10 @@
+{"id":"web-001","query":"FTC 100% guaranteed advertising substantiation official","expected_domains":["ftc.gov"],"note":"美国广告证据"}
+{"id":"web-002","query":"FDA cosmetic claims cure acne official guidance","expected_domains":["fda.gov"],"note":"FDA 功效宣称"}
+{"id":"web-003","query":"EU CE marking official requirements European Commission","expected_domains":["europa.eu","ec.europa.eu"],"note":"CE 标志"}
+{"id":"web-004","query":"EU GPSR Regulation 2023/988 responsible person official","expected_domains":["eur-lex.europa.eu","europa.eu"],"note":"GPSR"}
+{"id":"web-005","query":"REACH regulation official ECHA SVHC","expected_domains":["echa.europa.eu","europa.eu"],"note":"REACH"}
+{"id":"web-006","query":"Japan PSE mark electrical appliances METI official","expected_domains":["meti.go.jp"],"note":"PSE"}
+{"id":"web-007","query":"Japan 薬機法 厚生労働省 official","expected_domains":["mhlw.go.jp"],"note":"药机法"}
+{"id":"web-008","query":"Japan 景品表示法 優良誤認 消費者庁 official","expected_domains":["caa.go.jp"],"note":"景表法"}
+{"id":"web-009","query":"Amazon Seller Central intellectual property policy official","expected_domains":["sellercentral.amazon.com","sell.amazon.com","amazon.com"],"note":"Amazon IP"}
+{"id":"web-010","query":"Amazon best seller claim product detail page policy official","expected_domains":["sellercentral.amazon.com","sell.amazon.com","amazon.com"],"note":"绝对化用语"}

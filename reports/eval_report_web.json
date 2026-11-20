@@ -1,0 +1,220 @@
+{
+  "meta": {
+    "generated_at": "2026-11-20T16:39:41.031909+00:00",
+    "embedding_provider": "huggingface",
+    "embedding_model": "moka-ai/m3e-base",
+    "agent_mode": "rule_based",
+    "qdrant_mode": "memory",
+    "chunks": 96,
+    "rules": 35,
+    "rule_versions": {
+      "EU": "2026.11",
+      "JP": "2026.11",
+      "US": "2026.11"
+    },
+    "retrieval_mode": "hybrid",
+    "k": 6
+  },
+  "web": {
+    "available": true,
+    "cases": 10,
+    "metrics": {
+      "sufficient_rate": 1.0,
+      "official_rate": 0.9,
+      "expected_domain_hit_rate": 0.9,
+      "avg_results": 5.0,
+      "avg_latency_ms": 480.26
+    },
+    "failures": [
+      {
+        "id": "web-006",
+        "query": "Japan PSE mark electrical appliances METI official",
+        "results": 5,
+        "sufficient": true,
+        "official": false,
+        "domain_hit": false,
+        "hosts": [
+          "payapress.com",
+          "www.ul.com",
+          "www.jqa.jp",
+          "www.tuvsud.com",
+          "www.tuv.com"
+        ],
+        "latency_ms": 329.92,
+        "error": ""
+      }
+    ],
+    "rows": [
+      {
+        "id": "web-001",
+        "query": "FTC 100% guaranteed advertising substantiation official",
+        "results": 5,
+        "sufficient": true,
+        "official": true,
+        "domain_hit": true,
+        "hosts": [
+          "www.ftc.gov",
+          "www.ftc.gov",
+          "claddr.com",
+          "www.americanconference.com",
+          "www.linkedin.com"
+        ],
+        "latency_ms": 489.61,
+        "error": ""
+      },
+      {
+        "id": "web-002",
+        "query": "FDA cosmetic claims cure acne official guidance",
+        "results": 5,
+        "sufficient": true,
+        "official": true,
+        "domain_hit": true,
+        "hosts": [
+          "www.fda.gov",
+          "www.fda.gov",
+          "arrsys.com",
+          "packoasis.com",
+          "cosmetic.chemlinked.com"
+        ],
+        "latency_ms": 341.72,
+        "error": ""
+      },
+      {
+        "id": "web-003",
+        "query": "EU CE marking official requirements European Commission",
+        "results": 5,
+        "sufficient": true,
+        "official": true,
+        "domain_hit": true,
+        "hosts": [
+          "europa.eu",
+          "www.complir.io",
+          "en.wikipedia.org",
+          "www.trade.gov",
+          "www.tradecommissioner.gc.ca"
+        ],
+        "latency_ms": 280.84,
+        "error": ""
+      },
+      {
+        "id": "web-004",
+        "query": "EU GPSR Regulation 2023/988 responsible person official",
+        "results": 5,
+        "sufficient": true,
+        "official": true,
+        "domain_hit": true,
+        "hosts": [
+          "eur-lex.europa.eu",
+          "soulierbunch.com",
+          "med-di-dia.com",
+          "conformitypoint.com",
+          "www.youtube.com"
+        ],
+        "latency_ms": 262.68,
+        "error": ""
+      },
+      {
+        "id": "web-005",
+        "query": "REACH regulation official ECHA SVHC",
+        "results": 5,
+        "sufficient": true,
+        "official": true,
+        "domain_hit": true,
+        "hosts": [
+          "environment.ec.europa.eu",
+          "blog.sourceintelligence.com",
+          "getenviropass.com",
+          "www.chemradar.com",
+          "getreadycompliance.eu"
+        ],
+        "latency_ms": 327.7,
+        "error": ""
+      },
+      {
+        "id": "web-006",
+        "query": "Japan PSE mark electrical appliances METI official",
+        "results": 5,
+        "sufficient": true,
+        "official": false,
+        "domain_hit": false,
+        "hosts": [
+          "payapress.com",
+          "www.ul.com",
+          "www.jqa.jp",
+          "www.tuvsud.com",
+          "www.tuv.com"
+        ],
+        "latency_ms": 329.92,
+        "error": ""
+      },
+      {
+        "id": "web-007",
+        "query": "Japan 薬機法 厚生労働省 official",
+        "results": 5,
+        "sufficient": true,
+        "official": true,
+        "domain_hit": true,
+        "hosts": [
+          "www.mhlw.go.jp",
+          "www.mhlw.go.jp",
+          "www.mhlw.go.jp",
+          "www.tuvsud.com",
+          "www.youtube.com"
+        ],
+        "latency_ms": 1287.36,
+        "error": ""
+      },
+      {
+        "id": "web-008",
+        "query": "Japan 景品表示法 優良誤認 消費者庁 official",
+        "results": 5,
+        "sufficient": true,
+        "official": true,
+        "domain_hit": true,
+        "hosts": [
+          "www.caa.go.jp",
+          "www.caa.go.jp",
+          "www.caa.go.jp",
+          "www.businesslawyers.jp",
+          "esgjournaljapan.com"
+        ],
+        "latency_ms": 323.06,
+        "error": ""
+      },
+      {
+        "id": "web-009",
+        "query": "Amazon Seller Central intellectual property policy official",
+        "results": 5,
+        "sufficient": true,
+        "official": true,
+        "domain_hit": true,
+        "hosts": [
+          "sellercentral.amazon.com",
+          "www.amazon.com",
+          "www.youtube.com",
+          "www.youtube.com",
+          "sellercandy.com"
+        ],
+        "latency_ms": 425.84,
+        "error": ""
+      },
+      {
+        "id": "web-010",
+        "query": "Amazon best seller claim product detail page policy official",
+        "results": 5,
+        "sufficient": true,
+        "official": true,
+        "domain_hit": true,
+        "hosts": [
+          "sellercentral.amazon.com",
+          "sellercentral.amazon.com",
+          "www.amazon.com",
+          "sellercentral.amazon.com",
+          "www.youtube.com"
+        ],
+        "latency_ms": 733.83,
+        "error": ""
+      }
+    ]
+  }
+}

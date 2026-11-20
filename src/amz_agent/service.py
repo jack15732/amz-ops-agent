@@ -27,10 +27,13 @@ from .models import (
     SearchRequest,
     SearchResponse,
     Site,
+    WebSearchRequest,
+    WebSearchResponse,
 )
 from .rag import Chunker, HybridRetriever, QueryExpander, build_embedder, ingest_paths
 from .rag.ingest import load_catalog
 from .rag.vector_store import build_vector_store
+from .web import build_web_client
 
 logger = logging.getLogger(__name__)
 
@@ -53,6 +56,7 @@ class AppService:
         )
         self.embedder = build_embedder(self.settings.embedding)
         self.store = build_vector_store(self.settings.qdrant, self.data_path)
+        self.web = build_web_client(self.settings.web_search)
         self.audit = AuditStore(self.settings.audit_path)
 
         chunks = load_catalog(self.catalog_path)
@@ -82,6 +86,7 @@ class AppService:
             self.engine,
             llm=self.llm,
             settings=self.settings.agent,
+            web=self.web,
         )
 
     # ------------------------------------------------------------------ ingest
@@ -151,6 +156,28 @@ class AppService:
         )
         return response
 
+    def web_search(self, request: WebSearchRequest) -> WebSearchResponse:
+        trace_id = uuid.uuid4().hex[:16]
+        response = self.web.search(
+            request.query,
+            max_results=request.max_results,
+            topic=request.topic,
+            days=request.days,
+        )
+        self.audit.record_trace(
+            AuditTrace(
+                trace_id=trace_id,
+                endpoint="web_search",
+                site="",
+                input=request.model_dump(mode="json"),
+                output=response.model_dump(mode="json"),
+                latency_ms=response.latency_ms,
+                status="error" if response.error else "ok",
+                created_at=_now(),
+            )
+        )
+        return response
+
     def run_agent(self, request: AgentRequest) -> AgentResponse:
         response = self.agent.run(request)
         trace_id = response.trace_id
@@ -179,6 +206,28 @@ class AppService:
             top_k=3,
         )
         citations: list[Citation] = [item.citation() for item in search.results]
+        web_sufficient = False
+        if not search.sufficient and self.web.available:
+            web = self.web.search(
+                f"{request.site.value} Amazon listing compliance pre-review requirements",
+                max_results=4,
+            )
+            web_sufficient = web.sufficient
+            for row in web.results:
+                citations.append(
+                    Citation(
+                        chunk_id=f"web:{uuid.uuid4().hex[:8]}",
+                        doc_id="web",
+                        title=row.title,
+                        heading_path=["Web Search"],
+                        source=row.url,
+                        snippet=row.content[:240],
+                        score=row.score,
+                        source_type="web",
+                        url=row.url,
+                        published_date=row.published_date,
+                    )
+                )
         decision = result.decision
         handoff = Handoff()
         if decision is Decision.REVIEW:
@@ -188,7 +237,7 @@ class AppService:
                 priority="high",
                 payload={"asin": request.asin, "trace_id": trace_id},
             )
-        elif decision is Decision.PASSED and not search.sufficient:
+        elif decision is Decision.PASSED and not (search.sufficient or web_sufficient):
             decision = Decision.REVIEW
             handoff = Handoff(
                 required=True,
@@ -230,6 +279,8 @@ class AppService:
             embedding_provider=self.embedder.name,
             embedding_model=self.embedder.model,
             llm_available=self.llm.available,
+            llm_model=self.settings.llm.model if self.llm.available else "",
+            web_search_available=self.web.available,
             qdrant_mode=self.settings.qdrant.mode,
             chunks=self.store.count(),
             rules=self.engine.rule_count,
@@ -237,6 +288,7 @@ class AppService:
 
     def close(self) -> None:
         self.llm.close()
+        self.web.close()
         self.audit.close()
         close = getattr(self.embedder, "close", None)
         if close:

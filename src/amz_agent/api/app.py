@@ -22,6 +22,8 @@ from ..models import (
     SearchRequest,
     SearchResponse,
     Site,
+    WebSearchRequest,
+    WebSearchResponse,
 )
 from ..service import AppService
 from ..rag.ingest import SUPPORTED
@@ -82,6 +84,14 @@ def create_app(settings: Settings | None = None, service: AppService | None = No
         if not request.query.strip():
             raise HTTPException(status_code=422, detail="query must not be empty")
         return svc.search(request)
+
+    @app.post("/v1/web/search", response_model=WebSearchResponse)
+    def web_search(request: WebSearchRequest, svc: AppService = Depends(get_service)):
+        if not request.query.strip():
+            raise HTTPException(status_code=422, detail="query must not be empty")
+        if not svc.web.available:
+            raise HTTPException(status_code=503, detail="Tavily is not configured")
+        return svc.web_search(request)
 
     @app.post("/v1/agent/query", response_model=AgentResponse)
     def agent(request: AgentRequest, svc: AppService = Depends(get_service)):

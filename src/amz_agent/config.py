@@ -52,7 +52,7 @@ class _Base(BaseModel):
 
 class AppSettings(_Base):
     name: str = "AMZ Ops Agent"
-    version: str = "0.1.0"
+    version: str = "0.2.0"
     data_dir: str = "data/runtime"
     log_level: str = "INFO"
     auto_ingest: bool = True
@@ -96,6 +96,34 @@ class RetrievalSettings(_Base):
     query_expansion: bool = True
 
 
+class WebSearchSettings(_Base):
+    enabled: bool = True
+    provider: str = "tavily"
+    api_key: str = ""
+    base_url: str = "https://api.tavily.com"
+    max_results: int = 5
+    timeout_s: float = 20.0
+    search_depth: str = "basic"
+    include_domains: list[str] = Field(default_factory=list)
+    priority_domains: list[str] = Field(
+        default_factory=lambda: [
+            "amazon.com",
+            "sellercentral.amazon.com",
+            "sell.amazon.com",
+            "ec.europa.eu",
+            "europa.eu",
+            "eur-lex.europa.eu",
+            "echa.europa.eu",
+            "ftc.gov",
+            "fda.gov",
+            "cpsc.gov",
+            "meti.go.jp",
+            "mhlw.go.jp",
+            "caa.go.jp",
+        ]
+    )
+
+
 class ComplianceSettings(_Base):
     rule_dir: str = "config/compliance"
     review_on_unknown: bool = True
@@ -128,6 +156,7 @@ class Settings(_Base):
     llm: LLMSettings = Field(default_factory=LLMSettings)
     retrieval: RetrievalSettings = Field(default_factory=RetrievalSettings)
     compliance: ComplianceSettings = Field(default_factory=ComplianceSettings)
+    web_search: WebSearchSettings = Field(default_factory=WebSearchSettings)
     agent: AgentSettings = Field(default_factory=AgentSettings)
     audit: AuditSettings = Field(default_factory=AuditSettings)
     qdrant: QdrantSettings = Field(default_factory=QdrantSettings)
@@ -155,24 +184,52 @@ class Settings(_Base):
 
 def _apply_env(settings: Settings) -> Settings:
     env = os.environ
-    key = env.get("SILICONFLOW_API_KEY", "")
+    siliconflow_key = env.get("SILICONFLOW_API_KEY", "")
+    deepseek_key = env.get("DEEPSEEK_API_KEY", "")
+    llm_key = env.get("LLM_API_KEY", "") or deepseek_key or siliconflow_key
 
     settings.embedding.provider = env.get("EMBEDDING_PROVIDER", settings.embedding.provider)
     settings.embedding.model = env.get("EMBEDDING_MODEL", settings.embedding.model)
     settings.embedding.base_url = env.get(
-        "SILICONFLOW_BASE_URL", settings.embedding.base_url
+        "EMBEDDING_BASE_URL",
+        env.get("SILICONFLOW_BASE_URL", settings.embedding.base_url),
     )
-    settings.embedding.api_key = env.get("SILICONFLOW_API_KEY", settings.embedding.api_key) or key
+    settings.embedding.api_key = (
+        env.get("EMBEDDING_API_KEY", "")
+        or env.get("SILICONFLOW_API_KEY", settings.embedding.api_key)
+        or siliconflow_key
+    )
 
     settings.llm.provider = env.get("LLM_PROVIDER", settings.llm.provider)
     settings.llm.model = env.get("LLM_MODEL", settings.llm.model)
-    settings.llm.base_url = env.get("SILICONFLOW_BASE_URL", settings.llm.base_url)
-    settings.llm.api_key = env.get("SILICONFLOW_API_KEY", settings.llm.api_key) or key
+    settings.llm.base_url = env.get(
+        "LLM_BASE_URL",
+        env.get("SILICONFLOW_BASE_URL", settings.llm.base_url),
+    )
+    settings.llm.api_key = env.get("LLM_API_KEY", "") or llm_key
+
+    # DeepSeek is chat/tool-calling only; it has no embedding endpoint.
+    if (
+        deepseek_key
+        and "LLM_PROVIDER" not in env
+        and "LLM_BASE_URL" not in env
+    ):
+        settings.llm.provider = "deepseek"
+        settings.llm.base_url = "https://api.deepseek.com"
+        settings.llm.model = env.get("LLM_MODEL", "deepseek-chat")
+    if "LLM_TIMEOUT" in env:
+        settings.llm.timeout_s = float(env["LLM_TIMEOUT"])
 
     settings.app.data_dir = env.get("AMZ_DATA_DIR", settings.app.data_dir)
     settings.app.log_level = env.get("AMZ_LOG_LEVEL", settings.app.log_level)
     if "AMZ_AUTO_INGEST" in env:
         settings.app.auto_ingest = env["AMZ_AUTO_INGEST"].lower() in {"1", "true", "yes"}
+    settings.web_search.api_key = env.get("TAVILY_API_KEY", settings.web_search.api_key)
+    settings.web_search.base_url = env.get("TAVILY_BASE_URL", settings.web_search.base_url)
+    if "WEB_SEARCH_ENABLED" in env:
+        settings.web_search.enabled = env["WEB_SEARCH_ENABLED"].lower() in {"1", "true", "yes"}
+    settings.web_search.enabled = settings.web_search.enabled and bool(settings.web_search.api_key)
+
     settings.qdrant.mode = env.get("AMZ_QDRANT_MODE", settings.qdrant.mode)
     settings.qdrant.url = env.get("QDRANT_URL", settings.qdrant.url)
     settings.qdrant.api_key = env.get("QDRANT_API_KEY", settings.qdrant.api_key)

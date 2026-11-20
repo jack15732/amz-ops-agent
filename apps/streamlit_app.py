@@ -80,6 +80,12 @@ def render_citations(citations: list[dict]) -> None:
         return
     st.markdown("**可追溯引用**")
     for index, citation in enumerate(citations, start=1):
+        if citation.get("source_type") == "web":
+            with st.expander(f"[S{index}] 🌐 {citation['title']}"):
+                st.markdown(f"[{citation.get('url', '')}]({citation.get('url', '')})")
+                st.write(citation.get("snippet", ""))
+                st.caption(f"web · score={citation.get('score', 0)}")
+            continue
         heading = " > ".join(citation.get("heading_path", []))
         with st.expander(f"[S{index}] {citation['title']} :: {heading}"):
             st.write(citation.get("snippet", ""))
@@ -97,6 +103,8 @@ with st.sidebar:
             {
                 "embedding": f"{health['embedding_provider']} / {health['embedding_model']}",
                 "llm": health["llm_available"],
+                "llm_model": health.get("llm_model", ""),
+                "web_search": health.get("web_search_available", False),
                 "qdrant": health["qdrant_mode"],
                 "chunks": health["chunks"],
                 "rules": health["rules"],
@@ -109,7 +117,7 @@ with st.sidebar:
     site = st.selectbox("站点", list(SITES), format_func=lambda key: f"{SITES[key]} ({key})")
     st.caption("风控原则：高危直接拦截；模糊内容转人工；无可靠依据不放行。")
 
-tabs = st.tabs(["Listing 预审", "Agent 问答", "知识库检索", "合规词库", "审计与评测"])
+tabs = st.tabs(["Listing 预审", "Agent 问答", "知识库检索", "联网检索", "合规词库", "审计与评测"])
 
 # ------------------------------------------------------------------ precheck
 with tabs[0]:
@@ -218,8 +226,42 @@ with tabs[2]:
                         f"bm25={item['bm25_score']:.2f} · doc={chunk['doc_id']}"
                     )
 
-# --------------------------------------------------------------------- rules
+# ------------------------------------------------------------------ web search
 with tabs[3]:
+    st.subheader("Tavily 联网检索")
+    st.caption("用于知识库不足时的实时政策/官方公告兜底；结果必须带 URL，网页内容仅作为证据。")
+    web_query = st.text_input("联网问题", value="Amazon US listing best seller policy 2026")
+    web_topic = st.selectbox("类型", ["general", "news"])
+    web_days = st.number_input("最近天数（news 生效）", min_value=1, max_value=365, value=30)
+    if st.button("联网检索", type="primary", key="web_search"):
+        try:
+            result = api_post(
+                "/v1/web/search",
+                {
+                    "query": web_query,
+                    "max_results": 5,
+                    "topic": web_topic,
+                    "days": int(web_days) if web_topic == "news" else None,
+                },
+            )
+        except Exception as exc:  # noqa: BLE001
+            show_error(exc)
+        else:
+            if result.get("error"):
+                st.warning(result["error"])
+            elif result.get("sufficient"):
+                st.success("联网结果可作为补充依据")
+            else:
+                st.warning("联网结果不足，Agent 应转人工")
+            for index, item in enumerate(result.get("results", []), start=1):
+                with st.expander(f"[S{index}] {item['title']}", expanded=index == 1):
+                    st.markdown(f"[{item['url']}]({item['url']})")
+                    st.write(item.get("content", ""))
+                    st.caption(f"score={item['score']} · {item.get('published_date', '')}")
+            st.caption(f"{result.get('latency_ms', 0)} ms")
+
+# --------------------------------------------------------------------- rules
+with tabs[4]:
     st.subheader("站点合规词库")
     st.caption("YAML 维护，按站点灰度发布；支持词条、正则、白名单上下文与严重级别。")
     try:
@@ -251,7 +293,7 @@ with tabs[3]:
         show_error(exc)
 
 # -------------------------------------------------------------------- audit
-with tabs[4]:
+with tabs[5]:
     st.subheader("审计与评测")
     try:
         traces = api_get("/v1/audit?limit=20")["traces"]

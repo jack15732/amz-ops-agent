@@ -3,5 +3,9 @@
 !README.md
 !eval_report.md
 !eval_report.json
+!eval_report_llm.md
+!eval_report_llm.json
+!eval_report_web.md
+!eval_report_web.json
 !retrieval_comparison.md
 !retrieval_comparison.json
